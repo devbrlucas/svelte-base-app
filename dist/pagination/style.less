@@ -1,0 +1,30 @@
+form.app-pagination {
+    margin-top: 2em;
+    text-align: right;
+    & > span {
+        display: inline-block;
+        margin-bottom: .5em;
+    }
+    & > div {
+        display: inline-flex;
+        align-items: center;
+        & > span {
+            font-size: 1.3em;
+            font-weight: 400;
+        }
+        &:first-of-type {
+            gap: .5em;
+            margin-right: 2em;
+        }
+        &:last-of-type {
+            gap: 1em;
+        }
+        & > button {
+            font-size: 1.5em;
+            &:disabled {
+                opacity: .3;
+                cursor: not-allowed;
+            }
+        }
+    }
+}

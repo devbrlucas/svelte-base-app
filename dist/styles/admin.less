@@ -1,0 +1,302 @@
+.profile-button() {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--accent-color);
+    color: #FFF;
+    width: 2em;
+    height: 2em;
+    font-weight: 700;
+    border-radius: 100%;
+    border: solid .2em var(--body-bg-color);
+    box-sizing: content-box;
+    overflow: hidden;
+    &.image {
+        background-color: transparent;
+    }
+    & > img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    @media (hover: hover) {
+        transition: outline .1s;
+        &:hover {
+            outline: solid .2em var(--accent-color);
+        }
+    }
+}
+
+div#app {
+    padding-right: 1em;
+    @media (max-width: 1023px) {
+        grid-template: min-content min-content auto / auto;
+        padding-right: 0;
+    }
+
+    & > #app-header {
+        position: relative;
+        grid-area: 1/1/span 2/1;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 1em;
+        height: 100vh;
+        color: #FFF;
+        background-color: var(--accent-color);
+        & > button {
+            position: relative;
+            width: 1.7em;
+            height: 1.7em;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            transition: transform .2s;
+            &.show {
+                transform: rotate(180deg);
+                & > svg {
+                    &:first-child {
+                        opacity: 0;
+                    }
+                    &:last-child {
+                        opacity: 1;
+                    }
+                }
+            }
+            & > svg {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                transition: opacity .2s;
+                &:last-child {
+                    opacity: 0;
+                }
+            }
+        }
+        & > img {
+            width: 100%;
+            height: auto;
+        }
+        & > nav {
+            display: flex;
+            gap: 1em;
+            flex-direction: column;
+            background-color: var(--accent-color);
+            & > a, & > button {
+                white-space: nowrap;
+                padding: .5em;
+                text-align: right;
+                &:focus {
+                    outline: solid 1px #FFF;
+                }
+                & > svg {
+                    font-size: .9em;
+                }
+                @media (hover: hover) {
+                    transition: color .2s, background-color .2s;
+                    &:hover {
+                        background-color: #FFF;
+                        color: var(--accent-color);
+                    }
+                }
+            }
+        }
+        & > div {
+            display: none;
+            & > button {
+                .profile-button();
+                font-size: 1.3em;
+            }
+             & > ul {
+                position: absolute;
+                top: 4.3em;
+                left: 0;
+                z-index: 510;
+                padding: 0;
+                margin: 0;
+                width: 100%;
+                height: 0;
+                background-color: var(--accent-color);
+                box-shadow: 0 2em 2em -1.5em rgba(0, 0, 0, .3);
+                overflow: hidden;
+                transition: height .2s, padding .2s;
+                &.show {
+                    padding: 2em 0 1em;
+                    height: auto;
+                }
+                & > li {
+                    margin-top: 1.5em;
+                    list-style: none;
+                    text-align: center;
+                     & > span {
+                        font-weight: 400;
+                     }
+                }
+             }
+        }
+        @media (max-width: 1023px) {
+            grid-area: auto;
+            flex-direction: row;
+            align-items: center;
+            height: auto;
+            & > img {
+                max-width: 10em;
+                max-height: 4em;
+            }
+            & > nav {
+                flex-direction: row;
+            }
+            & > div {
+                display: block;
+            }
+        }
+        @media (max-width: 767px) {
+            height: 4.5em;
+            & > button {
+                display: flex;
+            }
+            & > nav {
+                position: absolute;
+                top: 4.3em;
+                left: 0;
+                z-index: 500;
+                width: 100%;
+                height: 0;
+                flex-direction: column;
+                align-items: center;
+                padding: 0;
+                box-shadow: 0 2em 2em -1.5em rgba(0, 0, 0, .3);
+                overflow: hidden;
+                transition: height .2s, padding .2s;
+                &.show {
+                    padding: 2em 0 1em;
+                    height: auto;
+                }
+            }
+            
+        }
+    }
+
+    & > #app-user-info {
+        position: absolute;
+        top: 1em;
+        right: 1em;
+        z-index: 550;
+        display: grid;
+        align-items: center;
+        justify-items: end;
+        grid-template: auto auto / min-content min-content;
+        text-align: right;
+        @media (max-width: 1023px) {
+            display: none;
+        }
+        & > span {
+            font-weight: 400;
+            font-size: 1.2em;
+            white-space: nowrap;
+            margin-right: .5em;
+        }
+        & > button {
+            font-size: 1.5em;
+            .profile-button();
+        }
+        & > ul {
+            grid-area: 2/1/2/span 2;
+            padding: .5em;
+            margin: 0;
+            margin-left: auto;
+            width: fit-content;
+            background-color: var(--accent-color);
+            border-radius: .7em;
+            & > li {
+                text-align: right;
+                list-style: none;
+                & > a {
+                    display: flex;
+                    align-items: flex-start;
+                    padding: .5em;
+                    margin: .5em;
+                    font-weight: 400;
+                    color: #FFF;
+                    white-space: nowrap;
+                    @media (hover: hover) {
+                        transition: background-color .2s, color .2s;
+                        &:hover {
+                            color: var(--accent-color);
+                            background-color: #FFF;
+                        }
+                    }
+                    & > svg {
+                        margin-right: .5em;
+                    }
+                }
+            }
+        }
+    }
+    
+    & > #app-main {
+        align-self: baseline;
+        justify-self: baseline;
+        padding: 2em;
+        max-height: calc(100% - 5.5em);
+        max-width: 100%;
+        background-color: #FFF;
+        border-radius: 1em;
+        box-shadow: 0 .2em 2em rgba(0, 0, 0, .05);
+        overflow: auto;
+        @media (max-width: 1023px) {
+            margin: 0 1em;
+            max-width: calc(100% - 2em);
+        }
+    }
+    
+    & > #app-aside {
+        grid-area: 1/2/1/2;
+        display: flex;
+        align-items: center;
+        gap: 1em;
+        margin-top: 1em;
+    
+        & > a, & > button, & > span {
+            position: relative;
+            padding: .7em 1em;
+            background-color: #FFF;
+            border-radius: 2em;
+            box-shadow: 0 .2em 2em rgba(0, 0, 0, .05);
+            overflow: hidden;
+            &:focus {
+                outline: solid 2px var(--accent-color);
+                color: var(--accent-color);
+                font-weight: 400;
+            }
+            &::before {
+                content: '';
+                position: absolute;
+                top: calc(50% - .25em);
+                left: -.5em;
+                width: .5em;
+                height: .5em;
+                background-color: #FFF;
+                border-radius: 100%;
+                transition: left .2s;
+            }
+            @media (hover: hover) {
+                transition: border-radius .2s, background-color .2s, color .2s, padding .2s;
+                &:hover {
+                    padding-left: 2em;
+                    color: #FFF;
+                    background-color: var(--accent-color);
+                    border-radius: 0;
+                    font-weight: 400;
+                    &::before {
+                        left: 1em;
+                    }
+                }
+            }
+        }
+        @media (max-width: 1023px) {
+            grid-area: 2/1/2/1;
+            margin: 0 1em;
+        }
+    }
+}

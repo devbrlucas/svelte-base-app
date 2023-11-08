@@ -1,0 +1,57 @@
+#app-messages-container {
+    position: fixed;
+    right: 1em;
+    top: 5em;
+    z-index: 600;
+    max-width: calc(100% - 2em);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 1em;
+    & > p {
+        position: relative;
+        margin: 0;
+        padding: 1em;
+        max-width: 100%;
+        background-color: #FFF;
+        box-shadow: 0 1em 2em -1em rgba(0, 0, 0, .25);
+        border-radius: 1em;
+        overflow: hidden;
+        cursor: pointer;
+        &.success {
+            --message-color: green;
+        }
+        &.warning {
+            --message-color: goldenrod;
+        }
+        &.error {
+            --message-color: red;
+        }
+        & > svg {
+            margin-right: .4em;
+            font-size: 1.1em;
+            & > path {
+                fill: var(--message-color);
+            }
+        }
+        & > .flash-messages-progress {
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            height: .2em;
+            background-color: var(--message-color);
+            animation: progress 10s linear;
+            @keyframes progress {
+                from { width: 0; }
+                to { width: 100%; }
+            }
+        }
+        @media (hover: hover) {
+            &:hover {
+                & > .flash-messages-progress {
+                    animation-play-state: paused;
+                }
+            }
+        }
+    }
+}
