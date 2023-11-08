@@ -1,5 +1,5 @@
 {
-	"name": "sveltetools",
+	"name": "svelte-base-app",
 	"version": "0.0.1",
 	"scripts": {
 		"dev": "vite dev",
@@ -14,6 +14,21 @@
 		".": {
 			"types": "./dist/index.d.ts",
 			"svelte": "./dist/index.js"
+		},
+		"./auth": {
+			"types": "./dist/auth/index.d.ts",
+			"svelte": "./dist/auth/index.js"
+		},
+		"./form": {
+			"types": "./dist/form/index.d.ts",
+			"svelte": "./dist/form/index.js"
+		},
+		"./confirmation": {
+			"types": "./dist/confirmation/index.d.ts",
+			"svelte": "./dist/confirmation/index.js"
+		},
+		"./styles/*": {
+			"default": "./dist/styles/*"
 		}
 	},
 	"files": [
@@ -22,12 +37,14 @@
 		"!dist/**/*.spec.*"
 	],
 	"peerDependencies": {
-		"svelte": "^4.0.0"
+		"svelte": "^4.0.0",
+		"@sveltejs/kit": "^1.20.4"
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "^2.0.0",
 		"@sveltejs/kit": "^1.20.4",
 		"@sveltejs/package": "^2.0.0",
+		"less": "^4.2.0",
 		"publint": "^0.1.9",
 		"svelte": "^4.0.5",
 		"svelte-check": "^3.4.3",

@@ -1,0 +1,113 @@
+table.app-table-records {
+    border-collapse: collapse;
+    @media (orientation: landscape) {
+        &.center {
+            & td, & th{
+                text-align: center;
+            }
+        }
+    }
+    & td, & th {
+        padding: .3em 1em;
+    }
+    & th {
+        font-size: 1.2em;
+        color: var(--accent-color);
+        vertical-align: middle;
+        text-align: left;
+    }
+    & > tbody {
+        & > tr {
+            &:not(.hover-disabled) {
+                @media (hover: hover) and (orientation: landscape) {
+                    transition: background-color .1s;
+                    &:hover {
+                        background-color: rgb(230, 230, 230);
+                        & > td {
+                            padding-top: 1em;
+                            padding-bottom: 1em;
+                        }
+                    }
+                }
+            }
+            & > td {
+                transition: padding .1s;
+                & > b {
+                    display: none;
+                }
+                &.actions {
+                    white-space: nowrap;
+                }
+                & > a, & > button {
+                    display: inline-flex;
+                    align-items: center;
+                    justify-content: center;
+                    padding: .2em;
+                    width: 1.3em;
+                    height: 1.3em;
+                    border-radius: .3em;
+                    &:not(:last-child) {
+                        margin-right: .5em;
+                    }
+                    @media (hover: hover) {
+                        @keyframes table-action-animation {
+                            0% { transform: scale(1); }
+                            50% { transform: scale(1.7); }
+                            100% { transform: scale(1.3); }
+                        }
+                        &:hover {
+                            animation: table-action-animation .2s forwards;
+                        }
+                    }
+                    &.edit {
+                        color: goldenrod;
+                        background-color: lighten(goldenrod, 35%);
+                    }
+                    &.delete, &.disapproved {
+                        color: red;
+                        background-color: lighten(red, 35%);
+                    }
+                    &.restore, &.show {
+                        color: green;
+                        background-color: lighten(green, 50%);
+                    }
+                    &.more {
+                        color: dodgerblue;
+                        background-color: lighten(dodgerblue, 30%);
+                    }
+                }
+            }
+        }
+    }
+    @media (orientation: portrait) {
+        display: block;
+        & > thead {
+            display: none;
+        }
+        & > tbody {
+            display: flex;
+            flex-direction: column;
+            gap: 1em;
+            & > tr {
+                display: flex;
+                flex-wrap: wrap;
+                padding: .5em;
+                border: solid 1px gray;
+                border-radius: 1em;
+                & > td {
+                    display: inline-block;
+                    text-align: left;
+                    & > b {
+                        display: inline;
+                        font-weight: 400;
+                    }
+                    &.actions {
+                        margin-top: 1em;
+                        min-width: 100%;
+                        text-align: center;
+                    }
+                }
+            }
+        }
+    }
+}
