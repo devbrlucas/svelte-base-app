@@ -10,6 +10,7 @@
     import { confirmation, type ConfirmationProperites, ConfirmationComponent } from "../confirmation";
     import { beforeNavigate } from "$app/navigation";
     import { slide } from "svelte/transition";
+    import "./admin.less";
     async function logout(): Promise<void>
     {
         const response = await Ajax
