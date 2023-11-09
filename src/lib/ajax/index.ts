@@ -79,7 +79,7 @@ export class Ajax
         return new Ajax(uri, 'HEAD', options);
     }
 
-    public static error<T>(response: AjaxResponse<T>): [number, object]
+    public static error<T>(response: AjaxResponse<T>): [number, App.Error]
     {
         return [
             response.response.status,
