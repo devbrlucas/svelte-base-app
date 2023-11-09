@@ -2,7 +2,7 @@
     import Error from "./error.svelte";
     export let
         label: string,
-        value: string | number | undefined,
+        value: string | number | undefined | null,
         error: string = '',
         disabled: boolean = false;
 </script>

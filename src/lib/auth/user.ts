@@ -1,4 +1,3 @@
-import { messages } from "../messages";
 import { currentUser as store, INITIAL_DATA } from "./store";
 const APP_CURRENT_USER_KEY = 'app:current_user';
 function getUser(key: 'user'): CurrentUser['user']

@@ -24,7 +24,7 @@
             cursor: inherit;
         }
     }
-    
+    &:not(.selection-box)
     & > input, & > select, & > textarea {
         margin-left: .1em;
         padding: .7em;
@@ -119,6 +119,7 @@
     & > input {
         position: absolute;
         opacity: 0;
+        width: auto;
         &:focus + .box {
             outline: solid 3px var(--accent-color);
             border-color: transparent;

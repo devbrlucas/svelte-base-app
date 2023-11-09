@@ -1,7 +1,6 @@
 import { user } from "../auth";
 import { errors } from "../form/errors";
 import { messages } from "../messages";
-import { InternalError } from "../errors";
 import type { PaginatedResponse } from "../pagination";
 import { goto } from "$app/navigation";
 type Method = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE' | 'HEAD';
@@ -13,11 +12,13 @@ type Options = {
     preserveErrors?: boolean;
     convertToFormData?: boolean;
     unauthenticatedMessage?: string;
+    suppressErrorMessage?: boolean;
 }
 type AjaxResponse<B> = {
     response: Response;
     body: B;
     error?: string;
+    detailed_error?: string;
 }
 type ResponseBody = Blob | string | Record<string, any> | FormData | null;
 type RequestBody = Record<string, any> | FormData | undefined;
@@ -43,7 +44,7 @@ export class Ajax
         this.url = `${import.meta.env.VITE_API_BASE_URL}${uri}`;
         this.method = method;
         this.options = options ? options : {};
-        let token = this.getToken();
+        let token = user.get('access_token');
         this.setAuthorizationHeader(token, 'Bearer');
         this.initLoadIcon();
     }
@@ -78,6 +79,17 @@ export class Ajax
         return new Ajax(uri, 'HEAD', options);
     }
 
+    public static error<T>(response: AjaxResponse<T>): [number, object]
+    {
+        return [
+            response.response.status,
+            {
+                message: response.response.statusText,
+                detailed_message: response.detailed_error,
+            }
+        ];
+    }
+
     public setHeader(key: string, value: string): Ajax
     {
         this.headers[key] = value;
@@ -91,21 +103,12 @@ export class Ajax
 
     public setOption(key: 'unauthenticatedMessage', value: string): Ajax
     public setOption(key: 'preserveErrors', value: boolean): Ajax
+    public setOption(key: 'suppressErrorMessage', value: boolean): Ajax
     public setOption(key: 'convertToFormData', value: boolean): Ajax
     public setOption(key: keyof Options, value: any): Ajax
     {
         this.options[key] = value;
         return this;
-    }
-
-    private getToken(): string
-    {
-        try {
-            return user.get('access_token');
-        } catch (error) {
-            if (!(error instanceof InternalError)) throw error;
-            return '';
-        }
     }
 
     public async send(responseType: 'text', data?: RequestBody): Promise<AjaxResponse<string>>;
@@ -140,10 +143,13 @@ export class Ajax
                     goto('/admin/perfil');
                 } else {
                     const errorMessageDetail: string | undefined = (await response.json()).message;
-                    messages
-                        .error(`<b>ERRO ${response.status}: </b> ${response.statusText}`)
-                        .error(errorMessageDetail);
+                    if (!this.options.suppressErrorMessage) {
+                        messages
+                            .error(`<b>ERRO ${response.status}: </b> ${response.statusText}`)
+                            .error(errorMessageDetail);
+                    }
                     console.error(`ERRO ${response.status}: ${response.statusText}`);
+                    ajaxResponse.detailed_error = errorMessageDetail;
                     if (errorMessageDetail) console.error(errorMessageDetail);
                 }
                 ajaxResponse.error = `ERRO ${response.status}: ${response.statusText}`;
