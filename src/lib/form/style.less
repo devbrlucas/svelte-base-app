@@ -42,7 +42,10 @@
     & > select > option {
         font-weight: 300;
         padding: .5em;
-        background-color: var(--accent-color);
+        &:hover {
+            color: #FFF;
+            background-color: var(--accent-color);
+        }
     }
 
     & > input[type="color"] {
