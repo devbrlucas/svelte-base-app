@@ -1,8 +1,8 @@
-<script lang="ts">
+<script lang="ts" generics="T">
     import Error from "./error.svelte";
     export let
         label: string,
-        value: string | number| null,
+        value: string | number| null | T,
         error: string,
         blank: boolean = false,
         disabled: boolean = false;

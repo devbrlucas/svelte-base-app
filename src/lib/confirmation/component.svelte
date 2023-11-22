@@ -1,5 +1,4 @@
 <script lang="ts">
-    import "./style.less";
     import { store } from "./store";
     $: {
         if (Boolean($store)) dialog.showModal();

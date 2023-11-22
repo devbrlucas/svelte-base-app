@@ -2,7 +2,6 @@
     import { messages } from "../messages";
     import xmarkIcon from "./icons/xmark.svg?raw";
     import { user, currentUser } from "../auth";
-    import "./style.less";
     export let version: string;
     let installPromptContainer: HTMLDivElement;
     let installPrompt: BeforeInstallPromptEvent | null;

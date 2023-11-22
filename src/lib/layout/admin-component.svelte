@@ -8,7 +8,6 @@
     import { slide } from "svelte/transition";
     import ProfileButton from "./components/profile-button.svelte";
     import ProfileLinks from "./components/profile-links.svelte";
-    import "./admin.less";    
     let navState: boolean = false;
     let profileMenuState: boolean = false;
     beforeNavigate(() => {

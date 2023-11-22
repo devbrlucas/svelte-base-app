@@ -8,7 +8,6 @@
     import lastIcon from "./icons/last.svg?raw";
     import plusIcon from "./icons/plus.svg?raw";
     import minusIcon from "./icons/minus.svg?raw";
-    import "./style.less";
     export let meta: PaginatedResponse['meta'];
     export let links: PaginatedResponse['links'];
 

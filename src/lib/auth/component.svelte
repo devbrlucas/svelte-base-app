@@ -3,7 +3,6 @@
     import { MessagesComponent } from "../messages";
     import { Ajax } from "../ajax";
     import { user, type AuthResponse } from "./index";
-    import "./style.less";
     import { goto } from "$app/navigation";
     export let callback: (() => Promise<void>) | undefined = undefined;
     export let email: string = '';

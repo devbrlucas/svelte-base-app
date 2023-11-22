@@ -3,7 +3,6 @@
     import { flip } from "svelte/animate";
     import { messages } from "./store";
     import icon from "./icon.svg?raw";
-    import "./style.less";
     import { onDestroy } from "svelte";
     function remove(id: number): void
     {

@@ -1,5 +1,4 @@
 <script lang="ts">
-    import "./style.less";
     import { onMount } from "svelte";
     export let center = false;
     let table: HTMLTableElement;
