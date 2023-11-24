@@ -4,14 +4,14 @@
     let table: HTMLTableElement;
     onMount(() => {
         const headCells = table.querySelectorAll<HTMLTableCellElement>('thead > tr > th');
-        for (const [key, cell] of headCells.entries()) {
-            if (key === headCells.length - 1) continue;
-            table
-                .querySelectorAll<HTMLTableRowElement>('tbody > tr')
-                .forEach(row => {
-                    const html = row.children[key].innerHTML;
-                    row.children[key].innerHTML = `<b>${cell.textContent}:</b> ${html}`;
-                });
+        const bodyRows = table.querySelectorAll<HTMLTableRowElement>('tbody > tr');
+        for (const [headCellKey, headCell] of headCells.entries()) {
+            for (const [bodyRowKey, bodyRow] of bodyRows.entries()) {
+                if (headCells.length !== bodyRow.children.length) return;
+                if (bodyRow.children[headCellKey].classList.contains('actions')) continue;
+                const html = bodyRow.children[headCellKey].textContent;
+                bodyRow.children[headCellKey].innerHTML = `<b>${headCell.textContent}:</b> ${html}`;
+            }
         }
     });
 </script>
