@@ -3,6 +3,8 @@ import { errors } from "../form/errors";
 import { messages } from "../messages";
 import type { PaginatedResponse } from "../pagination";
 import { goto } from "$app/navigation";
+import { navigating } from "$app/stores";
+import { get } from "svelte/store";
 type Method = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE' | 'HEAD';
 type ResponseType = 'json' | 'blob' | 'text' | 'none' | 'paginate' | 'form-data';
 type ResourceResponse<D, A = object> = A & {
@@ -12,7 +14,6 @@ type Options = {
     preserveErrors?: boolean;
     convertToFormData?: boolean;
     unauthenticatedMessage?: string;
-    suppressErrorMessage?: boolean;
 }
 type AjaxResponse<B> = {
     response: Response;
@@ -38,6 +39,7 @@ export class Ajax
         'X-Requested-With': 'XMLHttpRequest',
     }
     private options: Options;
+    private isNavigating: boolean;
 
     constructor(uri: string, method: Method, options?: Options)
     {
@@ -46,6 +48,7 @@ export class Ajax
         this.options = options ? options : {};
         let token = user.get('access_token');
         this.setAuthorizationHeader(token, 'Bearer');
+        this.isNavigating = get(navigating) !== null;
         this.initLoadIcon();
     }
 
@@ -103,7 +106,6 @@ export class Ajax
 
     public setOption(key: 'unauthenticatedMessage', value: string): Ajax
     public setOption(key: 'preserveErrors', value: boolean): Ajax
-    public setOption(key: 'suppressErrorMessage', value: boolean): Ajax
     public setOption(key: 'convertToFormData', value: boolean): Ajax
     public setOption(key: keyof Options, value: any): Ajax
     {
@@ -140,10 +142,10 @@ export class Ajax
                     goto('/login');
                 } else if (response.status === 403) {
                     messages.error('Você não tem permissão para acessar o recurso selecionado');
-                    goto('/admin/perfil');
+                    if (this.isNavigating) goto('/admin/perfil');
                 } else {
                     const errorMessageDetail: string | undefined = (await response.json()).message;
-                    if (!this.options.suppressErrorMessage) {
+                    if (!this.isNavigating) {
                         messages
                             .error(`<b>ERRO ${response.status}: </b> ${response.statusText}`)
                             .error(errorMessageDetail);
