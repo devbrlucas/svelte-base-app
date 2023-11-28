@@ -8,7 +8,7 @@
     export let email: string = '';
     export let password: string = '';
     export let remember: boolean = false;
-    type InternalAuthResponse = AuthResponse<CurrentUser['user'], 'user'>;
+    type InternalAuthResponse = AuthResponse<SvelteBaseApp.CurrentUser['user'], 'user'>;
     async function login(): Promise<void>
     {
         if (callback) return await callback();

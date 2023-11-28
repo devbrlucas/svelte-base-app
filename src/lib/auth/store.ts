@@ -1,5 +1,5 @@
 import { writable } from "svelte/store";
-export const INITIAL_DATA: CurrentUser = {
+export const INITIAL_DATA: SvelteBaseApp.CurrentUser = {
     access_token: '',
     type: '',
     user: {
@@ -8,4 +8,4 @@ export const INITIAL_DATA: CurrentUser = {
         image: null,
     }
 }
-export const currentUser = writable<CurrentUser>(INITIAL_DATA);
+export const currentUser = writable<SvelteBaseApp.CurrentUser>(INITIAL_DATA);

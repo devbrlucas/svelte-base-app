@@ -1,4 +1,5 @@
 <script lang="ts">
+    import "../styles/base.less";
     import { messages } from "../messages";
     import xmarkIcon from "./icons/xmark.svg?raw";
     import { user, currentUser } from "../auth";
@@ -35,7 +36,7 @@
         <button type="button" on:click={removeInstallPrompt} class="remove" title="remover alerta">
             {@html xmarkIcon}
         </button>
-        <span>Clique no botão abaixxo para instalar o aplicativo</span>
+        <span>Clique no botão abaixo para instalar o aplicativo</span>
         <br>
         <button type="button" on:click={installPromptChoice} class="choice">
             Instalar

@@ -1,14 +1,16 @@
 declare global {
-    interface CurrentUser {
-        access_token: string;
-        user: {
-            name: string;
-            email: string;
-            image: string | null;
+    namespace SvelteBaseApp {
+        interface CurrentUser {
+            access_token: string;
+            user: {
+                name: string;
+                email: string;
+                image: string | null;
+            }
+            type: string;
         }
-        type: string;
+        type CurrentUserUpdate = Omit<CurrentUser, 'access_token'>;
     }
-    type CurrentUserUpdate = Omit<CurrentUser, 'access_token'>;
 } 
 export type AuthResponse<U, T> = {
     access_token: string;

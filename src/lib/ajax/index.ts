@@ -164,7 +164,7 @@ export class Ajax
             ajaxResponse.response = response;
             const jsonUser = response.headers.get('App-Current-User');
             if (jsonUser) {
-                const currentUser: CurrentUserUpdate = JSON.parse(jsonUser);
+                const currentUser: SvelteBaseApp.CurrentUserUpdate = JSON.parse(jsonUser);
                 user.update(currentUser);
             }
         } catch (error) {

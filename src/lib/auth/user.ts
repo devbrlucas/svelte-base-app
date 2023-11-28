@@ -1,17 +1,17 @@
 import { currentUser as store, INITIAL_DATA } from "./store";
 const APP_CURRENT_USER_KEY = 'app:current_user';
-function getUser(key: 'user'): CurrentUser['user']
-function getUser(key: 'access_token'): CurrentUser['access_token']
-function getUser(key: 'type'): CurrentUser['type']
-function getUser(): CurrentUser
-function getUser(key?: keyof CurrentUser): CurrentUser | any
+function getUser(key: 'user'): SvelteBaseApp.CurrentUser['user']
+function getUser(key: 'access_token'): SvelteBaseApp.CurrentUser['access_token']
+function getUser(key: 'type'): SvelteBaseApp.CurrentUser['type']
+function getUser(): SvelteBaseApp.CurrentUser
+function getUser(key?: keyof SvelteBaseApp.CurrentUser): SvelteBaseApp.CurrentUser | any
 {
     let jsonUser = window.sessionStorage.getItem(APP_CURRENT_USER_KEY);
     if (!jsonUser) jsonUser = window.localStorage.getItem(APP_CURRENT_USER_KEY);
-    const user: CurrentUser = jsonUser ? JSON.parse(jsonUser) : INITIAL_DATA;
+    const user: SvelteBaseApp.CurrentUser = jsonUser ? JSON.parse(jsonUser) : INITIAL_DATA;
     return key ? user[key] : user;
 }
-function setUser(user: CurrentUser, remember: boolean): void
+function setUser(user: SvelteBaseApp.CurrentUser, remember: boolean): void
 {
     cleanUser();
     if (remember) {
@@ -21,7 +21,7 @@ function setUser(user: CurrentUser, remember: boolean): void
     }
     store.set(user);
 }
-function updateUser(user: CurrentUserUpdate): void
+function updateUser(user: SvelteBaseApp.CurrentUserUpdate): void
 {
     let storage: Storage;
     let jsonUser = window.sessionStorage.getItem(APP_CURRENT_USER_KEY);
@@ -32,7 +32,7 @@ function updateUser(user: CurrentUserUpdate): void
         if (!jsonUser) return;
         storage = window.localStorage;
     }
-    const currentUser: CurrentUser = JSON.parse(jsonUser);
+    const currentUser: SvelteBaseApp.CurrentUser = JSON.parse(jsonUser);
     currentUser.type = user.type;
     currentUser.user = user.user;
     storage.setItem(APP_CURRENT_USER_KEY, JSON.stringify(currentUser));
