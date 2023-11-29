@@ -1,6 +1,6 @@
-<script lang="ts">
+<script lang="ts" generics="T">
     export let name: string;
-    export let content: string;
+    export let content: T;
 </script>
 
 <div>
