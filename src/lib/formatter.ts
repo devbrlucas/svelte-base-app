@@ -22,9 +22,13 @@ function formatCurrency(value: number, currency: string = 'BRL'): string
     return formatter.format(value);
 }
 
-function formatDocument(type: 'cpf' | 'cnpj', value: number | string): string
+function formatDocument(type: 'cpf' | 'cnpj' | 'unkown', value: number | string): string
 {
     value = String(value);
+    if (type === 'unkown') {
+        if (value.length === 14) type = 'cnpj';
+        if (value.length === 11) type = 'cpf';
+    }
     if (type === 'cnpj') {
         return value.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, '$1.$2.$3/$4-$5');
     } else if (type === 'cpf') {
