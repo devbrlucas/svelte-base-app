@@ -1,5 +1,5 @@
 import { writable } from "svelte/store";
-type Errors = {
+export type Errors = {
     [key: string]: string[];
 }
 export const errors = writable<Errors>({}); 
