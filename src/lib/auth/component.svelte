@@ -22,7 +22,7 @@
                                     });
         if (response.error) return;
         user.set(response.body.data, remember);
-        goto('/admin');
+        goto('/admin/dashboard');
     }
 </script>
 

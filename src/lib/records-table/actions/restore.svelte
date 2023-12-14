@@ -22,6 +22,6 @@
     }
 </script>
 
-<a {href} class="restore" title="restaurar registro" use:confirmation={action}>
+<a href={window.location.pathname} class="restore" title="restaurar registro" use:confirmation={action}>
     {@html icon}
 </a>

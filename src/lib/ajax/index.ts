@@ -6,7 +6,7 @@ import { goto } from "$app/navigation";
 import { navigating } from "$app/stores";
 import { get } from "svelte/store";
 type Method = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE' | 'HEAD';
-type ResponseType = 'json' | 'blob' | 'text' | 'none' | 'paginate' | 'form-data';
+type ResponseType = 'json' | 'blob' | 'text' | 'none' | 'paginate' | 'form-data' | 'basic-json';
 type ResourceResponse<D, A = object> = A & {
     data: D;
 }
@@ -14,6 +14,7 @@ type Options = {
     preserveErrors?: boolean;
     convertToFormData?: boolean;
     unauthenticatedMessage?: string;
+    dontUseBaseURL?: boolean;
 }
 type AjaxResponse<B> = {
     response: Response;
@@ -33,7 +34,7 @@ type AjaxValidationErrorResponse = {
 }
 export class Ajax
 {
-    private url: string;
+    private uri: string;
     private method: Method;
     private headers: Record<string, string> = {
         'X-Requested-With': 'XMLHttpRequest',
@@ -43,7 +44,7 @@ export class Ajax
 
     constructor(uri: string, method: Method, options?: Options)
     {
-        this.url = `${import.meta.env.VITE_API_BASE_URL}${uri}`;
+        this.uri = uri;
         this.method = method;
         this.options = options ? options : {};
         let token = user.get('access_token');
@@ -116,17 +117,19 @@ export class Ajax
     public async send(responseType: 'text', data?: RequestBody): Promise<AjaxResponse<string>>;
     public async send(responseType: 'none', data?: RequestBody): Promise<AjaxResponse<null>>;
     public async send<R, A = object>(responseType: 'json', data?: RequestBody): Promise<AjaxResourceResponse<R, A>>;
+    public async send<R>(responseType: 'basic-json', data?: RequestBody): Promise<R>;
     public async send<R, A = object>(responseType: 'paginate', data?: RequestBody): Promise<AjaxPaginatedResponse<R, A>>;
     public async send(responseType: 'blob', data?: RequestBody): Promise<AjaxResponse<Blob>>;
     public async send(responseType: ResponseType, data?: RequestBody): Promise<AjaxResponse<ResponseBody>>
     {
+        const url = this.options.dontUseBaseURL ? this.uri : `${import.meta.env.VITE_API_BASE_URL}${this.uri}`;
         const ajaxResponse: AjaxResponse<ResponseBody> = {
             response: new Response,
             body: null,
         }
         try {
             const requestBody = this.handleRequestBody(data);
-            const response = await fetch(this.url, {
+            const response = await fetch(url, {
                 method: this.method,
                 headers: this.headers,
                 body: requestBody,

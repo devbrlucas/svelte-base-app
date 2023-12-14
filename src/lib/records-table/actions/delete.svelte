@@ -22,6 +22,6 @@
     }
 </script>
 
-<a {href} class="delete" title="desativar registro" use:confirmation={action}>
+<a href={window.location.pathname} class="delete" title="desativar registro" use:confirmation={action}>
     {@html icon}
 </a>

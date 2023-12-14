@@ -87,6 +87,9 @@ div#app {
                 padding: .5em;
                 text-align: right;
                 font-weight: 400;
+                border-radius: 5em;
+                border: solid .2em transparent;
+                transition: color .2s, background-color .2s, border-color .2s, outline .1s;
                 &:focus {
                     outline: solid 1px #FFF;
                 }
@@ -94,11 +97,16 @@ div#app {
                     font-size: .9em;
                 }
                 @media (hover: hover) {
-                    transition: color .2s, background-color .2s;
                     &:hover {
                         background-color: #FFF;
                         color: var(--accent-color);
                     }
+                }
+                &.current {
+                    background-color: #FFF;
+                    color: var(--accent-color);
+                    border-color: var(--accent-color);
+                    outline: solid .2em #FFF;
                 }
             }
         }

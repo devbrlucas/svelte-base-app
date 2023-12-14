@@ -3,6 +3,7 @@ import { store } from "./store";
 export type ConfirmationProperites = {
     callback: Function;
     message: string;
+    deniedCallback?: Function;
 }
 export { default as ConfirmationComponent } from "./component.svelte";
 export function confirmation(node: HTMLElement , properties: ConfirmationProperites): ActionReturn

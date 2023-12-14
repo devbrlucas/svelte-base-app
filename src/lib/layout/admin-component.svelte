@@ -4,10 +4,11 @@
     import { MessagesComponent } from "../messages";
     import { currentUser } from "../auth";
     import { ConfirmationComponent } from "../confirmation";
-    import { beforeNavigate } from "$app/navigation";
+    import { afterNavigate, beforeNavigate } from "$app/navigation";
     import { slide } from "svelte/transition";
     import ProfileButton from "./components/profile-button.svelte";
     import ProfileLinks from "./components/profile-links.svelte";
+    import { onMount } from "svelte";
     let navState: boolean = false;
     let profileMenuState: boolean = false;
     beforeNavigate(() => {
@@ -20,7 +21,22 @@
         navState = !navState;
         profileMenuState = false;
     }
-    
+    onMount(setCurrentNavLink);
+    afterNavigate(setCurrentNavLink);
+    function setCurrentNavLink(): void
+    {
+        const anchors = document.querySelectorAll<HTMLAnchorElement>('#app-nav > a');
+        anchors.forEach(anchor => anchor.classList.remove('current'));
+        const path = window.location.pathname;
+        anchors.forEach(anchor => {
+            const anchorHref = anchor.href;
+            const regexp = new RegExp(`^${anchorHref}`);
+            if (regexp.test(path)) {
+                anchor.classList.add('current');
+                return;
+            }
+        });
+    }
 </script>
 
 <header id="app-header">
@@ -29,7 +45,7 @@
         {@html hideNavIcon}
     </button>
     <img src="/logo.png" alt="logo da empresa">
-    <nav class:show={navState}>
+    <nav class:show={navState} id="app-nav">
         <slot name="nav"></slot>
     </nav>
     <div>
