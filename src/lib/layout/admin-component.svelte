@@ -8,7 +8,6 @@
     import { slide } from "svelte/transition";
     import ProfileButton from "./components/profile-button.svelte";
     import ProfileLinks from "./components/profile-links.svelte";
-    import { onMount } from "svelte";
     let navState: boolean = false;
     let profileMenuState: boolean = false;
     beforeNavigate(() => {
@@ -21,17 +20,16 @@
         navState = !navState;
         profileMenuState = false;
     }
-    onMount(setCurrentNavLink);
     afterNavigate(setCurrentNavLink);
     function setCurrentNavLink(): void
     {
         const anchors = document.querySelectorAll<HTMLAnchorElement>('#app-nav > a');
         anchors.forEach(anchor => anchor.classList.remove('current'));
-        const path = window.location.pathname;
+        const currentPathname = window.location.pathname;
         anchors.forEach(anchor => {
-            const anchorHref = anchor.href;
-            const regexp = new RegExp(`^${anchorHref}`);
-            if (regexp.test(path)) {
+            const anchorPathname = anchor.pathname;
+            const regexp = new RegExp(`^${anchorPathname}`);
+            if (regexp.test(currentPathname)) {
                 anchor.classList.add('current');
                 return;
             }

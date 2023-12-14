@@ -108,6 +108,7 @@ export class Ajax
     public setOption(key: 'unauthenticatedMessage', value: string): Ajax
     public setOption(key: 'preserveErrors', value: boolean): Ajax
     public setOption(key: 'convertToFormData', value: boolean): Ajax
+    public setOption(key: 'dontUseBaseURL', value: boolean): Ajax
     public setOption(key: keyof Options, value: any): Ajax
     {
         this.options[key] = value;
@@ -117,7 +118,7 @@ export class Ajax
     public async send(responseType: 'text', data?: RequestBody): Promise<AjaxResponse<string>>;
     public async send(responseType: 'none', data?: RequestBody): Promise<AjaxResponse<null>>;
     public async send<R, A = object>(responseType: 'json', data?: RequestBody): Promise<AjaxResourceResponse<R, A>>;
-    public async send<R>(responseType: 'basic-json', data?: RequestBody): Promise<R>;
+    public async send<R>(responseType: 'basic-json', data?: RequestBody): Promise<AjaxResponse<R>>;
     public async send<R, A = object>(responseType: 'paginate', data?: RequestBody): Promise<AjaxPaginatedResponse<R, A>>;
     public async send(responseType: 'blob', data?: RequestBody): Promise<AjaxResponse<Blob>>;
     public async send(responseType: ResponseType, data?: RequestBody): Promise<AjaxResponse<ResponseBody>>
@@ -232,6 +233,7 @@ export class Ajax
                 break;
             case 'json':
             case 'paginate':
+            case 'basic-json':
                 responseBody = await response.json();
                 break;
             case 'text':
