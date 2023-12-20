@@ -123,13 +123,13 @@ export class Ajax
     public async send(responseType: 'blob', data?: RequestBody): Promise<AjaxResponse<Blob>>;
     public async send(responseType: ResponseType, data?: RequestBody): Promise<AjaxResponse<ResponseBody>>
     {
-        const url = this.options.dontUseBaseURL ? this.uri : `${import.meta.env.VITE_API_BASE_URL}${this.uri}`;
         const ajaxResponse: AjaxResponse<ResponseBody> = {
             response: new Response,
             body: null,
         }
         try {
             const requestBody = this.handleRequestBody(data);
+            const url = this.options.dontUseBaseURL ? this.uri : `${import.meta.env.VITE_API_BASE_URL}${this.uri}`;
             const response = await fetch(url, {
                 method: this.method,
                 headers: this.headers,
@@ -200,7 +200,36 @@ export class Ajax
     private handleRequestBody(data?: RequestBody): undefined | string | FormData
     {
         let body: undefined | string | FormData = undefined;
-        if (this.options.convertToFormData) {
+        if (this.method === 'GET') {
+            if (data) {
+                const query = new URLSearchParams;
+                if (data instanceof FormData) {
+                    for (const key in data.keys()) {
+                        const item = data.get(key);
+                        if (Array.isArray(item)) {
+                            for (const value of item) {
+                                query.append(`${key}[]`, String(value ?? ''));
+                            }
+                        } else {
+                            query.append(key, String(item ?? ''));
+                        }
+                    }
+                } else {
+                    for (const key in data) {
+                        const item = data[key];
+                        if (Array.isArray(item)) {
+                            for (const value of item) {
+                                query.append(`${key}[]`, String(value ?? ''));
+                            }
+                        } else {
+                            query.append(key, String(item ?? ''));
+                        }
+                    }
+                }
+                const queryString = query.toString();
+                if (queryString) this.uri += `?${queryString}`;
+            }
+        } else if (this.options.convertToFormData) {
             if (!(data instanceof FormData) && data) {
                 body = new FormData;
                 for (const key in data) {

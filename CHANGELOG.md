@@ -14,3 +14,9 @@
 - Adicionada propriedade `deniedCallback` no tipo `ConfirmationProperties` em `confirmation` (agora é possível adicionar uma callback para ser executada caso seja selecionada a opção **Não** na janela de confirmação)
 - Adicionado recurso no componente `AdminLayoutComponent` para marcar o menu de navegação ativo
 - No componente `AuthComponent` a função de login padrão agora redireciona para `/admin/dashboard`, não mais para `/admin`
+
+## [1.0.2] - 2023-12-20
+
+### Modificações
+
+- Na classe `Ajax`, ao realizar uma requisição `GET`, você pode informar a query string como objeto ou `FormData` no método `Ajax.send()` que a query string será gerada automaticamente. Exemplo: `Ajax.get(<url>).send('json', queryStringAsObjectOrFormData)`
