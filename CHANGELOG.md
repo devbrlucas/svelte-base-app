@@ -20,3 +20,4 @@
 ### Modificações
 
 - Na classe `Ajax`, ao realizar uma requisição `GET`, você pode informar a query string como objeto ou `FormData` no método `Ajax.send()` que a query string será gerada automaticamente. Exemplo: `Ajax.get(<url>).send('json', queryStringAsObjectOrFormData)`
+- Adicionado `svelte-base-app/filter` que exporta componentes e funções comuns para filtros

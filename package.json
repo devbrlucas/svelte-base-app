@@ -26,6 +26,10 @@
 		"./confirmation": {
 			"types": "./dist/confirmation/index.d.ts",
 			"svelte": "./dist/confirmation/index.js"
+		},
+		"./filter": {
+			"types": "./dist/filter/index.d.ts",
+			"svelte": "./dist/filter/index.js"
 		}
 	},
 	"files": [
