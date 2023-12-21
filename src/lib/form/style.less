@@ -73,6 +73,24 @@
         display: block;
         margin-left: .25em;
         font-size: 1.1em;
+        & > button.toggle-password {
+            width: 1.5em;
+            height: 1em;
+            margin-left: .3em;
+            font-size: .9em;
+            color: dimgray;
+            &.visible {
+                color: var(--accent-color);
+                & > svg {
+                    &.invisible {
+                        display: inline;
+                    }
+                    &.visible {
+                        display: none;
+                    }
+                }
+            }
+        }
     }
 
     &.textarea {
