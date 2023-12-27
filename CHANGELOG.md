@@ -33,3 +33,4 @@
 - Corrigido problema que mantinha o componente `FilterComponent` em `svelte-base-app/filter` aberto ao navegar entre as páginas
 - Adicionada opção `disableRedirects` em `Ajax.setOption()` para desabilitar os redireconamentos internos feitos ao tratar a resposta
 - Adicionada função `title()` para modificar o título da página de maneira mais simples (no componente `LayoutComponent` agora é obrigatório informar o título base: _prop_ `baseTile`)
+- Nas respostas retornadas pela chamada em `Ajax.send()` agora tem o método `AjaxResponse.throwHttpError()` que lança um erro utilizando a função `error()` do **SvelteKit**

@@ -5,6 +5,7 @@ import type { PaginatedResponse } from "../pagination";
 import { goto } from "$app/navigation";
 import { navigating } from "$app/stores";
 import { get } from "svelte/store";
+import { error, type NumericRange } from "@sveltejs/kit";
 type Method = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE' | 'HEAD';
 type ResponseType = 'json' | 'blob' | 'text' | 'none' | 'paginate' | 'form-data' | 'basic-json';
 type ResourceResponse<D, A = object> = A & {
@@ -22,6 +23,7 @@ type AjaxResponse<B> = {
     body: B;
     error?: string;
     detailed_error?: string;
+    throwHttpError: () => void;
 }
 type ResponseBody = Blob | string | Record<string, any> | FormData | null;
 type RequestBody = Record<string, any> | FormData | undefined;
@@ -84,17 +86,6 @@ export class Ajax
         return new Ajax(uri, 'HEAD', options);
     }
 
-    public static error<T>(response: AjaxResponse<T>): [number, App.Error]
-    {
-        return [
-            response.response.status,
-            {
-                message: response.response.statusText,
-                detailed_message: response.detailed_error,
-            }
-        ];
-    }
-
     public setHeader(key: string, value: string): Ajax
     {
         this.headers[key] = value;
@@ -128,6 +119,16 @@ export class Ajax
         const ajaxResponse: AjaxResponse<ResponseBody> = {
             response: new Response,
             body: null,
+            throwHttpError()
+            {
+                const statusCode = ajaxResponse.response.status;
+                if (statusCode >= 400 && statusCode <= 599) {
+                    error(statusCode as NumericRange<400, 599>, {
+                        message: ajaxResponse.response.statusText,
+                        detailed_message: ajaxResponse.detailed_error,
+                    });
+                }
+            },
         }
         try {
             const requestBody = this.handleRequestBody(data);
