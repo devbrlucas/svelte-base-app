@@ -32,3 +32,4 @@
 - Atualizações das dependências para o novo [SvelteKit@2](https://kit.svelte.dev/docs/migrating-to-sveltekit-2)
 - Corrigido problema que mantinha o componente `FilterComponent` em `svelte-base-app/filter` aberto ao navegar entre as páginas
 - Adicionada opção `disableRedirects` em `Ajax.setOption()` para desabilitar os redireconamentos internos feitos ao tratar a resposta
+- Adicionada função `title()` para modificar o título da página de maneira mais simples (no componente `LayoutComponent` agora é obrigatório informar o título base: _prop_ `baseTile`)

@@ -3,7 +3,9 @@
     import { messages } from "../messages";
     import xmarkIcon from "./icons/xmark.svg?raw";
     import { user, currentUser } from "../auth";
+    import { titleStore } from "../utils/title_store";
     export let version: string;
+    export let baseTitle: string;
     let installPromptContainer: HTMLDivElement;
     let installPrompt: BeforeInstallPromptEvent | null;
     window.addEventListener('beforeinstallprompt', async event => {
@@ -30,6 +32,9 @@
     currentUser.set(user.get());
 </script>
 
+<svelte:head>
+    <title>{$titleStore}{baseTitle}</title>
+</svelte:head>
 <slot></slot>
 {#if installPrompt}
     <div role="alert" bind:this={installPromptContainer} id="app-pwa-install-message">

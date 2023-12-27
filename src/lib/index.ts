@@ -40,7 +40,7 @@ declare global {
 		}
 	}
 }
-export * from "./formatter";
+export * from "./utils";
 export * from "./layout";
 export * from "./ajax";
 export * from "./records-table";
