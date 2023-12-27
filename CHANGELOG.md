@@ -24,3 +24,11 @@
 ### Adições
 
 - Adicionado `svelte-base-app/filter` que exporta componentes e funções comuns para filtros
+
+## [2.0.0] - 2023-12-27
+
+### Modificações
+
+- Atualizações das dependências para o novo [SvelteKit@2](https://kit.svelte.dev/docs/migrating-to-sveltekit-2)
+- Corrigido problema que mantinha o componente `FilterComponent` em `svelte-base-app/filter` aberto ao navegar entre as páginas
+- Adicionada opção `disableRedirects` em `Ajax.setOption()` para desabilitar os redireconamentos internos feitos ao tratar a resposta

@@ -1,6 +1,6 @@
 <script lang="ts">
     import { goto } from "$app/navigation";
-    import { onMount } from "svelte";
+    import { onDestroy, onMount } from "svelte";
     import { filterStore } from "./store";
     export let url: string;
     export let form: Record<string, any>;
@@ -47,6 +47,12 @@
         }
     }
     onMount(populate);
+    onDestroy(() => {
+        filterStore.update(filter => {
+            filter.visible = false;
+            return filter;
+        });
+    });
 </script>
 
 <form on:submit|preventDefault={filter}>

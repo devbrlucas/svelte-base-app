@@ -15,6 +15,7 @@ type Options = {
     convertToFormData?: boolean;
     unauthenticatedMessage?: string;
     dontUseBaseURL?: boolean;
+    disableRedirects?: boolean;
 }
 type AjaxResponse<B> = {
     response: Response;
@@ -109,6 +110,7 @@ export class Ajax
     public setOption(key: 'preserveErrors', value: boolean): Ajax
     public setOption(key: 'convertToFormData', value: boolean): Ajax
     public setOption(key: 'dontUseBaseURL', value: boolean): Ajax
+    public setOption(key: 'disableRedirects', value: boolean): Ajax
     public setOption(key: keyof Options, value: any): Ajax
     {
         this.options[key] = value;
@@ -143,10 +145,10 @@ export class Ajax
                 } else if (response.status === 401) {
                     messages.error(this.options.unauthenticatedMessage ?? 'Você precisa se identificar para acessar esse recurso');
                     user.clean();
-                    goto('/login');
+                    if (!this.options.disableRedirects) goto('/login');
                 } else if (response.status === 403) {
                     messages.error('Você não tem permissão para acessar o recurso selecionado');
-                    if (this.isNavigating) goto('/admin/perfil');
+                    if (this.isNavigating && !this.options.disableRedirects) goto('/admin/perfil');
                 } else {
                     const errorMessageDetail: string | undefined = (await response.json()).message;
                     if (!this.isNavigating) {
