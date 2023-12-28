@@ -7,6 +7,7 @@
         'text' |
         'tel' |
         'date' |
+        'month' |
         'datetime-local' |
         'search' |
         'file' |
@@ -47,6 +48,8 @@
         <input type="tel" bind:value autocomplete="off" {...$$restProps} {disabled} on:input on:blur />
     {:else if type === 'date'}
         <input type="date" bind:value autocomplete="off" {...$$restProps} {disabled} on:input on:blur />
+    {:else if type === 'month'}
+        <input type="month" bind:value autocomplete="off" {...$$restProps} {disabled} on:input on:blur />
     {:else if type === 'search'}
         <input type="search" bind:value autocomplete="off" {...$$restProps} {disabled} on:input on:blur />
     {:else if type === 'color'}
