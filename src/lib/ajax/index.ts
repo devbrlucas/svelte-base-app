@@ -6,6 +6,7 @@ import { goto } from "$app/navigation";
 import { navigating } from "$app/stores";
 import { get } from "svelte/store";
 import { error, type NumericRange } from "@sveltejs/kit";
+import { createFormDataFromObject } from "../utils";
 type Method = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE' | 'HEAD';
 type ResponseType = 'json' | 'blob' | 'text' | 'none' | 'paginate' | 'form-data' | 'basic-json';
 type ResourceResponse<D, A = object> = A & {
@@ -206,27 +207,11 @@ export class Ajax
         if (this.method === 'GET') {
             if (data) {
                 const query = new URLSearchParams;
+                if (!(data instanceof FormData)) data = createFormDataFromObject(data);
                 if (data instanceof FormData) {
                     for (const key in data.keys()) {
                         const item = data.get(key);
-                        if (Array.isArray(item)) {
-                            for (const value of item) {
-                                query.append(`${key}[]`, String(value ?? ''));
-                            }
-                        } else {
-                            query.append(key, String(item ?? ''));
-                        }
-                    }
-                } else {
-                    for (const key in data) {
-                        const item = data[key];
-                        if (Array.isArray(item)) {
-                            for (const value of item) {
-                                query.append(`${key}[]`, String(value ?? ''));
-                            }
-                        } else {
-                            query.append(key, String(item ?? ''));
-                        }
+                        query.append(key, String(item ?? ''));
                     }
                 }
                 const queryString = query.toString();
@@ -234,16 +219,7 @@ export class Ajax
             }
         } else if (this.options.convertToFormData) {
             if (!(data instanceof FormData) && data) {
-                body = new FormData;
-                for (const key in data) {
-                    if (Array.isArray(data[key])) {
-                        for (const value of data[key]) {
-                            body.append(`${key}[]`, value);
-                        }
-                    } else {
-                        body.append(key, data[key] ?? '');
-                    }
-                }
+                body = createFormDataFromObject(data);
             }
         } else if (data && !(data instanceof FormData)) {
             this.headers['Content-Type'] = 'application/json';
