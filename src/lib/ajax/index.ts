@@ -209,7 +209,7 @@ export class Ajax
                 const query = new URLSearchParams;
                 if (!(data instanceof FormData)) data = createFormDataFromObject(data);
                 if (data instanceof FormData) {
-                    for (const key in data.keys()) {
+                    for (const key of data.keys()) {
                         const item = data.get(key);
                         query.append(key, String(item ?? ''));
                     }

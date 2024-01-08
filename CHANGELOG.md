@@ -39,3 +39,10 @@
 ### Adições
 
 - Adicionada função `createFormDataFromObject()` em `svelte-base-app`
+
+## [2.0.1] - 2024-01-08
+
+### Correções
+
+- Corrigido o problema que não gerava a query string em `Ajax.get()`
+- Corrigido problema em que a listagem não é atualizada quando os campos não são atualizados em `FilterComponent`

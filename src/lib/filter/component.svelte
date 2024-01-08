@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { goto } from "$app/navigation";
+    import { goto, invalidateAll } from "$app/navigation";
     import { onDestroy, onMount } from "svelte";
     import { filterStore } from "./store";
     export let url: string;
@@ -16,7 +16,12 @@
         for (const key in form) {
             params.set(key, form[key]);
         }
-        goto(`${url}?${params.toString()}`);
+        const newURL = `${url}?${params.toString()}`;
+        if (newURL === `${window.location.pathname}${window.location.search}`) {
+            invalidateAll();
+        } else {
+            goto(newURL);
+        }
     }
     function clean(): void
     {
