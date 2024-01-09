@@ -7,6 +7,16 @@ declare global {
 		// interface PageData {}
 		// interface Platform {}
 	}
+	namespace SvelteBaseApp {
+		interface CurrentUser {
+			user: {
+				name: string;
+				email: string;
+				image: string | null;
+			}
+			type: string;
+		}
+	}
 }
 
 export {};

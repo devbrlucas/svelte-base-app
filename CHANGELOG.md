@@ -46,3 +46,9 @@
 
 - Corrigido o problema que não gerava a query string em `Ajax.get()`
 - Corrigido problema em que a listagem não é atualizada quando os campos não são atualizados em `FilterComponent`
+
+## [2.0.2] - 2024-01-09
+
+### Correções
+
+- A interface `CurrentUser` agora tem por padrão apenas a propriedade `access_token`, permitindo mesclar ela globalmente

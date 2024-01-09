@@ -2,12 +2,6 @@ declare global {
     namespace SvelteBaseApp {
         interface CurrentUser {
             access_token: string;
-            user: {
-                name: string;
-                email: string;
-                image: string | null;
-            }
-            type: string;
         }
         type CurrentUserUpdate = Omit<CurrentUser, 'access_token'>;
     }
