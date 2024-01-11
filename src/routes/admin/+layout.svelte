@@ -1,0 +1,15 @@
+<script lang="ts">
+    import { AdminLayoutComponent } from "$lib";
+</script>
+
+<AdminLayoutComponent>
+    <svelte:fragment slot="nav">
+        <a href="/admin/dashboard">home</a>
+        <a href="/admin/dialog">dialog</a>
+        <a href="/admin/table">table</a>
+        <a href="/admin/ajax">ajax</a>
+    </svelte:fragment>
+    <svelte:fragment slot="body">
+        <slot></slot>
+    </svelte:fragment>
+</AdminLayoutComponent>

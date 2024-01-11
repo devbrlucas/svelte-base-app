@@ -3,7 +3,6 @@ declare global {
         interface CurrentUser {
             access_token: string;
         }
-        type CurrentUserUpdate = Omit<CurrentUser, 'access_token'>;
     }
 } 
 export type AuthResponse<U, T> = {

@@ -1,5 +1,7 @@
 <script lang="ts">
     import { page } from "$app/stores";
+    import { title } from "../utils";
+    title('Error');
 </script>
 
 <main id="app-main">

@@ -149,8 +149,12 @@ export class Ajax
                     user.clean();
                     if (!this.options.disableRedirects) goto('/login');
                 } else if (response.status === 403) {
-                    messages.error('Você não tem permissão para acessar o recurso selecionado');
-                    if (this.isNavigating && !this.options.disableRedirects) goto('/admin/perfil');
+                    const forbiddenMessage = 'Você não tem permissão para acessar o recurso selecionado';
+                    if (this.isNavigating && !this.options.disableRedirects) {
+                        ajaxResponse.detailed_error = forbiddenMessage;
+                    } else {
+                        messages.error(forbiddenMessage);
+                    }
                 } else {
                     const errorMessageDetail: string | undefined = (await response.json()).message;
                     if (!this.isNavigating) {
@@ -170,11 +174,6 @@ export class Ajax
                 ajaxResponse.body = responseBody
             }
             ajaxResponse.response = response;
-            const jsonUser = response.headers.get('App-Current-User');
-            if (jsonUser) {
-                const currentUser: SvelteBaseApp.CurrentUserUpdate = JSON.parse(jsonUser);
-                user.update(currentUser);
-            }
         } catch (error) {
             messages.error(String(error));
             ajaxResponse.error = String(error);

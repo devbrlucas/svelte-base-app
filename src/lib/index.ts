@@ -43,8 +43,9 @@ declare global {
 export * from "./utils";
 export * from "./layout";
 export * from "./ajax";
-export * from "./records-table";
+export * from "./table";
 export * from "./link";
 export { Pagination } from "./pagination";
 export * from "./messages";
 export * from "./datalist";
+export * from "./dialog";

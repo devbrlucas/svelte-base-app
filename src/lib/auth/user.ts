@@ -21,7 +21,7 @@ function setUser(user: SvelteBaseApp.CurrentUser, remember: boolean): void
     }
     store.set(user);
 }
-function updateUser(user: SvelteBaseApp.CurrentUserUpdate): void
+function updateUser(user: SvelteBaseApp.CurrentUser): void
 {
     let storage: Storage;
     let jsonUser = window.sessionStorage.getItem(APP_CURRENT_USER_KEY);
@@ -32,11 +32,8 @@ function updateUser(user: SvelteBaseApp.CurrentUserUpdate): void
         if (!jsonUser) return;
         storage = window.localStorage;
     }
-    const currentUser: SvelteBaseApp.CurrentUser = JSON.parse(jsonUser);
-    currentUser.type = user.type;
-    currentUser.user = user.user;
-    storage.setItem(APP_CURRENT_USER_KEY, JSON.stringify(currentUser));
-    store.set(currentUser);
+    storage.setItem(APP_CURRENT_USER_KEY, JSON.stringify(user));
+    store.set(user);
 }
 function cleanUser(): void
 {

@@ -3,13 +3,14 @@
     import { Input } from "../form";
     import { messages } from "../messages";
     import { confirmation, type ConfirmationProperites } from "../confirmation";
+    import { user } from "$lib/auth";
     export let name: string;
     export let email: string;
     export let url: string = '/users/self';
     export let callback: Function | undefined = undefined;
     let password: string = '';
     let password_confirmation: string = '';
-    let image: File | null;
+    let image: File | null = null;
     async function update(): Promise<void>
     {
         if (callback) {
@@ -18,7 +19,7 @@
             const response = await Ajax
                                         .post(url)
                                         .setOption('convertToFormData', true)
-                                        .send('none', {
+                                        .send<SvelteBaseApp.CurrentUser>('json', {
                                             name,
                                             email,
                                             image,
@@ -27,6 +28,7 @@
                                         });
             if (response.error) return;
             messages.success('Dados editados com sucesso');
+            user.update(response.body.data);
             image = null;
             password = password_confirmation = '';
         }
@@ -49,6 +51,7 @@
         <br>
         <Input type="password" label="Senha" error="password" bind:value={password} size=40 />
         <Input type="password" label="Confirmação da senha" error="password_confirmation" bind:value={password_confirmation} size=40 />
+        <slot></slot>
     </form>
 </main>
 

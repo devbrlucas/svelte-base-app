@@ -8,6 +8,7 @@
     import { slide } from "svelte/transition";
     import ProfileButton from "./components/profile-button.svelte";
     import ProfileLinks from "./components/profile-links.svelte";
+    import { DialogComponent } from "../dialog";
     let navState: boolean = false;
     let profileMenuState: boolean = false;
     beforeNavigate(() => {
@@ -68,3 +69,4 @@
 <slot name="body"></slot>
 <MessagesComponent />
 <ConfirmationComponent />
+<DialogComponent />
