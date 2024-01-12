@@ -49,3 +49,4 @@ export { Pagination } from "./pagination";
 export * from "./messages";
 export * from "./datalist";
 export * from "./dialog";
+export { confirmation, ConfirmationComponent } from "./confirmation";
