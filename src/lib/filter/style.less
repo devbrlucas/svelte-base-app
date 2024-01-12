@@ -1,0 +1,28 @@
+#form-filter {
+    & > fieldset {
+        & > button {
+            padding: .5em 1em;
+            border-radius: 1em;
+            font-weight: 500;
+            transition: outline .1s, background-color .2s;
+            &:focus {
+                outline: solid .2em currentColor;
+            }
+            &.clean {
+                margin-right: 1em;
+                color: red;
+                background-color: lighten(red, 35%);
+            }
+            &.filter {
+                color: green;
+                background-color: lighten(green, 50%);
+            }
+            @media (hover: hover) {
+                &:hover {
+                    outline: solid .2em currentColor;
+                    background-color: transparent;
+                }
+            }
+        }
+    }
+}

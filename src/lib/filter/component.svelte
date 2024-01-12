@@ -60,17 +60,16 @@
     });
 </script>
 
-<form on:submit|preventDefault={filter}>
+<form on:submit|preventDefault={filter} id="form-filter">
     <fieldset>
         <legend>Pesquisa</legend>
         <slot></slot>
         <br>
         <br>
-        <button type="button" class="highlighted" on:click={clean}>
+        <button type="button" class="clean" on:click={clean}>
             Limpar
         </button>
-        {@html '&emsp;'}
-        <button type="submit" class="highlighted">
+        <button type="submit" class="filter">
             Filtrar
         </button>
     </fieldset>
