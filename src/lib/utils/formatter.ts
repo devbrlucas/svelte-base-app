@@ -5,8 +5,8 @@ type DateStyles = {
 function formatDate(date: string, styles: DateStyles = {}, utc: boolean = false): string
 {
     const formatter = new Intl.DateTimeFormat(window.navigator.language, {
-        dateStyle: styles.dateStyle ?? 'short',
-        timeStyle: styles.timeStyle ?? 'short',
+        dateStyle: styles.dateStyle,
+        timeStyle: styles.timeStyle,
         timeZone: utc ? 'UTC' : undefined,
     });
     const dateObject = new Date(date);
