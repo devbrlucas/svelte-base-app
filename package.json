@@ -30,6 +30,10 @@
 		"./filter": {
 			"types": "./dist/filter/index.d.ts",
 			"svelte": "./dist/filter/index.js"
+		},
+		"./service-worker": {
+			"types": "./dist/service-worker/index.d.ts",
+			"import": "./dist/service-worker/index.js"
 		}
 	},
 	"files": [
