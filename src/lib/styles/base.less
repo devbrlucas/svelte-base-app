@@ -47,12 +47,16 @@ button {
         color: #FFF;
         background-color: var(--accent-color);
         border-radius: 3em;
+        &:focus {
+            box-shadow: 0 .2em 1em var(--accent-color);
+            outline: none;
+        }
         @media (hover: hover) {
-            transition: background-color .1s, color .1s;
+            transition: background-color .2s, color .2s, outline .1s;
             &:hover {
                 background-color: #FFF;
                 color: var(--accent-color);
-                outline: solid 2px var(--accent-color);
+                outline: solid .2em var(--accent-color);
             }
         }
     }
