@@ -4,7 +4,7 @@
     import "./style.less";
     let dialog: HTMLDialogElement | undefined;
     $: {
-        if (Boolean($store)) dialog?.showModal();
+        Boolean($store) ? dialog?.showModal() : dialog?.close();
     }
 </script>
 
