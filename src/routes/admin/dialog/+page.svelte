@@ -1,10 +1,11 @@
 <script lang="ts">
-    import { dialog, title } from "$lib";
+    import { dialog, title, messages } from "$lib";
     import { onMount } from "svelte";
     import Comp from "./component.svelte";
     title('dialog');
     function open()
     {
+        messages.success('Mensagem exibida');
         dialog('Cadastro do cliente', Comp, { name: 'Lucas Moreira' });
     }
     onMount(open);

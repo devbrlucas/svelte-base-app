@@ -9,6 +9,7 @@
         <a href="/admin/table">table</a>
         <a href="/admin/ajax">ajax</a>
         <a href="/admin/filter">filter</a>
+        <a href="/admin/confirmation">confirmation</a>
     </svelte:fragment>
     <svelte:fragment slot="body">
         <slot></slot>

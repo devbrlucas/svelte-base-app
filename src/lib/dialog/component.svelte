@@ -1,23 +1,48 @@
 <script lang="ts">
     import xmarkIcon from "./xmark.svg?raw";
     import { store } from "./store";
+    import { store as confirmationStore } from "../confirmation/store";
     import "./style.less";
-    let dialog: HTMLDialogElement | undefined;
+    let dialog: HTMLDivElement | undefined;
+    function close(): void
+    {
+        dialog
+            ?.classList
+            .remove('open');
+        store.set(null);
+        window.removeEventListener('keyup', closeByKeyboard);
+    }
+    function show(): void
+    {
+        dialog
+            ?.classList
+            .add('open');
+        setTimeout(() => {
+            dialog
+                ?.querySelector<HTMLButtonElement>('header button')
+                ?.focus();
+        }, 200);
+        window.addEventListener('keyup', closeByKeyboard);
+    }
+    function closeByKeyboard(event: KeyboardEvent): void
+    {
+        if (event.key === 'Escape' && !Boolean($confirmationStore)) close();
+    }
     $: {
-        Boolean($store) ? dialog?.showModal() : dialog?.close();
+        Boolean($store) ? show() : close();
     }
 </script>
 
-<dialog bind:this={dialog} id="app-dialog">
+<div bind:this={dialog} id="app-dialog" role="dialog">
     <div>
         {#if $store}
             <header>
                 <h3>{$store.title}</h3>
-                <button type="button" on:click={() => dialog?.close()}>
+                <button type="button" on:click={close}>
                     {@html xmarkIcon}
                 </button>
             </header>
             <svelte:component this={$store.component} props={$store.props} />
         {/if}
     </div>
-</dialog>
+</div>

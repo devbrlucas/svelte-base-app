@@ -1,13 +1,32 @@
 <script lang="ts">
     import { store } from "./store";
-    $: {
-        if (Boolean($store)) dialog.showModal();
-    }
-    let dialog: HTMLDialogElement;
+    let dialog: HTMLDivElement | undefined;
     function close(): void
     {
-        dialog.close();
+        dialog
+            ?.classList
+            .remove('open');
         store.set(null);
+        window.removeEventListener('keyup', closeByKeyboard);
+    }
+    function show(): void
+    {
+        dialog
+            ?.classList
+            .add('open');
+        setTimeout(() => {
+            dialog
+                ?.querySelector<HTMLButtonElement>('button.accept')
+                ?.focus();
+        }, 200);
+        window.addEventListener('keyup', closeByKeyboard);
+    }
+    function closeByKeyboard(event: KeyboardEvent): void
+    {
+        if (event.key === 'Escape') denied();
+    }
+    $: {
+        Boolean($store) ? show() : close();
     }
     function accept(): void
     {
@@ -21,7 +40,7 @@
     }
 </script>
 
-<dialog bind:this={dialog} id="app-confirmation">
+<div bind:this={dialog} id="app-confirmation" role="dialog">
     <div>
         <h3>Alerta</h3>
         <p>{@html $store?.message}</p>
@@ -34,4 +53,4 @@
             </button>
         </footer>
     </div>
-</dialog>
+</div>

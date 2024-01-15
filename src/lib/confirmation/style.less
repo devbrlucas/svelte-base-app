@@ -1,5 +1,7 @@
-dialog#app-confirmation {
+div#app-confirmation {
+    position: fixed;
     z-index: 700;
+    display: none;
     margin: 0;
     justify-content: center;
     align-items: flex-start;
@@ -10,7 +12,7 @@ dialog#app-confirmation {
     border: none;
     background: none;
     backdrop-filter: blur(5px);
-    &[open] {
+    &.open {
         display: flex;
     }
     & > div {
