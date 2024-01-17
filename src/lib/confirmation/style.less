@@ -18,11 +18,16 @@ div#app-confirmation {
     & > div {
         position: relative;
         padding: 2em 2em 1em;
+        max-width: 40em;
         border-radius: 1em;
         background-color: #FFF;
         box-shadow: 0 .2em 2em -.2em rgba(0, 0, 0, .2);
         text-align: center;
         animation: confirmation-visible .2s forwards;
+        @media (max-width: 45em) {
+            max-width: calc(100% - 2em);
+            margin: 0 1em;
+        }
         & > h3 {
             margin-top: 0;
             font-size: 2em;
