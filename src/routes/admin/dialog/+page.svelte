@@ -1,14 +1,22 @@
 <script lang="ts">
-    import { dialog, title, messages } from "$lib";
-    import { onMount } from "svelte";
+    import { dialog, title } from "$lib";
     import Comp from "./component.svelte";
     title('dialog');
-    function open()
+    let message: string = '';
+    async function open()
     {
-        messages.success('Mensagem exibida');
-        dialog('Cadastro do cliente', Comp, { name: 'Lucas Moreira' });
+        const re = await dialog.open<{name: string}>('Cadastro do cliente', Comp, { name: 'Lucas Moreira' });
+        console.log(re);
+        if (re) {
+            if (re.name) {
+                message = `O nome informado é ${re.name}`;
+            } else {
+                message = 'Nenhum nome informado';
+            }
+        } else {
+            message = 'Nenhum retorno informado';
+        }
     }
-    onMount(open);
 </script>
 
 <main id="app-main">
@@ -16,5 +24,8 @@
     <button type="button" on:click={open}>
         Testar dialog
     </button>
+    <p>
+        Aqui vai o retorno da função <i>dialog</i>: <b>{message}</b>
+    </p>
 </main>
 <aside id="app-aside"></aside>

@@ -1,17 +1,34 @@
 import type { ComponentType } from "svelte";
 import { store } from "./store";
 export { default as DialogComponent } from "./component.svelte";
-export function dialog(): void
-export function dialog(title: string, component: ComponentType, props?: Record<string, any>): void
-export function dialog(title?: string, component?: ComponentType, props?: Record<string, any>): void
+async function open<T>(title: string, component: ComponentType, props?: Record<string, any>): Promise<T | null>
 {
-    if (title && component) {
-        store.set({
-            title,
-            component,
-            props,
+    store.set({
+        title,
+        component,
+        props,
+    });
+    return new Promise((resolve, reject) => {
+        store.subscribe(value => {
+            if (value.resolved) {
+                resolve(value.resolved);
+            }
+            if (value.resolved === null) resolve(null);
         });
-    } else {
-        store.set(null);
-    }
+    });
+}
+function close(): void
+{
+    store.set({});
+}
+function resolve<T>(data: T): void
+{
+    store.set({
+        resolved: data,
+    });
+}
+export const dialog = {
+    open,
+    close,
+    resolve,
 }

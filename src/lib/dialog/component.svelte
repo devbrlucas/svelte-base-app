@@ -9,7 +9,7 @@
         dialog
             ?.classList
             .remove('open');
-        store.set(null);
+        if (!$store.resolved) store.set({resolved: null});
         window.removeEventListener('keyup', closeByKeyboard);
     }
     function show(): void
@@ -29,7 +29,7 @@
         if (event.key === 'Escape' && !Boolean($confirmationStore)) close();
     }
     $: {
-        Boolean($store) ? show() : close();
+        $store.component ? show() : close();
     }
 </script>
 
