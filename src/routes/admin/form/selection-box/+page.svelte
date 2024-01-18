@@ -1,8 +1,8 @@
 <script lang="ts">
     import { title } from "$lib";
     import { SelectionBox } from "$lib/form";
+    import { store } from "./store";
     title('form SelectionBox');
-    let group: string[] = [];
     let checked: boolean = false;
     let selected: 'A' | 'B' | 'C' = 'A';
 </script>
@@ -10,13 +10,13 @@
 <main id="app-main">
     <h1>form SelectionBox</h1>
     <h2>checkbox group</h2>
-    <SelectionBox type="checkbox" label="A" value=A bind:group />
-    <SelectionBox type="checkbox" label="B" value=B bind:group />
-    <SelectionBox type="checkbox" label="C" value=C bind:group />
+    <SelectionBox type="checkbox" label="A" value=A bind:group={$store} />
+    <SelectionBox type="checkbox" label="B" value=B bind:group={$store} />
+    <SelectionBox type="checkbox" label="C" value=C bind:group={$store} />
     <p>
         Resultado do checkbox group
         <br>
-        {group}
+        {$store}
     </p>
     <h2>checkbox checked</h2>
     <SelectionBox type="checkbox" label="Seleção" bind:checked />

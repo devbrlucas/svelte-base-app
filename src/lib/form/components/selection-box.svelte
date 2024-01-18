@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { onMount } from "svelte";
     import Error from "./error.svelte";
     import checkIcon from "./icons/check.svg?raw";
     import circleIcon from "./icons/circle.svg?raw";
@@ -22,6 +23,13 @@
         }
         group = group;
     }
+    function initGroup(): void
+    {
+        if (Array.isArray(group)) {
+            checked = group.includes(value);
+        }
+    }
+    onMount(initGroup);
 </script>
 
 <!-- svelte-ignore a11y-label-has-associated-control -->
