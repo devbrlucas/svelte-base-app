@@ -1,5 +1,5 @@
 import { user } from "../auth";
-import { errors } from "../form/errors";
+import { formUtils } from "../form";
 import { messages } from "../messages";
 import type { PaginatedResponse } from "../pagination";
 import { goto } from "$app/navigation";
@@ -142,8 +142,8 @@ export class Ajax
             if (!response.ok) {
                 if (response.status === 422) {
                     const responseErrors: AjaxValidationErrorResponse = await response.json();
-                    errors.set(responseErrors.errors);
-                    messages.error('Você tem um ou mais campos para serem verificados')
+                    formUtils.setErrors(responseErrors.errors);
+                    formUtils.message();
                 } else if (response.status === 401) {
                     messages.error(this.options.unauthenticatedMessage ?? 'Você precisa se identificar para acessar esse recurso');
                     user.clean();
@@ -169,7 +169,7 @@ export class Ajax
                 ajaxResponse.error = `ERRO ${response.status}: ${response.statusText}`;
                 ajaxResponse.body = null;
             } else {
-                if (!this.options.preserveErrors) errors.set({});
+                if (!this.options.preserveErrors) formUtils.cleanErrors();
                 const responseBody = await this.handleResponseBody(response, responseType);
                 ajaxResponse.body = responseBody
             }

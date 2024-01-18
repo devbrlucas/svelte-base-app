@@ -2,6 +2,7 @@
     import { goto, invalidateAll } from "$app/navigation";
     import { onDestroy, onMount } from "svelte";
     import { filterStore } from "./store";
+    import { slide } from "svelte/transition";
     export let url: string;
     export let form: Record<string, any>;
     function filter(): void
@@ -51,7 +52,27 @@
             form[key] = params.get(key) ?? '';
         }
     }
-    onMount(populate);
+    function setFilterActive(): void
+    {
+        const params = new URLSearchParams(
+            window.location.search
+        );
+        let filterActive: boolean = false;
+        for (const key in form) {
+            if (params.has(key)) {
+                filterActive = true;
+                break;
+            }
+        }
+        filterStore.update(filter => {
+            filter.active = filterActive;
+            return filter;
+        });
+    }
+    onMount(() => {
+        populate();
+        setFilterActive();
+    });
     onDestroy(() => {
         filterStore.update(filter => {
             filter.visible = false;
@@ -60,17 +81,19 @@
     });
 </script>
 
-<form on:submit|preventDefault={filter} id="form-filter">
-    <fieldset>
-        <legend>Pesquisa</legend>
-        <slot></slot>
-        <br>
-        <br>
-        <button type="button" class="clean" on:click={clean}>
-            Limpar
-        </button>
-        <button type="submit" class="filter">
-            Filtrar
-        </button>
-    </fieldset>
-</form>
+{#if $filterStore.visible}
+    <form on:submit|preventDefault={filter} transition:slide={{duration: 200}} id="form-filter">
+        <fieldset>
+            <legend>Pesquisa</legend>
+            <slot></slot>
+            <br>
+            <br>
+            <button type="button" class="clean" on:click={clean}>
+                Limpar
+            </button>
+            <button type="submit" class="filter">
+                Filtrar
+            </button>
+        </fieldset>
+    </form>
+{/if}
