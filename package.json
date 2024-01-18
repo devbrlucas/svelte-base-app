@@ -39,11 +39,11 @@
 	],
 	"peerDependencies": {
 		"@sveltejs/kit": "^2.0.0",
-		"svelte": "^4.0.0",
-		"less": "^4.2.0"
+		"less": "^4.2.0",
+		"svelte": "^4.0.0"
 	},
 	"devDependencies": {
-		"@sveltejs/adapter-auto": "^3.0.1",
+		"@sveltejs/adapter-node": "^3.0.1",
 		"@sveltejs/kit": "^2.0.0",
 		"@sveltejs/package": "^2.0.0",
 		"less": "^4.2.0",
