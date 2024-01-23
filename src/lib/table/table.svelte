@@ -1,15 +1,16 @@
 <script lang="ts">
-    import { onMount } from "svelte";
+    import { afterUpdate } from "svelte";
     export let center = false;
     let table: HTMLTableElement;
-    onMount(() => {
+    afterUpdate(() => {
         const headCells = table.querySelectorAll<HTMLTableCellElement>('thead > tr > th');
         const bodyRows = table.querySelectorAll<HTMLTableRowElement>('tbody > tr');
         for (const [headCellKey, headCell] of headCells.entries()) {
             for (const [bodyRowKey, bodyRow] of bodyRows.entries()) {
                 if (headCells.length !== bodyRow.children.length) return;
                 if (bodyRow.children[headCellKey].classList.contains('actions')) continue;
-                const html = bodyRow.children[headCellKey].textContent;
+                const html = bodyRow.children[headCellKey].textContent ?? '';
+                if (/<b>/.test(html)) continue;
                 bodyRow.children[headCellKey].innerHTML = `<b>${headCell.textContent}:</b> ${html}`;
             }
         }
