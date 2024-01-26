@@ -11,6 +11,7 @@
         <a href="/admin/filter">filter</a>
         <a href="/admin/confirmation">confirmation</a>
         <a href="/admin/form">form</a>
+        <a href="/admin/qrcode">qrcode</a>
     </svelte:fragment>
     <svelte:fragment slot="body">
         <slot></slot>

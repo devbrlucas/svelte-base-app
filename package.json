@@ -1,6 +1,6 @@
 {
 	"name": "svelte-base-app",
-	"version": "1.0.1",
+	"version": "1.1.0",
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build && npm run package",
@@ -56,5 +56,8 @@
 	},
 	"svelte": "./dist/index.js",
 	"types": "./dist/index.d.ts",
-	"type": "module"
+	"type": "module",
+	"dependencies": {
+		"qr-scanner": "^1.4.2"
+	}
 }
