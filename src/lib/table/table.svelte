@@ -1,6 +1,8 @@
 <script lang="ts">
+    import { type PaginatedResponse, Pagination } from "../pagination";
     import { afterUpdate } from "svelte";
     export let center = false;
+    export let pagination: {meta: PaginatedResponse['meta']; links: PaginatedResponse['links']} | undefined = undefined;
     let table: HTMLTableElement;
     afterUpdate(() => {
         const headCells = table.querySelectorAll<HTMLTableCellElement>('thead > tr > th');
@@ -17,6 +19,9 @@
     });
 </script>
 
+{#if pagination}
+    <Pagination meta={pagination.meta} links={pagination.links} />
+{/if}
 <table class:center class="app-table-records" bind:this={table}>
     <thead>
         <tr>

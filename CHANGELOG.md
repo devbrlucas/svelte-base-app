@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## [1.1.1] - 2024-02-01
+
+### Modificações
+
+- No componente `<Table>` foi adicionada a prop `pagination` para gerar o componente `<Pagination>` junto com a tabela, tirando a necessidade de importar a paginação
+- No `<ProfileLayoutComponent>`, agora pode ser feito o `bind:form`, que receberá todos os dados do formulário; também foi adicionado um `<slot>` para adicionar campos personalizados
+
 ## [1.1.0] - 2024-01-26
 
 ### Adições

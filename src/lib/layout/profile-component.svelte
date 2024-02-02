@@ -4,13 +4,15 @@
     import { messages } from "../messages";
     import { confirmation, type ConfirmationProperites } from "../confirmation";
     import { user } from "$lib/auth";
-    export let name: string;
-    export let email: string;
+    export let form: Record<string, any> = {
+        name: '',
+        email: '',
+        image: null,
+        password: '',
+        password_confirmation: '',
+    }
     export let url: string = '/users/self';
     export let callback: Function | undefined = undefined;
-    let password: string = '';
-    let password_confirmation: string = '';
-    let image: File | null = null;
     async function update(): Promise<void>
     {
         if (callback) {
@@ -19,18 +21,12 @@
             const response = await Ajax
                                         .post(url)
                                         .setOption('convertToFormData', true)
-                                        .send<SvelteBaseApp.CurrentUser>('json', {
-                                            name,
-                                            email,
-                                            image,
-                                            password,
-                                            password_confirmation,
-                                        });
+                                        .send<SvelteBaseApp.CurrentUser>('json', form);
             if (response.error) return;
             messages.success('Dados editados com sucesso');
             user.update(response.body.data);
-            image = null;
-            password = password_confirmation = '';
+            form.image = null;
+            form.password = form.password_confirmation = '';
         }
     }
 
@@ -43,15 +39,15 @@
 <main id="app-main">
     <h1>Meu Perfil</h1>
     <form id="form" use:confirmation={action}>
-        <Input type="text" label="Nome" error="name" bind:value={name} required size=60 />
+        <Input type="text" label="Nome" bind:value={form.name} error="name" required size=60 />
         <br>
-        <Input type="email" label="E-Mail" error="email" bind:value={email} required size=60 />
+        <Input type="email" label="E-Mail" bind:value={form.email} error="email" required size=60 />
         <br>
-        <Input type="file" label="Imagem" error="image" bind:value={image} />
-        <br>
-        <Input type="password" label="Senha" error="password" bind:value={password} size=40 />
-        <Input type="password" label="Confirmação da senha" error="password_confirmation" bind:value={password_confirmation} size=40 />
+        <Input type="file" label="Imagem" bind:value={form.image} error="image" />
         <slot></slot>
+        <br>
+        <Input type="password" label="Senha" bind:value={form.password} error="password" size=40 />
+        <Input type="password" label="Confirmação da senha" bind:value={form.password_confirmation} error="password_confirmation" size=40 />
     </form>
 </main>
 

@@ -1,6 +1,21 @@
 <script lang="ts">
     import { Table, tableActions, title } from "$lib";
+    import type { PaginatedResponse } from "$lib/pagination";
     title('table');
+    const meta: PaginatedResponse['meta'] = {
+        current_page: 1,
+        from: 1,
+        last_page: 1,
+        per_page: 20,
+        to: 1,
+        total: 0,
+    }
+    const links: PaginatedResponse['links'] = {
+        first: 'http://localhost:5500',
+        last: null,
+        next: null,
+        prev: null,
+    }
     let toggle: boolean = false;
     const rows = [
         [1, 2, 3],
@@ -61,6 +76,19 @@
     </Table>
     <h2>Vazia</h2>
     <Table center>
+        <svelte:fragment slot="head">
+            <th>Número<br>UM</th>
+            <th>Número<br>DOIS</th>
+            <th>Número<br>TRÊS</th>
+        </svelte:fragment>
+        <svelte:fragment slot="body">
+            <tr class="hover-disabled">
+                <td colspan="3">Nenhum registro encontrado</td>
+            </tr>
+        </svelte:fragment>
+    </Table>
+    <h2>Com pagination</h2>
+    <Table center pagination={{meta, links}}>
         <svelte:fragment slot="head">
             <th>Número<br>UM</th>
             <th>Número<br>DOIS</th>
