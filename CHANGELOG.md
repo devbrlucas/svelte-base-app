@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## [1.1.2] - 2024-02-05
+
+### Correções
+
+- Correção dos estilos referentes ao `<aside id="app-aside">` que ficavam estourando no mobile
+- Correção da tipagem em `<SelectionBox>` que não permitia valores do tipo `boolean`
+- Ajuste no módulo `service-worker` para carregar a página inicial ao fazer a navegação completa dentro do app
+
 ## [1.1.1] - 2024-02-01
 
 ### Modificações

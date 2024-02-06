@@ -264,9 +264,9 @@ div#app {
         grid-area: 1/2/1/2;
         display: flex;
         align-items: center;
+        flex-wrap: wrap;
         gap: 1em;
         margin-top: 1em;
-    
         & > a, & > button, & > span {
             position: relative;
             padding: .7em 1em;
@@ -274,6 +274,7 @@ div#app {
             border-radius: 2em;
             box-shadow: 0 .2em 2em rgba(0, 0, 0, .05);
             overflow: hidden;
+            white-space: nowrap;
             &:focus {
                 outline: solid 2px var(--accent-color);
                 color: var(--accent-color);

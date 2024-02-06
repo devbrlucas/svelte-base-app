@@ -6,10 +6,10 @@
     export let
         type: 'checkbox' | 'radio',
         label: string,
-        value: string | number = '',
-        selected: string | number | undefined = undefined,
+        value: string | number | boolean = '',
+        selected: string | number | boolean | undefined = undefined,
         checked: boolean = false,
-        group: (string | number)[] | undefined = undefined,
+        group: (string | number | boolean)[] | undefined = undefined,
         error: string = '',
         disabled: boolean = false;
     function handleGroup(): void
