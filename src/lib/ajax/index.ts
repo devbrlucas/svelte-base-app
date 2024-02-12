@@ -150,10 +150,11 @@ export class Ajax
                     if (!this.options.disableRedirects) goto('/login');
                 } else if (response.status === 403) {
                     const forbiddenMessage = 'Você não tem permissão para acessar o recurso selecionado';
+                    const errorResponse: {message?: string} = await response.json();
                     if (this.isNavigating && !this.options.disableRedirects) {
-                        ajaxResponse.detailed_error = forbiddenMessage;
+                        ajaxResponse.detailed_error = errorResponse.message ?? forbiddenMessage;
                     } else {
-                        messages.error(forbiddenMessage);
+                        messages.error(errorResponse.message ?? forbiddenMessage);
                     }
                 } else {
                     const errorMessageDetail: string | undefined = (await response.json()).message;

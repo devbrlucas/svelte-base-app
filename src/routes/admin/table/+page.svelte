@@ -100,6 +100,23 @@
             </tr>
         </svelte:fragment>
     </Table>
+    <h2>Com <i>HTML</i></h2>
+    <Table center>
+        <svelte:fragment slot="head">
+            <th>Número<br>UM</th>
+            <th>Número<br>DOIS</th>
+            <th>Número<br>TRÊS</th>
+        </svelte:fragment>
+        <svelte:fragment slot="body">
+            <tr>
+                <td>UM</td>
+                <td>DOIS</td>
+                <td>
+                    <button type="button" on:click={() => alert('oi')}>Teste</button>
+                </td>
+            </tr>
+        </svelte:fragment>
+    </Table>
 </main>
 <aside id="app-aside">
     <button type="button" on:click={() => toggle = !toggle}>

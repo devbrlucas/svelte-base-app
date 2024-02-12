@@ -18,13 +18,12 @@ div#app-dialog {
     & > div {
         position: relative;
         padding: 2em 2em 1em;
-        max-width: 40em;
+        max-width: calc(100% - 2em);
         border-radius: 1em;
         background-color: #FFF;
         box-shadow: 0 .2em 2em -.2em rgba(0, 0, 0, .2);
         animation: dialog-visible .2s forwards;
         @media (max-width: 45em) {
-            max-width: calc(100% - 2em);
             margin: 0 1em;
         }
         & > header {

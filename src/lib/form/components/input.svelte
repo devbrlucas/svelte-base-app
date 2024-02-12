@@ -15,20 +15,21 @@
 
     export let type: Type
     export let label: string;
-    export let value: string | number | FileList | File | undefined | null;
+    export let value: string | number | undefined | null = null;
+    export let file: FileList | File | null = null;
     export let error: string = '';
     export let disabled: boolean = false;
     function handleInputFileChange(event: Event): void
     {
         const input = event.currentTarget as HTMLInputElement;
         if (!input.files) {
-            value = null;
+            file = null;
             return;
         }
         if (input.files.length === 0) {
-            value = null;
+            file = null;
         } else {
-            value = input.multiple ? input.files : input.files[0];
+            file = input.multiple ? input.files : input.files[0];
         }
     }
 </script>
@@ -58,13 +59,13 @@
         <input type="datetime-local" bind:value autocomplete="off" {...$$restProps} {disabled} on:input on:blur />
     {:else if type === 'file'}
         <input type="file" autocomplete="off" {...$$restProps} {disabled} on:input on:blur on:change={handleInputFileChange} />
-        {#if value == null}
+        {#if file == null}
             <span>Nenhum arquivo selecionado</span>
-        {:else if value instanceof File}
-            <span>{value.name}</span>
-        {:else if value instanceof FileList}
-            {#each value as file}
-                <span>{file.name}</span>
+        {:else if file instanceof File}
+            <span>{file.name}</span>
+        {:else if file instanceof FileList}
+            {#each file as _file}
+                <span>{_file.name}</span>
             {/each}
         {/if}
     {/if}

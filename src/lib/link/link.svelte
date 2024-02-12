@@ -13,5 +13,5 @@
 </script>
 
 <a {href} {...$$restProps} on:click={update} on:click>
-    <slot />
+    <slot></slot>
 </a>

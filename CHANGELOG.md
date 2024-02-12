@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## [1.1.3] - 2024-02-12
+
+### Modificações
+
+- No export `form/Input`, foi adicionada a prop `file`, utilizada quando `type="file"` (ajuste para melhoria na tipagem)
+- No export `form/Input`, a prop `value` agora não tem mais os tipos `File` e `FileList`
+- Corrigido problema no `<Table>` onde ao gerar o título mobile (`<b></b>`) algum elementro HTML dentro da célula não é mantido
+
 ## [1.1.2] - 2024-02-05
 
 ### Correções

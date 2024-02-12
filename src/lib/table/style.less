@@ -41,43 +41,43 @@ table.app-table-records {
                 }
                 &.actions {
                     white-space: nowrap;
-                }
-                & > a, & > button {
-                    display: inline-flex;
-                    align-items: center;
-                    justify-content: center;
-                    padding: .2em;
-                    width: 1.3em;
-                    height: 1.3em;
-                    border-radius: .3em;
-                    &:not(:last-child) {
-                        margin-right: .5em;
-                    }
-                    @media (hover: hover) {
-                        @keyframes table-action-animation {
-                            0% { transform: scale(1); }
-                            50% { transform: scale(1.7); }
-                            100% { transform: scale(1.3); }
+                    & > a, & > button {
+                        display: inline-flex;
+                        align-items: center;
+                        justify-content: center;
+                        padding: .2em;
+                        width: 1.3em;
+                        height: 1.3em;
+                        border-radius: .3em;
+                        &:not(:last-child) {
+                            margin-right: .5em;
                         }
-                        &:hover {
-                            animation: table-action-animation .2s forwards;
+                        @media (hover: hover) {
+                            @keyframes table-action-animation {
+                                0% { transform: scale(1); }
+                                50% { transform: scale(1.7); }
+                                100% { transform: scale(1.3); }
+                            }
+                            &:hover {
+                                animation: table-action-animation .2s forwards;
+                            }
                         }
-                    }
-                    &.edit {
-                        color: goldenrod;
-                        background-color: lighten(goldenrod, 35%);
-                    }
-                    &.delete, &.disapproved {
-                        color: red;
-                        background-color: lighten(red, 35%);
-                    }
-                    &.restore, &.show {
-                        color: green;
-                        background-color: lighten(green, 50%);
-                    }
-                    &.more {
-                        color: dodgerblue;
-                        background-color: lighten(dodgerblue, 30%);
+                        &.edit {
+                            color: goldenrod;
+                            background-color: lighten(goldenrod, 35%);
+                        }
+                        &.delete, &.disapproved {
+                            color: red;
+                            background-color: lighten(red, 35%);
+                        }
+                        &.restore, &.show {
+                            color: green;
+                            background-color: lighten(green, 50%);
+                        }
+                        &.more {
+                            color: dodgerblue;
+                            background-color: lighten(dodgerblue, 30%);
+                        }
                     }
                 }
             }

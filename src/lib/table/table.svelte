@@ -11,9 +11,10 @@
             for (const [bodyRowKey, bodyRow] of bodyRows.entries()) {
                 if (headCells.length !== bodyRow.children.length) return;
                 if (bodyRow.children[headCellKey].classList.contains('actions')) continue;
-                const html = bodyRow.children[headCellKey].textContent ?? '';
                 if (/<b>/.test(bodyRow.children[headCellKey].innerHTML)) continue;
-                bodyRow.children[headCellKey].innerHTML = `<b>${headCell.textContent}:</b> ${html}`;
+                const b = document.createElement('b');
+                b.textContent = `${headCell.textContent}: `;
+                bodyRow.children[headCellKey].prepend(b);
             }
         }
     });
