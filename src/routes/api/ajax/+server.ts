@@ -1,5 +1,5 @@
-import type { ServerLoad } from "@sveltejs/kit";
-export const GET: ServerLoad = async () => {
+import type { RequestHandler } from "./$types";
+export const GET: RequestHandler = async () => {
     const body = {
         message: 'Você não pode carregar esse recurso',
     }

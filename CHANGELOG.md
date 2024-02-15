@@ -1,5 +1,17 @@
 # CHANGELOG
 
+## [1.2.0] - 2024-02-15
+
+### Modificações
+
+- Adição da prop `passwordReset` no componente `<AuthComponent>` que informa se deve ou não exibir o link de redefinição de senha
+- Os componentes do export `form` agora podem receber um slot default que irá gerar um ícone para exibir informações sobre aquele campo (para o `<Select>`, o slot terá o nome `info`)
+- Alterações no componente `<SelectionBox>`: quando for o tipo `radio`, agora será utilizado o `bind:group` ao invés de `bind:selected` (esse último foi removido)
+
+### Adições
+
+- Adição do componente `<PasswordResetComponent>` no export `auth` que traz um layout padrão para redefinição de senha por e-mail
+
 ## [1.1.3] - 2024-02-12
 
 ### Modificações

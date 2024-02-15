@@ -16,5 +16,6 @@ export type AuthData = {
     remember: boolean;
 }
 export { default as AuthComponent } from "./component.svelte";
+export { default as PasswordResetComponent } from "./password-reset.svelte";
 export * from "./store";
 export * from "./user";

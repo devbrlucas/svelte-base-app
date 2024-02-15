@@ -1,5 +1,5 @@
-import type { ServerLoad } from "@sveltejs/kit";
-export const POST: ServerLoad = async () => {
+import type { RequestHandler } from "./$types";
+export const POST: RequestHandler = async () => {
     const body: SvelteBaseApp.CurrentUser = {
         access_token: '123456789',
         user: {
@@ -21,12 +21,12 @@ export const POST: ServerLoad = async () => {
         },
     );
 }
-export const DELETE: ServerLoad = async () => {
+export const DELETE: RequestHandler = async () => {
     return new Response(undefined, {
         status: 204,
     });
 }
-export const OPTIONS: ServerLoad = async() => {
+export const OPTIONS: RequestHandler = async() => {
     return new Response('OK', {
         status: 200,
     });

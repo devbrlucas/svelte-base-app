@@ -4,7 +4,7 @@
     import { store } from "./store";
     title('form SelectionBox');
     let checked: boolean = false;
-    let selected: 'A' | 'B' | 'C' = 'A';
+    let group: 'A' | 'B' | 'C' = 'A';
 </script>
 
 <main id="app-main">
@@ -26,13 +26,13 @@
         {checked ? 'Sim' : 'Não'}
     </p>
     <h2>radio</h2>
-    <SelectionBox type="radio" label="A" bind:selected value=A />
-    <SelectionBox type="radio" label="B" bind:selected value=B />
-    <SelectionBox type="radio" label="C" bind:selected value=C />
+    <SelectionBox type="radio" label="A" bind:group value=A />
+    <SelectionBox type="radio" label="B" bind:group value=B />
+    <SelectionBox type="radio" label="C" bind:group value=C />
     <p>
         Resultado do radio
         <br>
-        {selected}
+        {group}
     </p>
 </main>
 <aside id="app-aside">

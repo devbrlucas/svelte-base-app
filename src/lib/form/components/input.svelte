@@ -1,5 +1,6 @@
 <script lang="ts">
     import Error from "./error.svelte";
+    import LabelInfo from "./label-info.svelte";
     type Type = 
         'password' |
         'number' |
@@ -19,6 +20,7 @@
     export let file: FileList | File | null = null;
     export let error: string = '';
     export let disabled: boolean = false;
+    const id = `input-${Math.random() * 5}`;
     function handleInputFileChange(event: Event): void
     {
         const input = event.currentTarget as HTMLInputElement;
@@ -34,40 +36,45 @@
     }
 </script>
 
-<!-- svelte-ignore a11y-label-has-associated-control -->
-<label class="app input-component" class:disabled>
-    <span>{label}</span>
+<div class="app input-component" class:disabled class:info={$$slots.default}>
+    {#if $$slots.default}
+        <LabelInfo {id} {label}>
+            <slot></slot>
+        </LabelInfo>
+    {:else}
+        <LabelInfo {id} {label} />
+    {/if}
     {#if type === 'password'}
-        <input type="password" bind:value autocomplete="off" {...$$restProps} {disabled} on:input on:blur />
+        <input {id} type="password" bind:value autocomplete="off" {...$$restProps} {disabled} on:input on:blur />
     {:else if type === 'number'}
-        <input type="number" bind:value autocomplete="off" {...$$restProps} {disabled} on:input on:blur />
+        <input {id} type="number" bind:value autocomplete="off" {...$$restProps} {disabled} on:input on:blur />
     {:else if type === 'email'}
-        <input type="email" bind:value autocomplete="off" {...$$restProps} {disabled} on:input on:blur />
+        <input {id} type="email" bind:value autocomplete="off" {...$$restProps} {disabled} on:input on:blur />
     {:else if type === 'text'}
-        <input type="text" bind:value autocomplete="off" {...$$restProps} {disabled} on:input on:blur />
+        <input {id} type="text" bind:value autocomplete="off" {...$$restProps} {disabled} on:input on:blur />
     {:else if type === 'tel'}
-        <input type="tel" bind:value autocomplete="off" {...$$restProps} {disabled} on:input on:blur />
+        <input {id} type="tel" bind:value autocomplete="off" {...$$restProps} {disabled} on:input on:blur />
     {:else if type === 'date'}
-        <input type="date" bind:value autocomplete="off" {...$$restProps} {disabled} on:input on:blur />
+        <input {id} type="date" bind:value autocomplete="off" {...$$restProps} {disabled} on:input on:blur />
     {:else if type === 'month'}
-        <input type="month" bind:value autocomplete="off" {...$$restProps} {disabled} on:input on:blur />
+        <input {id} type="month" bind:value autocomplete="off" {...$$restProps} {disabled} on:input on:blur />
     {:else if type === 'search'}
-        <input type="search" bind:value autocomplete="off" {...$$restProps} {disabled} on:input on:blur />
+        <input {id} type="search" bind:value autocomplete="off" {...$$restProps} {disabled} on:input on:blur />
     {:else if type === 'color'}
-        <input type="color" bind:value autocomplete="off" {...$$restProps} {disabled} on:input on:blur />
+        <input {id} type="color" bind:value autocomplete="off" {...$$restProps} {disabled} on:input on:blur />
     {:else if type === 'datetime-local'}
-        <input type="datetime-local" bind:value autocomplete="off" {...$$restProps} {disabled} on:input on:blur />
+        <input {id} type="datetime-local" bind:value autocomplete="off" {...$$restProps} {disabled} on:input on:blur />
     {:else if type === 'file'}
-        <input type="file" autocomplete="off" {...$$restProps} {disabled} on:input on:blur on:change={handleInputFileChange} />
+        <input {id} type="file" autocomplete="off" {...$$restProps} {disabled} on:input on:blur on:change={handleInputFileChange} />
         {#if file == null}
-            <span>Nenhum arquivo selecionado</span>
+            <label for={id} class="filename">Nenhum arquivo selecionado</label>
         {:else if file instanceof File}
-            <span>{file.name}</span>
+            <label for={id} class="filename">{file.name}</label>
         {:else if file instanceof FileList}
             {#each file as _file}
-                <span>{_file.name}</span>
+                <label for={id} class="filename">{_file.name}</label>
             {/each}
         {/if}
     {/if}
     <Error name={error} />
-</label>
+</div>

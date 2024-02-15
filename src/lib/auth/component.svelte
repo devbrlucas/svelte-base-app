@@ -8,6 +8,7 @@
     export let email: string = '';
     export let password: string = '';
     export let remember: boolean = false;
+    export let passwordReset: boolean = false;
     type InternalAuthResponse = AuthResponse<SvelteBaseApp.CurrentUser['user'], 'user'>;
     async function login(): Promise<void>
     {
@@ -32,14 +33,21 @@
         <img src="/logo.png" alt="logo da empresa">
     </h1>
     <form on:submit|preventDefault={login} id="form">
-        <Input type="email" label="E-Mail" bind:value={email} error="email" required size="40" />
+        <Input type="email" label="E-mail" bind:value={email} error="email" required size="40" />
         <br>
         <Input type="password" label="Senha" bind:value={password} error="password" required size="40" />
         <br>
         <SelectionBox type="checkbox" label="Manter conectado" bind:checked={remember} error="remember" />
     </form>
-    <button type="submit" form="form" class="highlighted">
-        Acessar
-    </button>
+    <footer>
+        <button type="submit" form="form" class="highlighted">
+            Acessar
+        </button>
+        {#if passwordReset}
+            <p class="reset-password">
+                <a href="/redefinir-senha">Esqueci minha senha</a>
+            </p>
+        {/if}
+    </footer>
 </main>
 <MessagesComponent />

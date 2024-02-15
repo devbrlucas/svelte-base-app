@@ -12,6 +12,7 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
+        gap: 1em;
         & > img {
             max-width: 5em;
             max-height: 3em;
@@ -23,9 +24,37 @@
     & > form {
         text-align: right;
         margin: 5em auto;
+        & > p {
+            max-width: 15em;
+            text-align: center;
+            font-size: 1.1em;
+            margin: auto;
+        }
     }
-    & > button {
-        font-size: 1.1em;
+    & > footer {
+        display: flex;
+        align-items: flex-end;
+        flex-wrap: wrap;
+        justify-content: center;
+        &.password-reset {
+            justify-content: space-between;
+        }
+        & > button.highlighted {
+            font-size: 1.1em;
+        }
+        & > p {
+            min-width: 100%;
+            margin: 2em 0 0;
+            text-align: right;
+        }
+        @media (hover: hover) {
+            & a {
+                font-size: 1.2em;
+                &:hover {
+                    text-decoration: underline .15em var(--accent-color);
+                }
+            }
+        }
     }
     @media (orientation: portrait) {
         margin: 0;

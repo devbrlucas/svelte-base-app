@@ -5,4 +5,4 @@
     title('Login');
     if (user.get('access_token')) goto('/admin/dashboard');
 </script>
-<AuthComponent />
+<AuthComponent passwordReset={true} />
