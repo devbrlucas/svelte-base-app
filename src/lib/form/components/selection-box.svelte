@@ -1,3 +1,7 @@
+<script lang="ts" context="module">
+    import { writable } from "svelte/store";
+    const store = writable<any[]>([]);
+</script>
 <script lang="ts" generics="T, C extends 'checkbox' | 'radio'">
     import { onMount } from "svelte";
     import Error from "./error.svelte";
@@ -13,23 +17,29 @@
     export let error: string = '';
     export let disabled: boolean = false;
     const id = `box-${Math.random() * 5}`;
+    const valueError = new TypeError('<SelectionBox>: Ao utilizar bind:group, é obrigatório informar a prop value');
     function handleGroup(): void
     {
         if (Array.isArray(group) && type === 'checkbox') {
+            if (!value) throw valueError;
             if (checked) {
-                if (!value) throw new TypeError('<SelectionBox>: Ao utilizar bind:group, é obrigatório informar a prop value');
                 group.push(value);
             } else {
                 group = group.filter(item => item !== value) as GroupType;
             }
+            store.set(group as any[]);
             group = group;
         }
     }
+    $: group && initGroup();
     function initGroup(): void
     {
-        if (Array.isArray(group)) {
-            if (!value) throw new TypeError('<SelectionBox>: Ao utilizar bind:group, é obrigatório informar a prop value');
-            checked = group.includes(value);
+        if (type === 'checkbox' && Array.isArray(group)) {
+            store.subscribe(content => {
+                if (!value) throw valueError;
+                checked = content.includes(value);
+            });
+            store.set(group as any[]);
         }
     }
     onMount(initGroup);

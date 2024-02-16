@@ -1,22 +1,22 @@
 <script lang="ts">
     import { title } from "$lib";
     import { SelectionBox } from "$lib/form";
-    import { store } from "./store";
     title('form SelectionBox');
     let checked: boolean = false;
     let group: 'A' | 'B' | 'C' = 'A';
+    let array: string[] = ['B'];
 </script>
 
 <main id="app-main">
     <h1>form SelectionBox</h1>
     <h2>checkbox group</h2>
-    <SelectionBox type="checkbox" label="A" value=A bind:group={$store} />
-    <SelectionBox type="checkbox" label="B" value=B bind:group={$store} />
-    <SelectionBox type="checkbox" label="C" value=C bind:group={$store} />
+    <SelectionBox type="checkbox" label="A" value=A bind:group={array} />
+    <SelectionBox type="checkbox" label="B" value=B bind:group={array} />
+    <SelectionBox type="checkbox" label="C" value=C bind:group={array} />
     <p>
         Resultado do checkbox group
         <br>
-        {$store}
+        {array}
     </p>
     <h2>checkbox checked</h2>
     <SelectionBox type="checkbox" label="Seleção" bind:checked />
@@ -36,5 +36,11 @@
     </p>
 </main>
 <aside id="app-aside">
+    <button type="button" on:click={() => array = []}>
+        Limpar grupo
+    </button>
+    <button type="button" on:click={() => array = ['A', 'B', 'C']}>
+        Marcar todos
+    </button>
     <a href="/admin/form">Voltar</a>
 </aside>

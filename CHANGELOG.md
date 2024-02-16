@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## [1.2.1] - 2024-02-15
+
+### Correções
+
+- Corrigidos problemas no `<SelectionBox>` ao utilizar `type="checkbox"` e `bind:group` com arrays
+
 ## [1.2.0] - 2024-02-15
 
 ### Modificações
