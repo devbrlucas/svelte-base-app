@@ -2,7 +2,7 @@
     import Error from "./error.svelte";
     import LabelInfo from "./label-info.svelte";
     export let label: string;
-    export let value: string | number | null;
+    export let value: T;
     export let error: string = '';
     export let blank: boolean = false;
     export let multiple: boolean = false;

@@ -1,21 +1,8 @@
 <script lang="ts">
     import { Table, tableActions, title } from "$lib";
-    import type { PaginatedResponse } from "$lib/pagination";
+    import type { PageData } from "./$types";
+    export let data: PageData;
     title('table');
-    const meta: PaginatedResponse['meta'] = {
-        current_page: 1,
-        from: 1,
-        last_page: 1,
-        per_page: 20,
-        to: 1,
-        total: 0,
-    }
-    const links: PaginatedResponse['links'] = {
-        first: 'http://localhost:5500',
-        last: null,
-        next: null,
-        prev: null,
-    }
     let toggle: boolean = false;
     const rows = [
         [1, 2, 3],
@@ -88,7 +75,7 @@
         </svelte:fragment>
     </Table>
     <h2>Com pagination</h2>
-    <Table center pagination={{meta, links}}>
+    <Table center pagination={{meta: data.meta, links: data.links}}>
         <svelte:fragment slot="head">
             <th>Número<br>UM</th>
             <th>Número<br>DOIS</th>
@@ -123,3 +110,8 @@
         Refazer corpo da table com actions
     </button>
 </aside>
+<style>
+    h2 {
+        margin-top: 2em;
+    }
+</style>

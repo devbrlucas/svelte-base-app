@@ -149,12 +149,12 @@ export class Ajax
                     user.clean();
                     if (!this.options.disableRedirects) goto('/login');
                 } else if (response.status === 403) {
-                    const forbiddenMessage = 'Você não tem permissão para acessar o recurso selecionado';
-                    const errorResponse: {message?: string} = await response.json();
+                    const errorResponse: {message: string} = await response.json();
+                    const forbiddenMessage = errorResponse.message ? errorResponse.message : 'Você não tem permissão para acessar o recurso selecionado';
                     if (this.isNavigating && !this.options.disableRedirects) {
-                        ajaxResponse.detailed_error = errorResponse.message ?? forbiddenMessage;
+                        ajaxResponse.detailed_error = forbiddenMessage;
                     } else {
-                        messages.error(errorResponse.message ?? forbiddenMessage);
+                        messages.error(forbiddenMessage);
                     }
                 } else {
                     const errorMessageDetail: string | undefined = (await response.json()).message;

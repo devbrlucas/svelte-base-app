@@ -4,23 +4,28 @@
     import { MessagesComponent } from "../messages";
     import { currentUser } from "../auth";
     import { ConfirmationComponent } from "../confirmation";
-    import { afterNavigate, beforeNavigate } from "$app/navigation";
+    import { afterNavigate, beforeNavigate, invalidateAll } from "$app/navigation";
     import { slide } from "svelte/transition";
     import ProfileButton from "./components/profile-button.svelte";
     import ProfileLinks from "./components/profile-links.svelte";
     import { DialogComponent } from "../dialog";
+    import { onMount } from "svelte";
     let navState: boolean = false;
     let profileMenuState: boolean = false;
     beforeNavigate(() => {
         if (navState) navState = false;
         if (profileMenuState) profileMenuState = false;
     });
-
     function toggleNavMenu(): void
     {
         navState = !navState;
         profileMenuState = false;
     }
+    onMount(() => {
+        setCurrentNavLink();
+        const anchors = document.querySelectorAll<HTMLAnchorElement>('#app-nav > a');
+        anchors.forEach(anchor => anchor.addEventListener('click', handleAnchorClick));
+    });
     afterNavigate(setCurrentNavLink);
     function setCurrentNavLink(): void
     {
@@ -35,6 +40,11 @@
                 return;
             }
         });
+    }
+    function handleAnchorClick(event: Event): void
+    {
+        const anchor = event.currentTarget as HTMLAnchorElement;
+        if (anchor.pathname === location.pathname && !location.search) invalidateAll();
     }
 </script>
 

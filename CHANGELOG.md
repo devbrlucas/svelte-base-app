@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## [1.2.2] - 2024-02-22
+
+### Correções
+- Na classe `Ajax` a mensagem padrão do status 403 não estava sendo exibida caso fosse retornada uma mensagem vazia
+- Ao clicar em um link de navegação do menu, a função `invalidateAll()` é chamada se o link do menu for o mesmo da página atual
+- Na paginação, o campo items por página não era redefinido ao remover o parâmetro `items` da url
+
 ## [1.2.1] - 2024-02-15
 
 ### Correções
