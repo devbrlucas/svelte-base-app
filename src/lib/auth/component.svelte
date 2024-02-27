@@ -22,11 +22,10 @@
                                         remember,
                                     });
         if (response.error) return;
-        user.set(response.body.data, remember);
+        user.set(response.body.data);
         goto('/admin/dashboard');
     }
 </script>
-
 <main id="login-page">
     <h1>
         <span>Login</span>

@@ -2,7 +2,6 @@
     import "../styles/base.less";
     import { messages } from "../messages";
     import xmarkIcon from "./icons/xmark.svg?raw";
-    import { user, currentUser } from "../auth";
     import { titleStore } from "../utils/title_store";
     export let version: string;
     export let baseTitle: string;
@@ -29,9 +28,7 @@
         const button = event.currentTarget as HTMLButtonElement;
         button.parentElement?.remove();
     }
-    currentUser.set(user.get());
 </script>
-
 <svelte:head>
     <title>{$titleStore}{baseTitle}</title>
 </svelte:head>

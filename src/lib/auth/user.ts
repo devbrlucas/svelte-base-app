@@ -1,43 +1,36 @@
+import { UserNotFoundError } from "./user_not_found_error";
 import { currentUser as store, INITIAL_DATA } from "./store";
 const APP_CURRENT_USER_KEY = 'app:current_user';
-function getUser(key: 'user'): SvelteBaseApp.CurrentUser['user']
-function getUser(key: 'access_token'): SvelteBaseApp.CurrentUser['access_token']
-function getUser(key: 'type'): SvelteBaseApp.CurrentUser['type']
 function getUser(): SvelteBaseApp.CurrentUser
-function getUser(key?: keyof SvelteBaseApp.CurrentUser): SvelteBaseApp.CurrentUser | any
+function getUser<T extends keyof SvelteBaseApp.CurrentUser>(key: T): SvelteBaseApp.CurrentUser[T]
+// function getUser(key: keyof SvelteBaseApp.CurrentUser): SvelteBaseApp.CurrentUser[keyof SvelteBaseApp.CurrentUser]
+function getUser(key?: keyof SvelteBaseApp.CurrentUser): SvelteBaseApp.CurrentUser | SvelteBaseApp.CurrentUser[keyof SvelteBaseApp.CurrentUser]
 {
-    let jsonUser = window.sessionStorage.getItem(APP_CURRENT_USER_KEY);
-    if (!jsonUser) jsonUser = window.localStorage.getItem(APP_CURRENT_USER_KEY);
-    const user: SvelteBaseApp.CurrentUser = jsonUser ? JSON.parse(jsonUser) : INITIAL_DATA;
+    const json = window.localStorage.getItem(APP_CURRENT_USER_KEY);
+    if (!json) throw new UserNotFoundError;
+    const user: SvelteBaseApp.CurrentUser = JSON.parse(json);
     return key ? user[key] : user;
 }
-function setUser(user: SvelteBaseApp.CurrentUser, remember: boolean): void
+function setUser(user: SvelteBaseApp.CurrentUser): void
 {
     cleanUser();
-    if (remember) {
-        window.localStorage.setItem(APP_CURRENT_USER_KEY, JSON.stringify(user));
-    } else {
-        window.sessionStorage.setItem(APP_CURRENT_USER_KEY, JSON.stringify(user));
-    }
+    window.localStorage.setItem(APP_CURRENT_USER_KEY, JSON.stringify(user));
     store.set(user);
 }
-function updateUser(user: SvelteBaseApp.CurrentUser): void
+function updateUser(user: Omit<SvelteBaseApp.CurrentUser, 'access_token'>): void
 {
-    let storage: Storage;
-    let jsonUser = window.sessionStorage.getItem(APP_CURRENT_USER_KEY);
-    if (jsonUser) {
-        storage = window.sessionStorage;
-    } else {
-        jsonUser = window.localStorage.getItem(APP_CURRENT_USER_KEY);
-        if (!jsonUser) return;
-        storage = window.localStorage;
+    const json = window.localStorage.getItem(APP_CURRENT_USER_KEY);
+    if (!json) throw new UserNotFoundError;
+    const currentUser: SvelteBaseApp.CurrentUser = JSON.parse(json);
+    const data = {
+        ...user,
+        access_token: currentUser.access_token,
     }
-    storage.setItem(APP_CURRENT_USER_KEY, JSON.stringify(user));
-    store.set(user);
+    window.localStorage.setItem(APP_CURRENT_USER_KEY, JSON.stringify(data));
+    store.set(data);
 }
 function cleanUser(): void
 {
-    window.sessionStorage.removeItem(APP_CURRENT_USER_KEY);
     window.localStorage.removeItem(APP_CURRENT_USER_KEY);
     store.set(INITIAL_DATA);
 }

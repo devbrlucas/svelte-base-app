@@ -5,6 +5,7 @@ export const POST: RequestHandler = async () => {
         user: {
             name: 'Administrador',
             email: 'dev@developer',
+            phone: '85996524785',
             image: '/logo.png',
         },
         type: 'user',

@@ -6,7 +6,7 @@ async function open<T>(title: string, component: ComponentType, props?: Record<s
     store.set({
         title,
         component,
-        props,
+        props: props ?? {},
     });
     return new Promise((resolve, reject) => {
         store.subscribe(value => {

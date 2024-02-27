@@ -1,29 +1,31 @@
-form.app-pagination {
-    margin: 2em 0;
-    text-align: right;
-    & > span {
-        display: inline-block;
-        margin-bottom: .5em;
-    }
-    & > div {
-        display: inline-flex;
-        align-items: center;
+body:not(.custom) {
+    form.app-pagination {
+        margin: 2em 0;
+        text-align: right;
         & > span {
-            font-size: 1.3em;
-            font-weight: 400;
+            display: inline-block;
+            margin-bottom: .5em;
         }
-        &:first-of-type {
-            gap: .5em;
-            margin-right: 2em;
-        }
-        &:last-of-type {
-            gap: 1em;
-        }
-        & > button {
-            font-size: 1.5em;
-            &:disabled {
-                opacity: .3;
-                cursor: not-allowed;
+        & > div {
+            display: inline-flex;
+            align-items: center;
+            & > span {
+                font-size: 1.3em;
+                font-weight: 400;
+            }
+            &:first-of-type {
+                gap: .5em;
+                margin-right: 2em;
+            }
+            &:last-of-type {
+                gap: 1em;
+            }
+            & > button {
+                font-size: 1.5em;
+                &:disabled {
+                    opacity: .3;
+                    cursor: not-allowed;
+                }
             }
         }
     }

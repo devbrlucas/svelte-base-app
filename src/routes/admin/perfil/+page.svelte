@@ -6,7 +6,7 @@
     let form: Record<string, any> = {
         name: user.get('user').name,
         email: user.get('user').email,
-        phone: '123456',
+        phone: user.get('user').phone,
     }
 </script>
 

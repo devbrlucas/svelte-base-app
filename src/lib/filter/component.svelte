@@ -5,6 +5,7 @@
     import { slide } from "svelte/transition";
     export let url: string;
     export let form: Record<string, any>;
+    export let callback: (() => void | Promise<void>) | undefined = undefined;
     function filter(): void
     {
         filterStore.update(filter => {
@@ -79,10 +80,15 @@
             return filter;
         });
     });
+    function handleSubmit(): void
+    {
+        filter();
+        if (callback) callback();
+    }
 </script>
 
 {#if $filterStore.visible}
-    <form on:submit|preventDefault={filter} transition:slide={{duration: 200}} id="form-filter">
+    <form on:submit|preventDefault={handleSubmit} transition:slide={{duration: 200}} id="form-filter">
         <fieldset>
             <legend>Pesquisa</legend>
             <slot></slot>

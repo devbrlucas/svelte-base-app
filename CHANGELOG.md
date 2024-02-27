@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## [1.2.3] - 2024-02-27
+
+### Correções
+- No export `user` de `svelte-base-app/auth`, agora não é preciso informar o parâmetro `remember` no método `set`
+- No `<FilterComponent>` foi adicionada uma prop opcional chamada `callback`, ela recebe uma função que é chamada após realizar o processamento do filtro
+- Na classe `Ajax` foi adicionado o suporte ao header `App-Current-User` para atualizar os dados do usuário logado a cada requisição
+
 ## [1.2.2] - 2024-02-22
 
 ### Correções

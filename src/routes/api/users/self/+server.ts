@@ -5,6 +5,7 @@ export const POST: ServerLoad = async ({ request }) => {
         user: {
             name: body.get('name'),
             email: body.get('email'),
+            phone: body.get('phone'),
         },
         type: 'user',
         access_token: '123456789',

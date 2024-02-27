@@ -1,4 +1,4 @@
-import { user } from "../auth";
+import { user, UserNotFoundError } from "../auth";
 import { formUtils } from "../form";
 import { messages } from "../messages";
 import type { PaginatedResponse } from "../pagination";
@@ -51,7 +51,12 @@ export class Ajax
         this.uri = uri;
         this.method = method;
         this.options = options ? options : {};
-        let token = user.get('access_token');
+        let token: string = '';
+        try {
+            token = user.get('access_token');
+        } catch (error) {
+            if (!(error instanceof UserNotFoundError)) throw error;
+        }
         this.setAuthorizationHeader(token, 'Bearer');
         this.isNavigating = get(navigating) !== null;
         this.initLoadIcon();
@@ -171,6 +176,15 @@ export class Ajax
                 ajaxResponse.body = null;
             } else {
                 if (!this.options.preserveErrors) formUtils.cleanErrors();
+                try {
+                    const currentUserHeader = response.headers.get('App-Current-User');
+                    if (currentUserHeader) {
+                        const jsonCurrentUser = JSON.parse(currentUserHeader);
+                        user.update(jsonCurrentUser);
+                    }
+                } catch (error) {
+                    Promise.reject(error);
+                }
                 const responseBody = await this.handleResponseBody(response, responseType);
                 ajaxResponse.body = responseBody
             }

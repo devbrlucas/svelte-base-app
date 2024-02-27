@@ -1,8 +1,8 @@
 <script lang="ts">
     import showNavIcon from "./icons/show-nav.svg?raw";
     import hideNavIcon from "./icons/hide-nav.svg?raw";
-    import { MessagesComponent } from "../messages";
-    import { currentUser } from "../auth";
+    import { MessagesComponent, messages } from "../messages";
+    import { UserNotFoundError, currentUser, user } from "../auth";
     import { ConfirmationComponent } from "../confirmation";
     import { afterNavigate, beforeNavigate, invalidateAll } from "$app/navigation";
     import { slide } from "svelte/transition";
@@ -22,6 +22,17 @@
         profileMenuState = false;
     }
     onMount(() => {
+        try {
+            currentUser.set(user.get());
+        } catch (error) {
+            if (error instanceof UserNotFoundError) {
+                messages
+                    .error('Erro ao consultar usuário logado')
+                    .warning('Atualize a página, e caso o problema persista entre em contato conosco');
+            } else {
+                throw error;
+            }
+        }
         setCurrentNavLink();
         const anchors = document.querySelectorAll<HTMLAnchorElement>('#app-nav > a');
         anchors.forEach(anchor => anchor.addEventListener('click', handleAnchorClick));
