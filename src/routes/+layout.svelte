@@ -3,6 +3,6 @@
     import { LayoutComponent } from "$lib";
 </script>
 
-<LayoutComponent version=1.2.3 baseTitle=" | Svelte Base App Test">
+<LayoutComponent version=1.2.4 baseTitle=" | Svelte Base App Test">
     <slot></slot>
 </LayoutComponent>

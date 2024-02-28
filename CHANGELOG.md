@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## [1.2.4] - 2024-02-28
+
+### Modificações
+
+- Adicionado overload na função `title`: ao usar ela sem parâmetros, a respectiva store é retornada
+- No `<AuthComponent>` foram removidas as props `email`, `password` e `remember` e adicionada a prop `form` (sendo um objeto contendo as três props anteriores)
+- No `<AuthComponent>` foi adicionada a prop `url` para casos onde é preciso alterar apenas a URL da requisição de login
+
 ## [1.2.3] - 2024-02-27
 
 ### Correções

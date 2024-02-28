@@ -144,6 +144,7 @@ export class Ajax
                 headers: this.headers,
                 body: requestBody,
             });
+            if (!this.options.preserveErrors) formUtils.cleanErrors();
             if (!response.ok) {
                 if (response.status === 422) {
                     const responseErrors: AjaxValidationErrorResponse = await response.json();
@@ -175,7 +176,6 @@ export class Ajax
                 ajaxResponse.error = `ERRO ${response.status}: ${response.statusText}`;
                 ajaxResponse.body = null;
             } else {
-                if (!this.options.preserveErrors) formUtils.cleanErrors();
                 try {
                     const currentUserHeader = response.headers.get('App-Current-User');
                     if (currentUserHeader) {
