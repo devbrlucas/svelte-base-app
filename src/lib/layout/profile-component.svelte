@@ -24,7 +24,7 @@
                                         .send<SvelteBaseApp.CurrentUser>('json', form);
             if (response.error) return;
             messages.success('Dados editados com sucesso');
-            user.update(response.body.data);
+            user.set(response.body.data);
             form.image = null;
             form.password = form.password_confirmation = '';
         }

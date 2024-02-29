@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## [1.2.5] - 2024-02-29
+
+### Correções
+
+- No `<ProfileLayoutComponent>` foi corrigido o erro que deslogava do sistema ao atualizar o perfil usando a callback padrão
+
 ## [1.2.4] - 2024-02-28
 
 ### Modificações
