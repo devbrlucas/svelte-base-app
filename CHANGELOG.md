@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## [1.2.6] - 2024-03-06
+
+### Modificações
+
+- Em `<Table>` foi adicionada a prop opcional `full`, que faz com que a tabela ocupe todo o espaço dentro do container
+- No `<Pagination>` foi adicionado o número da página atual, sendo que ele é um seletor podendo navegar entre as páginas
+
 ## [1.2.5] - 2024-02-29
 
 ### Correções

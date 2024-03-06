@@ -12,6 +12,13 @@
     export let links: PaginatedResponse['links'];
     const INITIAL_ITEMS_PER_PAGE: number = 20;
     const MAX_ITENS_PER_PAGE: number = 300;
+    let pages: number[] = [];
+    $: {
+        pages = [];
+        for (let i = 1; i <= meta.last_page; i++) {
+            pages.push(i);
+        }
+    }
     $: currentPage = meta.current_page;
     $: perPage = meta.per_page;
     $: {
@@ -60,6 +67,11 @@
         <button type="button" on:click={() => currentPage--} disabled={!links.prev} title="página anterior">
             {@html previousIcon}
         </button>
+        <select bind:value={meta.current_page}>
+            {#each pages as page}
+                <option>{page}</option>
+            {/each}
+        </select>
         <button type="button" on:click={() => currentPage++} disabled={!links.next} title="próxima página">
             {@html nextIcon}
         </button>

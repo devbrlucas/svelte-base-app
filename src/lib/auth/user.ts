@@ -3,7 +3,6 @@ import { currentUser as store, INITIAL_DATA } from "./store";
 const APP_CURRENT_USER_KEY = 'app:current_user';
 function getUser(): SvelteBaseApp.CurrentUser
 function getUser<T extends keyof SvelteBaseApp.CurrentUser>(key: T): SvelteBaseApp.CurrentUser[T]
-// function getUser(key: keyof SvelteBaseApp.CurrentUser): SvelteBaseApp.CurrentUser[keyof SvelteBaseApp.CurrentUser]
 function getUser(key?: keyof SvelteBaseApp.CurrentUser): SvelteBaseApp.CurrentUser | SvelteBaseApp.CurrentUser[keyof SvelteBaseApp.CurrentUser]
 {
     const json = window.localStorage.getItem(APP_CURRENT_USER_KEY);
