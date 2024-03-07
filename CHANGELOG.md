@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## [1.2.7] - 2024-03-07
+
+### Modificações
+
+- Adição de suporte as `action` do Svelte nos componentes exportados no `form`
+
 ## [1.2.6] - 2024-03-06
 
 ### Modificações

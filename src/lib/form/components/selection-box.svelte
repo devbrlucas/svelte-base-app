@@ -2,7 +2,8 @@
     import { writable } from "svelte/store";
     const store = writable<any[]>([]);
 </script>
-<script lang="ts" generics="T, C extends 'checkbox' | 'radio'">
+<script lang="ts" generics="T, C extends 'checkbox' | 'radio', P">
+    import type { Action } from "svelte/action";
     import { onMount } from "svelte";
     import Error from "./error.svelte";
     import checkIcon from "./icons/check.svg?raw";
@@ -16,6 +17,8 @@
     export let group: (C extends 'checkbox' ? T[] : T) | undefined = undefined;
     export let error: string = '';
     export let disabled: boolean = false;
+    export let action: Action<HTMLInputElement, P | undefined> | undefined = undefined;
+    export let actionOptions: P | undefined = undefined;
     const id = `box-${Math.random() * 5}`;
     const valueError = new TypeError('<SelectionBox>: Ao utilizar bind:group, é obrigatório informar a prop value');
     function handleGroup(): void
@@ -47,12 +50,24 @@
 <div class="app input-component selection-box {type}" class:disabled class:info={$$slots.default}>
     {#if type === 'checkbox'}
         {#if Array.isArray(group)}
-            <input {id} type="checkbox" {...$$restProps} bind:checked={checked} {value} autocomplete='off' {disabled} on:change={handleGroup}>
+            {#if action}
+                <input {id} type="checkbox" {...$$restProps} bind:checked={checked} {value} autocomplete='off' {disabled} on:change={handleGroup} use:action={actionOptions}>
+            {:else}
+                <input {id} type="checkbox" {...$$restProps} bind:checked={checked} {value} autocomplete='off' {disabled} on:change={handleGroup}>
+            {/if}
         {:else}
-            <input {id} type="checkbox" {...$$restProps} bind:checked={checked} autocomplete='off' {disabled} on:change>
+            {#if action}
+                <input {id} type="checkbox" {...$$restProps} bind:checked={checked} autocomplete='off' {disabled} on:change use:action={actionOptions}>
+            {:else}
+                <input {id} type="checkbox" {...$$restProps} bind:checked={checked} autocomplete='off' {disabled} on:change>
+            {/if}
         {/if}
     {:else if type === 'radio'}
-        <input {id} type="radio" {...$$restProps} bind:group {value} autocomplete='off' {disabled} on:change>
+        {#if action}
+            <input {id} type="radio" {...$$restProps} bind:group {value} autocomplete='off' {disabled} on:change use:action={actionOptions}>
+        {:else}
+            <input {id} type="radio" {...$$restProps} bind:group {value} autocomplete='off' {disabled} on:change>
+        {/if}
     {/if}
     {#if type === 'radio'}
         <label for={id} class="box radio" aria-hidden="true">

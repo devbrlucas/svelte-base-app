@@ -1,4 +1,5 @@
-<script lang="ts">
+<script lang="ts" generics="P">
+    import type { Action } from "svelte/action";
     import Error from "./error.svelte";
     import LabelInfo from "./label-info.svelte";
     type Type = 
@@ -20,6 +21,8 @@
     export let file: FileList | File | null = null;
     export let error: string = '';
     export let disabled: boolean = false;
+    export let action: Action<HTMLInputElement, P | undefined> | undefined = undefined;
+    export let actionOptions: P | undefined = undefined;
     const id = `input-${Math.random() * 5}`;
     function handleInputFileChange(event: Event): void
     {
@@ -45,27 +48,71 @@
         <LabelInfo {id} {label} />
     {/if}
     {#if type === 'password'}
-        <input {id} type="password" bind:value autocomplete="off" {...$$restProps} {disabled} on:input on:blur />
+        {#if action}
+            <input {id} type="password" bind:value autocomplete="off" {...$$restProps} {disabled} on:input on:blur use:action={actionOptions} />
+        {:else}
+            <input {id} type="password" bind:value autocomplete="off" {...$$restProps} {disabled} on:input on:blur />
+        {/if}
     {:else if type === 'number'}
-        <input {id} type="number" bind:value autocomplete="off" {...$$restProps} {disabled} on:input on:blur />
+        {#if action}
+            <input {id} type="number" bind:value autocomplete="off" {...$$restProps} {disabled} on:input on:blur use:action={actionOptions} />
+        {:else}
+            <input {id} type="number" bind:value autocomplete="off" {...$$restProps} {disabled} on:input on:blur />
+        {/if}
     {:else if type === 'email'}
-        <input {id} type="email" bind:value autocomplete="off" {...$$restProps} {disabled} on:input on:blur />
+        {#if action}
+            <input {id} type="email" bind:value autocomplete="off" {...$$restProps} {disabled} on:input use:action={actionOptions} />
+        {:else}
+            <input {id} type="email" bind:value autocomplete="off" {...$$restProps} {disabled} on:input />
+        {/if}
     {:else if type === 'text'}
-        <input {id} type="text" bind:value autocomplete="off" {...$$restProps} {disabled} on:input on:blur />
+        {#if action}
+            <input {id} type="text" bind:value autocomplete="off" {...$$restProps} {disabled} on:input on:blur use:action={actionOptions} />
+        {:else}
+            <input {id} type="text" bind:value autocomplete="off" {...$$restProps} {disabled} on:input on:blur />
+        {/if}
     {:else if type === 'tel'}
-        <input {id} type="tel" bind:value autocomplete="off" {...$$restProps} {disabled} on:input on:blur />
+        {#if action}
+            <input {id} type="tel" bind:value autocomplete="off" {...$$restProps} {disabled} on:input on:blur use:action={actionOptions} />
+        {:else}
+            <input {id} type="tel" bind:value autocomplete="off" {...$$restProps} {disabled} on:input on:blur />
+        {/if}
     {:else if type === 'date'}
-        <input {id} type="date" bind:value autocomplete="off" {...$$restProps} {disabled} on:input on:blur />
+        {#if action}
+            <input {id} type="date" bind:value autocomplete="off" {...$$restProps} {disabled} on:input on:blur use:action={actionOptions} />
+        {:else}
+            <input {id} type="date" bind:value autocomplete="off" {...$$restProps} {disabled} on:input on:blur />
+        {/if}
     {:else if type === 'month'}
-        <input {id} type="month" bind:value autocomplete="off" {...$$restProps} {disabled} on:input on:blur />
+        {#if action}
+            <input {id} type="month" bind:value autocomplete="off" {...$$restProps} {disabled} on:input on:blur use:action={actionOptions} />
+        {:else}
+            <input {id} type="month" bind:value autocomplete="off" {...$$restProps} {disabled} on:input on:blur />
+        {/if}
     {:else if type === 'search'}
-        <input {id} type="search" bind:value autocomplete="off" {...$$restProps} {disabled} on:input on:blur />
+        {#if action}
+            <input {id} type="search" bind:value autocomplete="off" {...$$restProps} {disabled} on:input on:blur use:action={actionOptions} />
+        {:else}
+            <input {id} type="search" bind:value autocomplete="off" {...$$restProps} {disabled} on:input on:blur />
+        {/if}
     {:else if type === 'color'}
-        <input {id} type="color" bind:value autocomplete="off" {...$$restProps} {disabled} on:input on:blur />
+        {#if action}
+            <input {id} type="color" bind:value autocomplete="off" {...$$restProps} {disabled} on:input on:blur use:action={actionOptions} />
+        {:else}
+            <input {id} type="color" bind:value autocomplete="off" {...$$restProps} {disabled} on:input on:blur />
+        {/if}
     {:else if type === 'datetime-local'}
-        <input {id} type="datetime-local" bind:value autocomplete="off" {...$$restProps} {disabled} on:input on:blur />
+        {#if action}
+            <input {id} type="datetime-local" bind:value autocomplete="off" {...$$restProps} {disabled} on:input on:blur use:action={actionOptions} />
+        {:else}
+            <input {id} type="datetime-local" bind:value autocomplete="off" {...$$restProps} {disabled} on:input on:blur />
+        {/if}
     {:else if type === 'file'}
-        <input {id} type="file" autocomplete="off" {...$$restProps} {disabled} on:input on:blur on:change={handleInputFileChange} />
+        {#if action}
+            <input {id} type="file" autocomplete="off" {...$$restProps} {disabled} on:input on:blur on:change={handleInputFileChange} use:action={actionOptions} />
+        {:else}
+            <input {id} type="file" autocomplete="off" {...$$restProps} {disabled} on:input on:blur on:change={handleInputFileChange} />
+        {/if}
         {#if file == null}
             <label for={id} class="filename">Nenhum arquivo selecionado</label>
         {:else if file instanceof File}

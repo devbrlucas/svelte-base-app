@@ -1,4 +1,5 @@
-<script lang="ts" generics="T">
+<script lang="ts" generics="T, P">
+    import type { Action } from "svelte/action";
     import Error from "./error.svelte";
     import LabelInfo from "./label-info.svelte";
     export let label: string;
@@ -7,6 +8,8 @@
     export let blank: boolean = false;
     export let multiple: boolean = false;
     export let disabled: boolean = false;
+    export let action: Action<HTMLSelectElement, P | undefined> | undefined = undefined;
+    export let actionOptions: P | undefined = undefined;
     const id = `select-${Math.random() * 5}`;
 </script>
 
@@ -19,19 +22,37 @@
         <LabelInfo {id} {label} />
     {/if}
     {#if multiple}
-        <select {id} multiple bind:value {...$$restProps} on:change autocomplete="off" {disabled}>
-            {#if blank}
-                <option value="">Selecione</option>
-            {/if}
-            <slot />
-        </select>
+        {#if action}
+            <select {id} multiple bind:value {...$$restProps} on:change autocomplete="off" {disabled} use:action={actionOptions}>
+                {#if blank}
+                    <option value="">Selecione</option>
+                {/if}
+                <slot />
+            </select>
+        {:else}
+            <select {id} multiple bind:value {...$$restProps} on:change autocomplete="off" {disabled}>
+                {#if blank}
+                    <option value="">Selecione</option>
+                {/if}
+                <slot />
+            </select>
+        {/if}
     {:else}
-        <select {id} bind:value {...$$restProps} on:change autocomplete="off" {disabled}>
-            {#if blank}
-                <option value="">Selecione</option>
-            {/if}
-            <slot />
-        </select>
+        {#if action}
+            <select {id} bind:value {...$$restProps} on:change autocomplete="off" {disabled} use:action={actionOptions}>
+                {#if blank}
+                    <option value="">Selecione</option>
+                {/if}
+                <slot />
+            </select>
+        {:else}
+            <select {id} bind:value {...$$restProps} on:change autocomplete="off" {disabled}>
+                {#if blank}
+                    <option value="">Selecione</option>
+                {/if}
+                <slot />
+            </select>
+        {/if}
     {/if}
     
     <Error name={error} />
