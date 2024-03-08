@@ -50,69 +50,69 @@
     {/if}
     {#if type === 'password'}
         {#if action}
-            <input {id} type="password" bind:value autocomplete="off" {...$$restProps} {disabled} on:input on:blur use:action={actionOptions} />
+            <input {id} type="password" bind:value autocomplete="off" {...$$restProps} {disabled} on:input on:blur use:action={actionOptions} {required} />
         {:else}
-            <input {id} type="password" bind:value autocomplete="off" {...$$restProps} {disabled} on:input on:blur />
+            <input {id} type="password" bind:value autocomplete="off" {...$$restProps} {disabled} on:input on:blur {required} />
         {/if}
     {:else if type === 'number'}
         {#if action}
-            <input {id} type="number" bind:value autocomplete="off" {...$$restProps} {disabled} on:input on:blur use:action={actionOptions} />
+            <input {id} type="number" bind:value autocomplete="off" {...$$restProps} {disabled} on:input on:blur use:action={actionOptions} {required} />
         {:else}
-            <input {id} type="number" bind:value autocomplete="off" {...$$restProps} {disabled} on:input on:blur />
+            <input {id} type="number" bind:value autocomplete="off" {...$$restProps} {disabled} on:input on:blur {required} />
         {/if}
     {:else if type === 'email'}
         {#if action}
-            <input {id} type="email" bind:value autocomplete="off" {...$$restProps} {disabled} on:input use:action={actionOptions} />
+            <input {id} type="email" bind:value autocomplete="off" {...$$restProps} {disabled} on:input use:action={actionOptions} {required} />
         {:else}
-            <input {id} type="email" bind:value autocomplete="off" {...$$restProps} {disabled} on:input />
+            <input {id} type="email" bind:value autocomplete="off" {...$$restProps} {disabled} on:input {required} />
         {/if}
     {:else if type === 'text'}
         {#if action}
-            <input {id} type="text" bind:value autocomplete="off" {...$$restProps} {disabled} on:input on:blur use:action={actionOptions} />
+            <input {id} type="text" bind:value autocomplete="off" {...$$restProps} {disabled} on:input on:blur use:action={actionOptions} {required} />
         {:else}
-            <input {id} type="text" bind:value autocomplete="off" {...$$restProps} {disabled} on:input on:blur />
+            <input {id} type="text" bind:value autocomplete="off" {...$$restProps} {disabled} on:input on:blur {required} />
         {/if}
     {:else if type === 'tel'}
         {#if action}
-            <input {id} type="tel" bind:value autocomplete="off" {...$$restProps} {disabled} on:input on:blur use:action={actionOptions} />
+            <input {id} type="tel" bind:value autocomplete="off" {...$$restProps} {disabled} on:input on:blur use:action={actionOptions} {required} />
         {:else}
-            <input {id} type="tel" bind:value autocomplete="off" {...$$restProps} {disabled} on:input on:blur />
+            <input {id} type="tel" bind:value autocomplete="off" {...$$restProps} {disabled} on:input on:blur {required} />
         {/if}
     {:else if type === 'date'}
         {#if action}
-            <input {id} type="date" bind:value autocomplete="off" {...$$restProps} {disabled} on:input on:blur use:action={actionOptions} />
+            <input {id} type="date" bind:value autocomplete="off" {...$$restProps} {disabled} on:input on:blur use:action={actionOptions} {required} />
         {:else}
-            <input {id} type="date" bind:value autocomplete="off" {...$$restProps} {disabled} on:input on:blur />
+            <input {id} type="date" bind:value autocomplete="off" {...$$restProps} {disabled} on:input on:blur {required} />
         {/if}
     {:else if type === 'month'}
         {#if action}
-            <input {id} type="month" bind:value autocomplete="off" {...$$restProps} {disabled} on:input on:blur use:action={actionOptions} />
+            <input {id} type="month" bind:value autocomplete="off" {...$$restProps} {disabled} on:input on:blur use:action={actionOptions} {required} />
         {:else}
-            <input {id} type="month" bind:value autocomplete="off" {...$$restProps} {disabled} on:input on:blur />
+            <input {id} type="month" bind:value autocomplete="off" {...$$restProps} {disabled} on:input on:blur {required} />
         {/if}
     {:else if type === 'search'}
         {#if action}
-            <input {id} type="search" bind:value autocomplete="off" {...$$restProps} {disabled} on:input on:blur use:action={actionOptions} />
+            <input {id} type="search" bind:value autocomplete="off" {...$$restProps} {disabled} on:input on:blur use:action={actionOptions} {required} />
         {:else}
-            <input {id} type="search" bind:value autocomplete="off" {...$$restProps} {disabled} on:input on:blur />
+            <input {id} type="search" bind:value autocomplete="off" {...$$restProps} {disabled} on:input on:blur {required} />
         {/if}
     {:else if type === 'color'}
         {#if action}
-            <input {id} type="color" bind:value autocomplete="off" {...$$restProps} {disabled} on:input on:blur use:action={actionOptions} />
+            <input {id} type="color" bind:value autocomplete="off" {...$$restProps} {disabled} on:input on:blur use:action={actionOptions} {required} />
         {:else}
-            <input {id} type="color" bind:value autocomplete="off" {...$$restProps} {disabled} on:input on:blur />
+            <input {id} type="color" bind:value autocomplete="off" {...$$restProps} {disabled} on:input on:blur {required} />
         {/if}
     {:else if type === 'datetime-local'}
         {#if action}
-            <input {id} type="datetime-local" bind:value autocomplete="off" {...$$restProps} {disabled} on:input on:blur use:action={actionOptions} />
+            <input {id} type="datetime-local" bind:value autocomplete="off" {...$$restProps} {disabled} on:input on:blur use:action={actionOptions} {required} />
         {:else}
-            <input {id} type="datetime-local" bind:value autocomplete="off" {...$$restProps} {disabled} on:input on:blur />
+            <input {id} type="datetime-local" bind:value autocomplete="off" {...$$restProps} {disabled} on:input on:blur {required} />
         {/if}
     {:else if type === 'file'}
         {#if action}
-            <input {id} type="file" autocomplete="off" {...$$restProps} {disabled} on:input on:blur on:change={handleInputFileChange} use:action={actionOptions} />
+            <input {id} type="file" autocomplete="off" {...$$restProps} {disabled} on:input on:blur on:change={handleInputFileChange} use:action={actionOptions} {required} />
         {:else}
-            <input {id} type="file" autocomplete="off" {...$$restProps} {disabled} on:input on:blur on:change={handleInputFileChange} />
+            <input {id} type="file" autocomplete="off" {...$$restProps} {disabled} on:input on:blur on:change={handleInputFileChange} {required} />
         {/if}
         {#if file == null}
             <label for={id} class="filename">Nenhum arquivo selecionado</label>

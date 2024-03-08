@@ -6,6 +6,7 @@
     export let value: string | null = '';
     export let error: string = '';
     export let disabled: boolean = false;
+    export let required: boolean = false;
     export let action: Action<HTMLElement, P | undefined> | undefined = undefined;
     export let actionOptions: P | undefined = undefined;
     const id = `textarea-${Math.random() * 5}`;
@@ -20,9 +21,9 @@
         <LabelInfo {id} {label} />
     {/if}
     {#if action}
-        <textarea {id} bind:value autocomplete="off" {...$$restProps} {disabled} on:input on:blur use:action={actionOptions}></textarea>
+        <textarea {id} bind:value autocomplete="off" {...$$restProps} {disabled} on:input on:blur use:action={actionOptions} {required}></textarea>
     {:else}
-        <textarea {id} bind:value autocomplete="off" {...$$restProps} {disabled} on:input on:blur></textarea>
+        <textarea {id} bind:value autocomplete="off" {...$$restProps} {disabled} on:input on:blur {required}></textarea>
     {/if}
     <Error name={error} />
 </div>

@@ -1,6 +1,12 @@
 # CHANGELOG
 
-## [1.2.8] - 2024-03-08
+## [1.2.9] - 2024-03-08
+
+### Correções
+
+- Correção nos elementos HTML do `form` que não estava adicionando o atributo `required` na última atualização
+
+## [1.2.9] - 2024-03-08
 
 ### Adições
 

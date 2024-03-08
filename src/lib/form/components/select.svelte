@@ -25,14 +25,14 @@
     {/if}
     {#if multiple}
         {#if action}
-            <select {id} multiple bind:value {...$$restProps} on:change autocomplete="off" {disabled} use:action={actionOptions}>
+            <select {id} multiple bind:value {...$$restProps} on:change autocomplete="off" {disabled} use:action={actionOptions} {required}>
                 {#if blank}
                     <option value="">Selecione</option>
                 {/if}
                 <slot />
             </select>
         {:else}
-            <select {id} multiple bind:value {...$$restProps} on:change autocomplete="off" {disabled}>
+            <select {id} multiple bind:value {...$$restProps} on:change autocomplete="off" {disabled} {required}>
                 {#if blank}
                     <option value="">Selecione</option>
                 {/if}
@@ -41,14 +41,14 @@
         {/if}
     {:else}
         {#if action}
-            <select {id} bind:value {...$$restProps} on:change autocomplete="off" {disabled} use:action={actionOptions}>
+            <select {id} bind:value {...$$restProps} on:change autocomplete="off" {disabled} use:action={actionOptions} {required}>
                 {#if blank}
                     <option value="">Selecione</option>
                 {/if}
                 <slot />
             </select>
         {:else}
-            <select {id} bind:value {...$$restProps} on:change autocomplete="off" {disabled}>
+            <select {id} bind:value {...$$restProps} on:change autocomplete="off" {disabled} {required}>
                 {#if blank}
                     <option value="">Selecione</option>
                 {/if}

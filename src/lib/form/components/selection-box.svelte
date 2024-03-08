@@ -52,22 +52,22 @@
     {#if type === 'checkbox'}
         {#if Array.isArray(group)}
             {#if action}
-                <input {id} type="checkbox" {...$$restProps} bind:checked={checked} {value} autocomplete='off' {disabled} on:change={handleGroup} use:action={actionOptions}>
+                <input {id} type="checkbox" {...$$restProps} bind:checked={checked} {value} autocomplete='off' {disabled} on:change={handleGroup} use:action={actionOptions} {required}>
             {:else}
-                <input {id} type="checkbox" {...$$restProps} bind:checked={checked} {value} autocomplete='off' {disabled} on:change={handleGroup}>
+                <input {id} type="checkbox" {...$$restProps} bind:checked={checked} {value} autocomplete='off' {disabled} on:change={handleGroup} {required}>
             {/if}
         {:else}
             {#if action}
-                <input {id} type="checkbox" {...$$restProps} bind:checked={checked} autocomplete='off' {disabled} on:change use:action={actionOptions}>
+                <input {id} type="checkbox" {...$$restProps} bind:checked={checked} autocomplete='off' {disabled} on:change use:action={actionOptions} {required}>
             {:else}
-                <input {id} type="checkbox" {...$$restProps} bind:checked={checked} autocomplete='off' {disabled} on:change>
+                <input {id} type="checkbox" {...$$restProps} bind:checked={checked} autocomplete='off' {disabled} on:change {required}>
             {/if}
         {/if}
     {:else if type === 'radio'}
         {#if action}
-            <input {id} type="radio" {...$$restProps} bind:group {value} autocomplete='off' {disabled} on:change use:action={actionOptions}>
+            <input {id} type="radio" {...$$restProps} bind:group {value} autocomplete='off' {disabled} on:change use:action={actionOptions} {required}>
         {:else}
-            <input {id} type="radio" {...$$restProps} bind:group {value} autocomplete='off' {disabled} on:change>
+            <input {id} type="radio" {...$$restProps} bind:group {value} autocomplete='off' {disabled} on:change {required}>
         {/if}
     {/if}
     {#if type === 'radio'}
