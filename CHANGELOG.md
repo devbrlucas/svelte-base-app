@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## [1.2.8] - 2024-03-08
+
+### Adições
+
+- Adicionada prop `required` nos componentes do export `form`, fazendo com que seja adicionada uma mensagem de campo obrigatório
+
+### Correções
+
+- Correção da tipagaem da prop `action` nos components do export `form`
+
 ## [1.2.7] - 2024-03-07
 
 ### Modificações

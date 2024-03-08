@@ -15,7 +15,6 @@ declare global {
 				phone: string;
 				image: string | null;
 			}
-			type: string;
 		}
 	}
 }

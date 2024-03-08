@@ -26,6 +26,17 @@
             cursor: inherit;
         }
     }
+    &.required {
+        &::after {
+            content: 'Obrigatório';
+            display: block;
+            margin-top: .5em;
+            margin-left: .5em;
+            color: red;
+            font-weight: bold;
+            font-size: .6em;
+        }
+    }
     & > input, & > select, & > textarea {
         padding: .7em;
         font-family: inherit;
@@ -88,10 +99,11 @@
             background-color: dimgray;
             color: #FFF;
             border-radius: 100%;
-            width: 1.1em;
-            height: 1.1em;
+            font-size: .8em;
+            width: 1em;
+            height: 1em;
             & > svg {
-                font-size: .9em;
+                font-size: .7em;
             }
             &.visible {
                 background-color: var(--accent-color);

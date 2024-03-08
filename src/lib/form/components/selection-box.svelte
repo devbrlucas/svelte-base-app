@@ -17,7 +17,8 @@
     export let group: (C extends 'checkbox' ? T[] : T) | undefined = undefined;
     export let error: string = '';
     export let disabled: boolean = false;
-    export let action: Action<HTMLInputElement, P | undefined> | undefined = undefined;
+    export let required: boolean = false;
+    export let action: Action<HTMLElement, P | undefined> | undefined = undefined;
     export let actionOptions: P | undefined = undefined;
     const id = `box-${Math.random() * 5}`;
     const valueError = new TypeError('<SelectionBox>: Ao utilizar bind:group, é obrigatório informar a prop value');
@@ -47,7 +48,7 @@
     }
     onMount(initGroup);
 </script>
-<div class="app input-component selection-box {type}" class:disabled class:info={$$slots.default}>
+<div class="app input-component selection-box {type}" class:disabled class:info={$$slots.default} class:required>
     {#if type === 'checkbox'}
         {#if Array.isArray(group)}
             {#if action}

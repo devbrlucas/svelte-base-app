@@ -8,7 +8,6 @@ export const POST: RequestHandler = async () => {
             phone: '85996524785',
             image: '/logo.png',
         },
-        type: 'user',
     }
     return new Response(
         JSON.stringify({ data: body }),

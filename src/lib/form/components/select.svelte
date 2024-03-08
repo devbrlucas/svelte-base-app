@@ -8,12 +8,14 @@
     export let blank: boolean = false;
     export let multiple: boolean = false;
     export let disabled: boolean = false;
-    export let action: Action<HTMLSelectElement, P | undefined> | undefined = undefined;
+    export let required: boolean = false;
+    export let action: Action<HTMLElement, P | undefined> | undefined = undefined;
     export let actionOptions: P | undefined = undefined;
     const id = `select-${Math.random() * 5}`;
 </script>
 
-<div class="app input-component" class:disabled class:info={$$slots.info}>
+<!-- <div class="app input-component" class:disabled class:info={$$slots.info}> -->
+<div class="app input-component" class:disabled class:info={$$slots.info} class:required>
     {#if $$slots.info}
         <LabelInfo {id} {label}>
             <slot name="info"></slot>

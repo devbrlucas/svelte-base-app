@@ -21,7 +21,8 @@
     export let file: FileList | File | null = null;
     export let error: string = '';
     export let disabled: boolean = false;
-    export let action: Action<HTMLInputElement, P | undefined> | undefined = undefined;
+    export let required: boolean = false;
+    export let action: Action<HTMLElement, P | undefined> | undefined = undefined;
     export let actionOptions: P | undefined = undefined;
     const id = `input-${Math.random() * 5}`;
     function handleInputFileChange(event: Event): void
@@ -39,7 +40,7 @@
     }
 </script>
 
-<div class="app input-component" class:disabled class:info={$$slots.default}>
+<div class="app input-component" class:disabled class:info={$$slots.default} class:required>
     {#if $$slots.default}
         <LabelInfo {id} {label}>
             <slot></slot>

@@ -11,13 +11,13 @@
 <main id="app-main">
     <h1>Teste do botão de mais informações</h1>
     <p>
-        <Input type="file" label="Selecionar arquivo com info" bind:file>
+        <Input type="file" label="Selecionar arquivo com info" bind:file required>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. A, inventore. Totam voluptatum maxime inventore illum voluptatibus cum error hic labore? Fugit, modi. Expedita tempora voluptatem dolores qui, eaque eum cumque.
         </Input>
         <Input type="datetime-local" label="Selecionar data sem info" />
     </p>
     <p>
-        <Select label="Seleção com info" bind:value>
+        <Select label="Seleção com info" bind:value required>
             <option value="">Item</option>
             <option value=A>Item Dois</option>
             <svelte:fragment slot="info">
@@ -30,7 +30,7 @@
         </Select>
     </p>
     <p>
-        <SelectionBox type="radio" label="Radio com info" value={true} bind:group>
+        <SelectionBox type="radio" label="Radio com info" value={true} bind:group required>
             Informações adicionais sobre o campo
         </SelectionBox>
         <SelectionBox type="radio" label="Radio sem info" value={false} bind:group />

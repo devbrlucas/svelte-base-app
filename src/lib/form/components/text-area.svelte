@@ -6,7 +6,7 @@
     export let value: string | null = '';
     export let error: string = '';
     export let disabled: boolean = false;
-    export let action: Action<HTMLTextAreaElement, P | undefined> | undefined = undefined;
+    export let action: Action<HTMLElement, P | undefined> | undefined = undefined;
     export let actionOptions: P | undefined = undefined;
     const id = `textarea-${Math.random() * 5}`;
 </script>
