@@ -16,7 +16,7 @@
     {
         const response = await Ajax
                                     .post(tokenRequestURL ?? '/auth/password-reset')
-                                    .send('none', { email: form.email });
+                                    .send('none', form);
         if (response.response.status !== 204) return;
         emailSent = true;
         messages
@@ -29,11 +29,7 @@
                                     .patch(tokenValidationURL ?? '/auth/password-reset')
                                     .setOption('disableRedirects', true)
                                     .setOption('unauthenticatedMessage', 'Token de redefinição inválido')
-                                    .send('none', {
-                                        token: form.token,
-                                        password: form.password,
-                                        password_confirmation: form.password_confirmation
-                                    });
+                                    .send('none', form);
         if (response.response.status === 401) messages.warning('O token informado está icorreto ou vencido');
         if (response.error) return;
         messages.success('Senha redefinida com sucesso');
