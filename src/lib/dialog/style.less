@@ -21,9 +21,11 @@ div#app-dialog {
         position: relative;
         padding: 2em 2em 1em;
         max-width: calc(100% - 2em);
+        max-height: calc(100% - 2em);
         border-radius: 1em;
         background-color: #FFF;
         box-shadow: 0 .2em 2em -.2em rgba(0, 0, 0, .2);
+        overflow: hidden auto;
         animation: dialog-visible .2s forwards;
         @media (max-width: 45em) {
             margin: 0 1em;

@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## [1.2.10] - 2024-03-11
+
+### Modificações
+
+- Adição das propos `tokenRequestURL` e `tokenValidationURL` no componente `PasswordResetComponent`
+
 ## [1.2.9] - 2024-03-08
 
 ### Correções

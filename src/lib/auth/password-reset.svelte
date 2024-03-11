@@ -3,6 +3,8 @@
     import { MessagesComponent, messages } from "../messages";
     import { Ajax } from "../ajax";
     import { goto } from "$app/navigation";
+    export let tokenRequestURL: string | undefined = undefined;
+    export let tokenValidationURL: string | undefined = undefined;
     let email: string = '';
     let token: string = '';
     let password: string = '';
@@ -11,7 +13,7 @@
     async function sendToken(): Promise<void>
     {
         const response = await Ajax
-                                    .post('/auth/password-reset')
+                                    .post(tokenRequestURL ?? '/auth/password-reset')
                                     .send('none', { email });
         if (response.response.status !== 204) return;
         emailSent = true;
@@ -22,7 +24,7 @@
     async function sendPassword(): Promise<void>
     {
         const response = await Ajax
-                                    .patch('/auth/password-reset')
+                                    .patch(tokenValidationURL ?? '/auth/password-reset')
                                     .setOption('disableRedirects', true)
                                     .setOption('unauthenticatedMessage', 'Token de redefinição inválido')
                                     .send('none', { token, password, password_confirmation });
