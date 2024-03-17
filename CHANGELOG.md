@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## [1.2.13] - 2024-03-17
+
+### Modificações
+
+- Adicionada prop `successURL` para alterar a URL de redirecionamento após login no `<AuthComponent>`
+- Adicionado slot no `<AuthComponent>` para adicionar campos no form
+- Adicionado slot `info` e `form` no `<PasswordResetComponent>` para alterar a mensagem e adicionar campos no form respectivamente
+
 ## [1.2.12] - 2024-03-11
 
 ### Correções

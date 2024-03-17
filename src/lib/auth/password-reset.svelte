@@ -52,8 +52,11 @@
         </form>
     {:else}
         <form on:submit|preventDefault={sendToken} id="form">
-            <p>Informe o seu e-mail de acesso ao sistema para receber seu token de para reset de senha</p>
+            <slot name="info">
+                <p>Informe o seu e-mail de acesso ao sistema para receber seu token de para reset de senha</p>
+            </slot>
             <Input type="email" label="E-mail" bind:value={form.email} error="email" required size=40 />
+            <slot name="form"></slot>
         </form>
     {/if}
     <footer class="password-reset">

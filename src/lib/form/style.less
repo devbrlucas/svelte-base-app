@@ -14,7 +14,7 @@
                 border-color: #000;
             }
             & > input[type="file"] {
-                & ~ span {
+                & + label {
                     color: #000;
                 }
             }
@@ -70,20 +70,18 @@
         z-index: -10;
         width: 0;
         &:focus {
-            & ~ span {
+            & + label {
                 color: var(--accent-color);
                 font-weight: 400;
             }
         }
-        & ~ span {
+        & + label {
+            display: block;
+            margin-left: .25em;
+            font-size: 1.1em;
             margin-left: .5em;
             color: dimgray;
         }
-    }
-    & > label.filename {
-        display: block;
-        margin-left: .25em;
-        font-size: 1.1em;
     }
     & > span.label {
         position: relative;

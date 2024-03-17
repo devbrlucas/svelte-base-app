@@ -6,6 +6,7 @@
     import { goto } from "$app/navigation";
     export let callback: (() => Promise<void>) | undefined = undefined;
     export let url: string | undefined = undefined;
+    export let successURL: string | undefined = undefined;
     export let form: AuthData = {
         email: '',
         password: '',
@@ -22,7 +23,7 @@
                                     .send<InternalAuthResponse>('json', form);
         if (response.error) return;
         user.set(response.body.data);
-        goto('/admin/dashboard');
+        goto(successURL ?? '/admin/dashboard');
     }
 </script>
 <main id="login-page">
@@ -34,6 +35,7 @@
         <Input type="email" label="E-mail" bind:value={form.email} error="email" required size="40" />
         <br>
         <Input type="password" label="Senha" bind:value={form.password} error="password" required size="40" />
+        <slot></slot>
         <br>
         <SelectionBox type="checkbox" label="Manter conectado" bind:checked={form.remember} error="remember" />
     </form>

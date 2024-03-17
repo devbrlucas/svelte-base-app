@@ -115,7 +115,7 @@
             <input {id} type="file" autocomplete="off" {...$$restProps} {disabled} on:input on:blur on:change={handleInputFileChange} {required} />
         {/if}
         {#if file == null}
-            <label for={id} class="filename">Nenhum arquivo selecionado</label>
+            <label for={id} class="filename">Clique para selicionar um arquivo</label>
         {:else if file instanceof File}
             <label for={id} class="filename">{file.name}</label>
         {:else if file instanceof FileList}
