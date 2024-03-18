@@ -1,6 +1,6 @@
 <script lang="ts" context="module">
     import { writable } from "svelte/store";
-    const store = writable<any[]>([]);
+    const store = writable<Record<string, any[]>>({});
 </script>
 <script lang="ts" generics="T, C extends 'checkbox' | 'radio', P">
     import type { Action } from "svelte/action";
@@ -18,6 +18,7 @@
     export let error: string = '';
     export let disabled: boolean = false;
     export let required: boolean = false;
+    export let key: string = '';
     export let action: Action<HTMLElement, P | undefined> | undefined = undefined;
     export let actionOptions: P | undefined = undefined;
     const id = `box-${Math.random() * 5}`;
@@ -31,7 +32,10 @@
             } else {
                 group = group.filter(item => item !== value) as GroupType;
             }
-            store.set(group as any[]);
+            store.update(content => {
+                content[key] = group as any;
+                return content;
+            });
             group = group;
         }
     }
@@ -41,9 +45,13 @@
         if (type === 'checkbox' && Array.isArray(group)) {
             store.subscribe(content => {
                 if (!value) throw valueError;
-                checked = content.includes(value);
+                if (!content[key]) return;
+                checked = content[key].includes(value);
             });
-            store.set(group as any[]);
+            store.update(content => {
+                content[key] = group as any;
+                return content;
+            });
         }
     }
     onMount(initGroup);

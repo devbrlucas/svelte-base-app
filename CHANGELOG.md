@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## [1.2.14] - 2024-03-18
+
+- Correção no `<SelectionBox>` ao utilizar `type="checkbox"` e `bind:group`: agora é necessário informar a prop `key` caso tenha mais de um array pra fazer o bind
+
+### Correções
+
 ## [1.2.13] - 2024-03-17
 
 ### Modificações
