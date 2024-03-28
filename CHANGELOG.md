@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## [1.2.17] - 2024-03-28
+
+### Correções
+
+- O container do  `<DialogComponent>` não estava rolando ao fazer overflow
+
 ## [1.2.16] - 2024-03-28
 
 ### Correções
