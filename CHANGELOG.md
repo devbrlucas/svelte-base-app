@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## [1.2.15] - 2024-03-28
+
+### Modificações
+
+- Alterado o funcionamento e formato do `<Input type=file>`
+- Adição de slots para personalização no `<AuthComponent>` e `<ResetPasswordComponent>`
+- No `<AuthComponent>`, a prop `successURL` agora também pode receber uma função que retorna a URL de redirecionamento
+- Nos elementos com a classe `circle`, haviam as classes `add` e `remove`, utilizadas para escolher as cores. Essas foram substituídos por `green` e `red` respectivamente
+
 ## [1.2.14] - 2024-03-18
 
 - Correção no `<SelectionBox>` ao utilizar `type="checkbox"` e `bind:group`: agora é necessário informar a prop `key` caso tenha mais de um array pra fazer o bind

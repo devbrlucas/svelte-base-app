@@ -1,3 +1,44 @@
+.disabled() {
+    &.disabled {
+        cursor: not-allowed;
+        & > input, & > select, & > textarea, & label {
+            cursor: inherit;
+        }
+    }
+}
+.required() {
+    &.required {
+        &::after {
+            content: 'Obrigatório';
+            display: block;
+            margin-top: .5em;
+            margin-left: .5em;
+            color: red;
+            font-weight: bold;
+            font-size: .6em;
+        }
+    }
+}
+.infos() {
+    & > div.info {
+        position: absolute;
+        z-index: 100;
+        left: 0;
+        top: 1.1em;
+        padding: 1em;
+        margin-bottom: .5em;
+        width: max-content;
+        max-width: 20em;
+        color: #FFF;
+        background-color: dimgray;
+        box-shadow: 0 .2em 2em rgba(0, 0, 0, .2);
+        font-size: 1em;
+        border-radius: 1em;
+        @media (orientation: portrait) {
+            max-width: calc(100vw - 7em);
+        }
+    }
+}
 .app.input-component {
     position: relative;
     margin: .5em;
@@ -13,28 +54,6 @@
             & > input, & > select, & > textarea {
                 border-color: #000;
             }
-            & > input[type="file"] {
-                & + label {
-                    color: #000;
-                }
-            }
-        }
-    }
-    &.disabled {
-        cursor: not-allowed;
-        & > input, & > select, & > textarea, & label {
-            cursor: inherit;
-        }
-    }
-    &.required {
-        &::after {
-            content: 'Obrigatório';
-            display: block;
-            margin-top: .5em;
-            margin-left: .5em;
-            color: red;
-            font-weight: bold;
-            font-size: .6em;
         }
     }
     & > input, & > select, & > textarea {
@@ -59,29 +78,8 @@
             background-color: var(--accent-color);
         }
     }
-
     & > input[type="color"] {
         padding: .3em;
-    }
-
-    & > input[type="file"] {
-        opacity: 0;
-        position: absolute;
-        z-index: -10;
-        width: 0;
-        &:focus {
-            & + label {
-                color: var(--accent-color);
-                font-weight: 400;
-            }
-        }
-        & + label {
-            display: block;
-            margin-left: .25em;
-            font-size: 1.1em;
-            margin-left: .5em;
-            color: dimgray;
-        }
     }
     & > span.label {
         position: relative;
@@ -114,24 +112,9 @@
             }
         }
     }
-    & > div.info {
-        position: absolute;
-        z-index: 100;
-        left: 0;
-        top: 1.1em;
-        padding: 1em;
-        margin-bottom: .5em;
-        width: max-content;
-        max-width: 20em;
-        color: #FFF;
-        background-color: dimgray;
-        box-shadow: 0 .2em 2em rgba(0, 0, 0, .2);
-        font-size: 1em;
-        border-radius: 1em;
-        @media (orientation: portrait) {
-            max-width: calc(100vw - 7em);
-        }
-    }
+    .disabled();
+    .required();
+    .infos();
 }
 .app.textarea {
     background-color: #FFF;
@@ -237,4 +220,77 @@
     margin-left: .5em;
     display: block;
     color: #F00;
+}
+.app.input-component.file {
+    position: relative;
+    padding: .5em 1em;
+    min-width: 10em;
+    text-align: center;
+    background-color: rgb(232, 232, 232);
+    border-radius: 1em;
+    @media (hover: hover) {
+        transition: outline .15s;
+        &:hover {
+            outline: solid .15em dimgray;
+        }
+    }
+    & > span.icon {
+        margin-bottom: 1em;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 100%;
+        width: 2em;
+        height: 2em;
+        color: #FFF;
+        background-color: dimgray;
+    }
+    &.fileselected {
+        & > span.icon {
+            background-color: var(--accent-color);
+        }
+        & > button {
+            visibility: visible;
+        }
+    }
+    & > input[type="file"] {
+        opacity: 0;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 2;
+        cursor: pointer;
+        &:focus {
+            & ~ label, & ~ ol > li {
+                text-decoration: underline 1.5px;
+            }
+        }
+    }
+    & > label {
+        display: block;
+        overflow-wrap: anywhere;
+    }
+    & > ol {
+        margin: 0;
+        padding-left: .8em;
+        text-align: left;
+        overflow-wrap: anywhere;
+        & > li::marker {
+            font-weight: bold;
+            font-size: .8em;
+        }
+    }
+    & > button {
+        visibility: hidden;
+        position: absolute;
+        top: .3em;
+        right: .3em;
+        z-index: 5;
+        font-size: 1.5em;
+    }
+    .disabled();
+    .required();
+    .infos();
 }

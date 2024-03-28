@@ -28,7 +28,7 @@ type AjaxResponse<B> = {
 }
 type ResponseBody = Blob | string | Record<string, any> | FormData | null;
 type RequestBody = Record<string, any> | FormData | undefined;
-type AjaxResourceResponse<R, A> = AjaxResponse<ResourceResponse<R, A>>;
+export type AjaxResourceResponse<R, A> = AjaxResponse<ResourceResponse<R, A>>;
 type AjaxPaginatedResponse<R, A> = AjaxResponse<PaginatedResponse<R, A>>;
 type AjaxValidationErrorResponse = {
     message: string;

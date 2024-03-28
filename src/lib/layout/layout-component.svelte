@@ -1,8 +1,9 @@
 <script lang="ts">
     import "../styles/base.less";
-    import { messages } from "../messages";
+    import { MessagesComponent, messages } from "../messages";
     import xmarkIcon from "./icons/xmark.svg?raw";
     import { titleStore } from "../utils/title_store";
+    import { ConfirmationComponent, DialogComponent } from "$lib";
     export let version: string;
     export let baseTitle: string;
     let installPromptContainer: HTMLDivElement;
@@ -46,3 +47,6 @@
     </div>
 {/if}
 <aside id="app-version">Versão {version}</aside>
+<MessagesComponent />
+<ConfirmationComponent />
+<DialogComponent />

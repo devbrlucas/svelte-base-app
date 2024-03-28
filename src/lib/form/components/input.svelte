@@ -2,6 +2,7 @@
     import type { Action } from "svelte/action";
     import Error from "./error.svelte";
     import LabelInfo from "./label-info.svelte";
+    import { uploadIcon, xmarkIcon } from "$lib/icons";
     type Type = 
         'password' |
         'number' |
@@ -38,15 +39,25 @@
             file = input.multiple ? input.files : input.files[0];
         }
     }
+    function clearSelectedFiles(event: Event): void
+    {
+        file = null;
+        const button = event.currentTarget as HTMLButtonElement;
+        const input = button.parentElement?.querySelector('input');
+        if (!input) return;
+        input.value = '';
+    }
 </script>
 
-<div class="app input-component" class:disabled class:info={$$slots.default} class:required>
-    {#if $$slots.default}
-        <LabelInfo {id} {label}>
-            <slot></slot>
-        </LabelInfo>
-    {:else}
-        <LabelInfo {id} {label} />
+<div class="app input-component" class:disabled class:info={$$slots.default} class:required class:file={type === 'file'} class:fileselected={Boolean(file)}>
+    {#if type !== 'file'}
+        {#if $$slots.default}
+            <LabelInfo {id} {label}>
+                <slot></slot>
+            </LabelInfo>
+        {:else}
+            <LabelInfo {id} {label} />
+        {/if}
     {/if}
     {#if type === 'password'}
         {#if action}
@@ -110,19 +121,27 @@
         {/if}
     {:else if type === 'file'}
         {#if action}
-            <input {id} type="file" autocomplete="off" {...$$restProps} {disabled} on:input on:blur on:change={handleInputFileChange} use:action={actionOptions} {required} />
+            <input {id} type="file" autocomplete="off" {...$$restProps} {disabled} on:input on:blur on:change={handleInputFileChange} use:action={actionOptions} {required} aria-label={label} />
         {:else}
-            <input {id} type="file" autocomplete="off" {...$$restProps} {disabled} on:input on:blur on:change={handleInputFileChange} {required} />
+            <input {id} type="file" autocomplete="off" {...$$restProps} {disabled} on:input on:blur on:change={handleInputFileChange} {required} aria-label={label} />
         {/if}
+        <span class="icon">
+            {@html uploadIcon}
+        </span>
         {#if file == null}
-            <label for={id} class="filename">Clique para selicionar um arquivo</label>
+            <label for={id}>{label}</label>
         {:else if file instanceof File}
-            <label for={id} class="filename">{file.name}</label>
+            <label for={id}>{file.name}</label>
         {:else if file instanceof FileList}
-            {#each file as _file}
-                <label for={id} class="filename">{_file.name}</label>
-            {/each}
+            <ol>
+                {#each file as _file}
+                    <li>{_file.name}</li>
+                {/each}
+            </ol>
         {/if}
+        <button type="button" class="circle red" title="limpar arquivos selecionados" on:click={clearSelectedFiles}>
+            {@html xmarkIcon}
+        </button>
     {/if}
     <Error name={error} />
 </div>

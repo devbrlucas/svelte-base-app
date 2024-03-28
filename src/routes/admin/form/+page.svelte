@@ -12,6 +12,7 @@
     <a href="/admin/form/info">Teste do botão de informações adicionais</a>
     <br>
     <br>
-    <Input type="file" label="Conta de luz" />
+    <Input type="file" label="Selecione um arquivo" />
+    <Input type="file" label="Selecione vários arquivos" multiple />
 </main>
 <aside id="app-aside"></aside>

@@ -1,14 +1,12 @@
 <script lang="ts">
     import showNavIcon from "./icons/show-nav.svg?raw";
     import hideNavIcon from "./icons/hide-nav.svg?raw";
-    import { MessagesComponent, messages } from "../messages";
+    import { messages } from "../messages";
     import { UserNotFoundError, currentUser, user } from "../auth";
-    import { ConfirmationComponent } from "../confirmation";
     import { afterNavigate, beforeNavigate, invalidateAll } from "$app/navigation";
     import { slide } from "svelte/transition";
     import ProfileButton from "./components/profile-button.svelte";
     import ProfileLinks from "./components/profile-links.svelte";
-    import { DialogComponent } from "../dialog";
     import { onMount } from "svelte";
     let navState: boolean = false;
     let profileMenuState: boolean = false;
@@ -88,6 +86,3 @@
     {/if}
 </aside>
 <slot name="body"></slot>
-<MessagesComponent />
-<ConfirmationComponent />
-<DialogComponent />

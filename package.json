@@ -1,6 +1,6 @@
 {
 	"name": "svelte-base-app",
-	"version": "1.2.14",
+	"version": "1.2.15",
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build && npm run package",
@@ -58,6 +58,7 @@
 	"types": "./dist/index.d.ts",
 	"type": "module",
 	"dependencies": {
+		"@fortawesome/fontawesome-free": "^6.5.1",
 		"qr-scanner": "^1.4.2"
 	}
 }

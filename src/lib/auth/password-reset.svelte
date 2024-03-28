@@ -1,6 +1,6 @@
 <script lang="ts">
     import { Input } from "../form";
-    import { MessagesComponent, messages } from "../messages";
+    import { messages } from "../messages";
     import { Ajax } from "../ajax";
     import { goto } from "$app/navigation";
     export let tokenRequestURL: string | undefined = undefined;
@@ -60,7 +60,11 @@
         </form>
     {/if}
     <footer class="password-reset">
-        <a href="/login">Voltar</a>
+        {#if emailSent}
+            <a href="#email" on:click|preventDefault={() => emailSent = false}>Voltar</a>
+        {:else}
+            <a href="/login">Voltar</a>
+        {/if}
         <button type="submit" form="form" class="highlighted">
             {#if emailSent}
                 Redefinir senha
@@ -70,4 +74,3 @@
         </button>
     </footer>
 </main>
-<MessagesComponent />

@@ -1,12 +1,11 @@
 <script lang="ts">
     import { Input, SelectionBox } from "../form";
-    import { MessagesComponent } from "../messages";
-    import { Ajax } from "../ajax";
+    import { Ajax, type AjaxResourceResponse } from "../ajax";
     import { user, type AuthResponse, type AuthData } from "./index";
     import { goto } from "$app/navigation";
     export let callback: (() => Promise<void>) | undefined = undefined;
     export let url: string | undefined = undefined;
-    export let successURL: string | undefined = undefined;
+    export let successURL: string | ((response: AjaxResourceResponse<SvelteBaseApp.CurrentUser, any>) => Promise<string>) |  undefined = undefined;
     export let form: AuthData = {
         email: '',
         password: '',
@@ -23,7 +22,15 @@
                                     .send<InternalAuthResponse>('json', form);
         if (response.error) return;
         user.set(response.body.data);
-        goto(successURL ?? '/admin/dashboard');
+        if (successURL) {
+            if (typeof successURL === 'string') {
+                goto(successURL);
+            } else {
+                goto(await successURL(response));
+            }
+        } else {
+            goto('/admin/dashboard');
+        }
     }
 </script>
 <main id="login-page">
@@ -50,4 +57,3 @@
         {/if}
     </footer>
 </main>
-<MessagesComponent />
