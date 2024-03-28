@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## [1.2.16] - 2024-03-28
+
+### Correções
+
+- Ao abrir um modal com `dialog.open()`, ao navegar entre páginas, o modal ficava aberto (agora ele é fechado)
+
 ## [1.2.15] - 2024-03-28
 
 ### Modificações

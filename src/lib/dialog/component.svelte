@@ -2,7 +2,9 @@
     import xmarkIcon from "./xmark.svg?raw";
     import { store } from "./store";
     import { store as confirmationStore } from "../confirmation/store";
+    import { dialog as dialogUtils } from "./index";
     import "./style.less";
+    import { beforeNavigate } from "$app/navigation";
     let dialog: HTMLDivElement | undefined;
     function close(): void
     {
@@ -31,14 +33,15 @@
     $: {
         $store.component ? show() : close();
     }
+    beforeNavigate(() => dialogUtils.close());
 </script>
 
 <div bind:this={dialog} id="app-dialog" role="dialog">
-    <div>
+    <div id="app-dialog-window">
         {#if $store}
             <header>
                 <h3>{$store.title}</h3>
-                <button type="button" on:click={close}>
+                <button type="button" class="circle red" on:click={close}>
                     {@html xmarkIcon}
                 </button>
             </header>

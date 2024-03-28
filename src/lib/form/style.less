@@ -229,9 +229,8 @@
     background-color: rgb(232, 232, 232);
     border-radius: 1em;
     @media (hover: hover) {
-        transition: outline .15s;
         &:hover {
-            outline: solid .15em dimgray;
+            outline: solid .1em dimgray;
         }
     }
     & > span.icon {
@@ -264,7 +263,7 @@
         cursor: pointer;
         &:focus {
             & ~ label, & ~ ol > li {
-                text-decoration: underline 1.5px;
+                text-decoration: underline 1px;
             }
         }
     }
