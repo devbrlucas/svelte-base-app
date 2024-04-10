@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## [1.2.18] - 2024-04-10
+
+### Correções
+
+- Correção em `service-worker` da função que manipula o evento `install` (estava adicionando ao cache duas vezes)
+
+### Modificações
+
+- Adicionado suporte para o erro `TypeError` no manipulador do evento `fetch` em `service-worker` para que seja retornada página de cache offline
+- Alterado o mecanismo de geração do QR Code (agora utiliza o pacote NPM `qrcode`)
+
 ## [1.2.17] - 2024-03-28
 
 ### Correções

@@ -17,6 +17,10 @@
             messages.error('ERRO');
         }
     }
+    async function generate(value: string): Promise<string>
+    {
+        return qrcode.generate(value);
+    }
 </script>
 
 <main id="app-main">
@@ -33,7 +37,7 @@
     <br>
     <br>
     {#if code}
-        {#await qrcode.generate(code)}
+        {#await generate(value)}
             Gerando QR Code...
         {:then qrcodeData} 
             <img src={qrcodeData} alt="code">

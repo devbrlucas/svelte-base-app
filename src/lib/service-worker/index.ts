@@ -1,16 +1,15 @@
 export async function handleInstallEvent(event: ExtendableEvent, cacheName: string, assets: string[], serviceWorker: ServiceWorkerGlobalScope): Promise<void>
 {
+    try {
+        await serviceWorker.skipWaiting();
+    } catch (error) {
+        console.error(error);
+    }
     async function addFilesToCacheAndSkipWaiting(): Promise<void>
     {
 		const cache = await caches.open(cacheName);
 		await cache.addAll(assets);
-        try {
-            await serviceWorker.skipWaiting();
-        } catch (error) {
-            console.error(error);
-        }
 	}
-	event.waitUntil(addFilesToCacheAndSkipWaiting());
     try {
         event.waitUntil(addFilesToCacheAndSkipWaiting());
     } catch (error) {
@@ -57,8 +56,10 @@ export async function handleFetch(event: FetchEvent, cacheName: string, assets: 
             if (response.status === 200) cache.put(event.request, response.clone());
             return response;
         } catch (error) {
-            const response = await cache.match(event.request);
+            let response = await cache.match(event.request);
 			if (response) return response;
+            if (error instanceof TypeError) response = await cache.match(new URL('/offline.html'));
+            if (response) return response;
             return respondWithRedirect();
         }
     }
