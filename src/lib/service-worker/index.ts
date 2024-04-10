@@ -1,7 +1,7 @@
 export async function handleInstallEvent(event: ExtendableEvent, cacheName: string, assets: string[], serviceWorker: ServiceWorkerGlobalScope): Promise<void>
 {
     try {
-        await serviceWorker.skipWaiting();
+        serviceWorker.skipWaiting();
     } catch (error) {
         console.error(error);
     }
