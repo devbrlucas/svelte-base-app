@@ -6,8 +6,9 @@
     async function open()
     {
         const re = await dialog.open<{name: string}>('Cadastro do cliente', Comp, { name: 'Lucas Moreira' });
+        console.log('Primeiro retorno');
         console.log(re);
-        if (re) {
+        if (typeof re !== 'undefined') {
             if (re.name) {
                 message = `O nome informado é ${re.name}`;
             } else {

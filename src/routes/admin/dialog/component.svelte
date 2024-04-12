@@ -2,8 +2,16 @@
     import { goto } from "$app/navigation";
     import { confirmation, dialog, messages } from "$lib";
     import { Input } from "$lib/form";
+    import ComponentTwo from "./component_two.svelte";
     export let props: {name: string};
     let name: string = '';
+    async function openNewDialog(): Promise<void>
+    {
+        const result = await dialog.open<string>('Dialog Dois', ComponentTwo);
+        console.log('Retorno dois');
+        console.log(result);
+        if (typeof result !== 'undefined') name = result;
+    }
 </script>
 <h2>Olá {props.name}</h2>
 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati voluptate ut aspernatur doloribus ea hic quis magnam. Corrupti quod minus eligendi, omnis, iste ullam, qui nemo tempore autem neque voluptate?</p>
@@ -18,6 +26,7 @@
 <!-- <main>
 </main> -->
 <footer>
+    <button type="button" class="highlighted" on:click={openNewDialog}>Abrir novo dialog</button>
     <button type="button" class="highlighted" on:click={() => dialog.resolve({name})}>Informar nome</button>
     <button type="button" class="highlighted" use:confirmation={{callback: () => dialog.close(), message: 'Fechar janela?'}}>Fechar janela</button>
     <button type="button" class="highlighted" on:click={() => messages.success('Teste da sobreposição da mensagem')}>Mensagem</button>

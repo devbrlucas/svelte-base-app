@@ -1,17 +1,18 @@
 <script lang="ts">
     import xmarkIcon from "./xmark.svg?raw";
-    import { store } from "./store";
+    import { dialogs } from "./dialogs";
     import { store as confirmationStore } from "../confirmation/store";
     import { dialog as dialogUtils } from "./index";
     import "./style.less";
     import { beforeNavigate } from "$app/navigation";
+    import { onMount } from "svelte";
     let dialog: HTMLDivElement | undefined;
     function close(): void
     {
+        dialogUtils.close();
         dialog
             ?.classList
             .remove('open');
-        if (!$store.resolved) store.set({resolved: null});
         window.removeEventListener('keyup', closeByKeyboard);
     }
     function show(): void
@@ -19,11 +20,6 @@
         dialog
             ?.classList
             .add('open');
-        setTimeout(() => {
-            dialog
-                ?.querySelector<HTMLButtonElement>('header button')
-                ?.focus();
-        }, 200);
         window.addEventListener('keyup', closeByKeyboard);
     }
     function closeByKeyboard(event: KeyboardEvent): void
@@ -31,21 +27,22 @@
         if (event.key === 'Escape' && !Boolean($confirmationStore)) close();
     }
     $: {
-        $store.component ? show() : close();
+        $dialogs.length === 0 ? close() : show();
     }
-    beforeNavigate(() => dialogUtils.close());
+    beforeNavigate(() => dialogUtils.closeAll());
+    onMount(() => dialogUtils.closeAll());
 </script>
 
 <div bind:this={dialog} id="app-dialog" role="dialog">
-    <div id="app-dialog-window">
-        {#if $store}
+    {#each $dialogs as dialog, index (dialog.id)}
+        <div class="dialog" class:active={$dialogs.length === (index + 1)} data-id={dialog.id}>
             <header>
-                <h3>{$store.title}</h3>
+                <h3>{dialog.title}</h3>
                 <button type="button" class="circle red" on:click={close}>
                     {@html xmarkIcon}
                 </button>
             </header>
-            <svelte:component this={$store.component} props={$store.props} />
-        {/if}
-    </div>
+            <svelte:component this={dialog.component} props={dialog.props} />
+        </div>
+    {/each}
 </div>

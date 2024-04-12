@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## [1.2.19] - 2024-04-12
+
+### Modificações
+
+- Em `dialog.open()`, agora o retorno quando a janela for fechada será do tipo `undefined` (tanto pela tecla `Esc`, botão de fechar ou `dialog.close()`)
+- `dialog.open()` agora suporta chamar o método mesmo com outra janela aberta (a última será sempre a visível acima); as funções `dialog.close()` e `dialog.resolve()` irão utilizar sempre a janela, ou seja, o última que foi adicionada
+
 ## [1.2.18] - 2024-04-10
 
 ### Correções
