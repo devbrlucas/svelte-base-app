@@ -9,7 +9,6 @@
     import plusIcon from "./icons/plus.svg?raw";
     import minusIcon from "./icons/minus.svg?raw";
     export let meta: PaginatedResponse['meta'];
-    export let links: PaginatedResponse['links'];
     const INITIAL_ITEMS_PER_PAGE: number = 20;
     const MAX_ITENS_PER_PAGE: number = 300;
     let pages: number[] = [];
@@ -64,7 +63,7 @@
         <button type="button" on:click={() => currentPage = 1} disabled={meta.current_page === 1} title="primeira página">
             {@html firstIcon}    
         </button>
-        <button type="button" on:click={() => currentPage--} disabled={!links.prev} title="página anterior">
+        <button type="button" on:click={() => currentPage--} disabled={meta.current_page === 1} title="página anterior">
             {@html previousIcon}
         </button>
         <select bind:value={meta.current_page}>
@@ -72,7 +71,7 @@
                 <option>{page}</option>
             {/each}
         </select>
-        <button type="button" on:click={() => currentPage++} disabled={!links.next} title="próxima página">
+        <button type="button" on:click={() => currentPage++} disabled={meta.current_page === meta.last_page} title="próxima página">
             {@html nextIcon}
         </button>
         <button type="button" on:click={() => currentPage = meta.last_page} disabled={meta.current_page === meta.last_page} title="última página">

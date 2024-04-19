@@ -75,7 +75,7 @@
         </svelte:fragment>
     </Table>
     <h2>Com pagination</h2>
-    <Table center pagination={{meta: data.meta, links: data.links}}>
+    <Table center pagination={{meta: data.meta}}>
         <svelte:fragment slot="head">
             <th>Número<br>UM</th>
             <th>Número<br>DOIS</th>

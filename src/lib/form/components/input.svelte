@@ -25,6 +25,7 @@
     export let required: boolean = false;
     export let action: Action<HTMLElement, P | undefined> | undefined = undefined;
     export let actionOptions: P | undefined = undefined;
+    export let clearCallback: ((event: Event) => void | Promise<void>) | undefined = undefined;
     const id = `input-${Math.random() * 5}`;
     function handleInputFileChange(event: Event): void
     {
@@ -41,11 +42,15 @@
     }
     function clearSelectedFiles(event: Event): void
     {
-        file = null;
-        const button = event.currentTarget as HTMLButtonElement;
-        const input = button.parentElement?.querySelector('input');
-        if (!input) return;
-        input.value = '';
+        if (file) {
+            file = null;
+            const button = event.currentTarget as HTMLButtonElement;
+            const input = button.parentElement?.querySelector('input');
+            if (!input) return;
+            input.value = '';
+        } else {
+            clearCallback?.(event);
+        }
     }
 </script>
 
@@ -139,9 +144,11 @@
                 {/each}
             </ol>
         {/if}
-        <button type="button" class="circle red" title="limpar arquivos selecionados" on:click={clearSelectedFiles}>
-            {@html xmarkIcon}
-        </button>
+        {#if clearCallback || file}
+            <button type="button" class="circle red" title="limpar arquivos selecionados" on:click={clearSelectedFiles}>
+                {@html xmarkIcon}
+            </button>
+        {/if}
     {/if}
     <Error name={error} />
 </div>

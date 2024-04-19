@@ -10,6 +10,10 @@
     let installPrompt: BeforeInstallPromptEvent | null;
     window.addEventListener('beforeinstallprompt', async event => {
         event.preventDefault();
+        const latestClose = Number(
+            localStorage.getItem('devbrlucas:svelte-panel:install_prompt_closed') ?? '0'
+        );
+        if ((Date.now() - latestClose) < 86_400_000) return; // lower than 1 day
         installPrompt = event;
     });
     async function installPromptChoice(): Promise<void>
@@ -26,6 +30,7 @@
     }
     function removeInstallPrompt(event: MouseEvent): void
     {
+        localStorage.setItem('devbrlucas:svelte-panel:install_prompt_closed', Date.now().toString());
         const button = event.currentTarget as HTMLButtonElement;
         button.parentElement?.remove();
     }

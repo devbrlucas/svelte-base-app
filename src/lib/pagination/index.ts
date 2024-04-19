@@ -9,10 +9,4 @@ export type PaginatedResponse<T = object, U = object> = U & {
         to: number | null;
         total: number;
     }
-    links: {
-        first: string;
-        last: string | null;
-        next: string | null;
-        prev: string | null;
-    }
 }

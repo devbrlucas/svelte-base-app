@@ -11,14 +11,7 @@ export const load: PageLoad = ({ url }) => {
         to: 20,
         total: 80,
     }
-    const links: PaginatedResponse['links'] = {
-        first: 'http://localhost:5500/admin/table',
-        last: 'http://localhost:5500/admin/table?page=4',
-        next: `http://localhost:5500/admin/table?page=${page + 1}`,
-        prev: `http://localhost:5500/admin/table?page=${page - 1}`,
-    }
     return {
         meta,
-        links,
     }
 }

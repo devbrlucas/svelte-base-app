@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## [1.2.20] - 2024-04-19
+
+### Modificações
+
+- Ao utilizar `<Input type=file multiple>`, a prop `file` irá receber `File[]` ao invés de `FileList`
+- A prop `links` foi removida do componente `<Pagination>` e do tipo `PaginatedResponse`
+- No componente `<Input>` em `/form`, foi adicionada a prop `clearCallback`; ela é vinculada ao `<Input type=file>` e indica uma função que será executada ao clicar no botão de fechar quando o `<input>` estiver vazio
+- No `<LayoutComponent>`, quando a janela de instalação for fechada manualmente, ela ficará oculta durante um dia, e só depois desse tempo será exibida novamente
+
 ## [1.2.19] - 2024-04-12
 
 ### Modificações
