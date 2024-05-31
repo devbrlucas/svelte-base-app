@@ -12,7 +12,7 @@
     const id = `textarea-${Math.random() * 5}`;
 </script>
 
-<div class="app input-component textarea" class:disabled>
+<div class="app input-component textarea" class:disabled class:required>
     {#if $$slots.default}
         <LabelInfo {id} {label}>
             <slot></slot>

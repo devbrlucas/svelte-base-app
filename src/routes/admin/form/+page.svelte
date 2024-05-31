@@ -7,6 +7,9 @@
         const button = event.currentTarget as HTMLButtonElement;
         button.parentElement?.remove();
     }
+    let form: {file: File | null} = {
+        file: null
+    }
 </script>
 
 <main id="app-main">
@@ -18,6 +21,7 @@
     <br>
     <br>
     <Input type="file" label="Selecione um arquivo" {clearCallback} />
+    <Input type=file label="Selecione um arquivo com bind" bind:file={form.file} error=file />
     <Input type="file" label="Selecione vários arquivos" multiple />
 </main>
 <aside id="app-aside"></aside>

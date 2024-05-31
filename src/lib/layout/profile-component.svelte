@@ -43,11 +43,11 @@
         <br>
         <Input type="email" label="E-Mail" bind:value={form.email} error="email" required size=60 />
         <br>
-        <Input type="file" label="Imagem" bind:value={form.image} error="image" />
-        <slot></slot>
+        <Input type="file" label="Selecione uma foto de perfil" bind:file={form.image} error="image" />
         <br>
         <Input type="password" label="Senha" bind:value={form.password} error="password" size=40 />
         <Input type="password" label="Confirmação da senha" bind:value={form.password_confirmation} error="password_confirmation" size=40 />
+        <slot></slot>
     </form>
 </main>
 

@@ -14,6 +14,7 @@
         'datetime-local' |
         'search' |
         'file' |
+        'time' |
         'color';
 
     export let type: Type
@@ -123,6 +124,12 @@
             <input {id} type="datetime-local" bind:value autocomplete="off" {...$$restProps} {disabled} on:input on:blur use:action={actionOptions} {required} />
         {:else}
             <input {id} type="datetime-local" bind:value autocomplete="off" {...$$restProps} {disabled} on:input on:blur {required} />
+        {/if}
+    {:else if type === 'time'}
+        {#if action}
+            <input {id} type="time" bind:value autocomplete="off" {...$$restProps} {disabled} on:input on:blur use:action={actionOptions} {required} />
+        {:else}
+            <input {id} type="time" bind:value autocomplete="off" {...$$restProps} {disabled} on:input on:blur {required} />
         {/if}
     {:else if type === 'file'}
         {#if action}
