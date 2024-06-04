@@ -45,7 +45,7 @@ export * from "./layout";
 export * from "./ajax";
 export * from "./table";
 export * from "./link";
-export { Pagination } from "./pagination";
+export * from "./pagination";
 export * from "./messages";
 export * from "./datalist";
 export * from "./dialog";

@@ -1,6 +1,6 @@
 <script lang="ts">
     import { goto } from "$app/navigation";
-    import { confirmation, dialog, messages } from "$lib";
+    import { Pagination, confirmation, dialog, messages } from "$lib";
     import { Input } from "$lib/form";
     import ComponentTwo from "./component_two.svelte";
     export let props: {name: string};
@@ -23,8 +23,16 @@
 <p>
     <Input type="text" label="Nome do retorno" bind:value={name} />
 </p>
-<!-- <main>
-</main> -->
+<main>
+    <Pagination  meta={{
+        current_page: 0,
+        from: 0,
+        last_page: 0,
+        per_page: 0,
+        to: 0,
+        total: 0,
+    }} />
+</main>
 <footer>
     <button type="button" class="highlighted" on:click={openNewDialog}>Abrir novo dialog</button>
     <button type="button" class="highlighted" on:click={() => dialog.resolve({name})}>Informar nome</button>

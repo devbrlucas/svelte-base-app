@@ -4,7 +4,6 @@
     import { store as confirmationStore } from "../confirmation/store";
     import { dialog as dialogUtils } from "./index";
     import "./style.less";
-    import { beforeNavigate } from "$app/navigation";
     import { onMount } from "svelte";
     let dialog: HTMLDivElement | undefined;
     function close(): void
@@ -29,7 +28,6 @@
     $: {
         $dialogs.length === 0 ? close() : show();
     }
-    beforeNavigate(() => dialogUtils.closeAll());
     onMount(() => dialogUtils.closeAll());
 </script>
 

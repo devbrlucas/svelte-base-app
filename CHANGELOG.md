@@ -1,5 +1,26 @@
 # CHANGELOG
 
+## [1.2.22] - 2024-06-04
+
+### Modificações
+
+- No `<DialogComponent>`, agora ele não é mais fechado quando houver navegação
+
+### Adições
+
+- Adicionada exportação do tipo `PaginatedResponse`
+
+## [1.2.21] - 2024-05-31
+
+## Adições
+
+- Adicionado no componente `<Input>` o `type=time`
+
+## Correções
+
+- Corrigido o `<TextArea>` que não exibia a mensagem de obrigatório
+- Corrigido o formulário padrão no `<ProfileLayoutComponent>` que não estava alterando as imagens de perfil
+
 ## [1.2.20] - 2024-04-19
 
 ### Modificações
