@@ -47,7 +47,7 @@
         <br>
         <Input type="password" label="Senha" bind:value={form.password} error="password" size=40 />
         <Input type="password" label="Confirmação da senha" bind:value={form.password_confirmation} error="password_confirmation" size=40 />
-        <slot></slot>
+        <slot name="form"></slot>
     </form>
 </main>
 
@@ -55,4 +55,5 @@
     <button type="submit" form="form">
         Alterar
     </button>
+    <slot name="buttons"></slot>
 </aside>

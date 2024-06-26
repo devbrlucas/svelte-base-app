@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## [1.2.23] - 2024-06-25
+
+### Modificações
+
+- No `<ProfileLayoutComponent>`, agora existem dois slot: o `form`, utilizado para adicionar campos no formulário e o `buttons` para adicionar os botões no topo da janela
+
 ## [1.2.22] - 2024-06-04
 
 ### Modificações
