@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## [1.2.24] - 2024-07-05
+
+### Modificações
+
+- Nos campos de formulário `svelte-base-app/form` agora o prop `label` não é obrigatória, e se não for informada, não será gerado o código HTML correspondente
+
 ## [1.2.23] - 2024-06-25
 
 ### Modificações

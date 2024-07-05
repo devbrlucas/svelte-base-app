@@ -18,7 +18,7 @@
         'color';
 
     export let type: Type
-    export let label: string;
+    export let label: string = '';
     export let value: string | number | undefined | null = null;
     export let file: FileList | File | null = null;
     export let error: string = '';
@@ -56,7 +56,7 @@
 </script>
 
 <div class="app input-component" class:disabled class:info={$$slots.default} class:required class:file={type === 'file'} class:fileselected={Boolean(file)}>
-    {#if type !== 'file'}
+    {#if type !== 'file' && label}
         {#if $$slots.default}
             <LabelInfo {id} {label}>
                 <slot></slot>

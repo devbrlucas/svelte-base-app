@@ -2,7 +2,7 @@
     import type { Action } from "svelte/action";
     import Error from "./error.svelte";
     import LabelInfo from "./label-info.svelte";
-    export let label: string;
+    export let label: string = '';
     export let value: T;
     export let error: string = '';
     export let blank: boolean = false;
@@ -16,12 +16,14 @@
 
 <!-- <div class="app input-component" class:disabled class:info={$$slots.info}> -->
 <div class="app input-component" class:disabled class:info={$$slots.info} class:required>
-    {#if $$slots.info}
-        <LabelInfo {id} {label}>
-            <slot name="info"></slot>
-        </LabelInfo>
-    {:else}
-        <LabelInfo {id} {label} />
+    {#if  label}
+        {#if $$slots.info}
+            <LabelInfo {id} {label}>
+                <slot name="info"></slot>
+            </LabelInfo>
+        {:else}
+            <LabelInfo {id} {label} />
+        {/if}
     {/if}
     {#if multiple}
         {#if action}
