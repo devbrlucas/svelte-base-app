@@ -9,10 +9,10 @@
     }
 </script>
 
-<button type="button" on:click={toggleProfileMenu} class:image={$currentUser?.user.image} aria-label="exibir opções do perfil de usuário">
-    {#if $currentUser?.user.image}
-        <img src={$currentUser?.user.image} alt="imagem de perfil do usuário">
+<button type="button" on:click={toggleProfileMenu} class:image={$currentUser?.current?.image} aria-label="exibir opções do perfil de usuário">
+    {#if $currentUser?.current?.image}
+        <img src={$currentUser?.current?.image} alt="imagem de perfil do usuário">
     {:else}
-        {($currentUser?.user.name[0] ?? '').toUpperCase()}
+        {($currentUser?.current?.name[0] ?? '').toUpperCase()}
     {/if}
 </button>

@@ -1,8 +1,7 @@
 <script lang="ts">
     import showNavIcon from "./icons/show-nav.svg?raw";
     import hideNavIcon from "./icons/hide-nav.svg?raw";
-    import { messages } from "../messages";
-    import { UserNotFoundError, currentUser, user } from "../auth";
+    import { currentUser } from "../auth";
     import { afterNavigate, beforeNavigate, invalidateAll } from "$app/navigation";
     import { slide } from "svelte/transition";
     import ProfileButton from "./components/profile-button.svelte";
@@ -20,17 +19,6 @@
         profileMenuState = false;
     }
     onMount(() => {
-        try {
-            currentUser.set(user.get());
-        } catch (error) {
-            if (error instanceof UserNotFoundError) {
-                messages
-                    .error('Erro ao consultar usuário logado')
-                    .warning('Atualize a página, e caso o problema persista entre em contato conosco');
-            } else {
-                throw error;
-            }
-        }
         setCurrentNavLink();
         const anchors = document.querySelectorAll<HTMLAnchorElement>('#app-nav > a');
         anchors.forEach(anchor => anchor.addEventListener('click', handleAnchorClick));
@@ -70,14 +58,14 @@
         <ProfileButton bind:profileMenuState bind:navState />
         <ul class:show={profileMenuState}>
             <li>
-                <span>Olá {$currentUser?.user.name}</span>
+                <span>Olá {$currentUser?.current?.name}</span>
             </li>
             <ProfileLinks />
         </ul>
     </div>
 </header>
 <aside id="app-user-info">
-    <span>Olá {$currentUser?.user.name}</span>
+    <span>Olá {$currentUser?.current?.name}</span>
     <ProfileButton bind:profileMenuState bind:navState />
     {#if profileMenuState}
         <ul transition:slide={{duration: 200}}>

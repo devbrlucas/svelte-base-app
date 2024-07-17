@@ -1,6 +1,6 @@
 import type { RequestHandler } from "./$types";
 export const POST: RequestHandler = async () => {
-    const body: SvelteBaseApp.CurrentUser = {
+    const body = {
         access_token: '123456789',
         user: {
             name: 'Administrador',

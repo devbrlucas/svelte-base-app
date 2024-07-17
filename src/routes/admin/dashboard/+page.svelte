@@ -1,5 +1,6 @@
 <script lang="ts">
     import { title } from "$lib";
+    import { currentUser } from "$lib/auth";
     title('Dashboard');
 </script>
 

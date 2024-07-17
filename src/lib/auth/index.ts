@@ -2,6 +2,7 @@ declare global {
     namespace SvelteBaseApp {
         interface CurrentUser {
             access_token: string;
+            current?: any;
         }
     }
 } 
@@ -16,7 +17,6 @@ export type AuthData = {
     remember: boolean;
 }
 export { default as AuthComponent } from "./component.svelte";
-export { UserNotFoundError } from "./user_not_found_error";
 export { default as PasswordResetComponent } from "./password-reset.svelte";
 export * from "./store";
 export * from "./user";

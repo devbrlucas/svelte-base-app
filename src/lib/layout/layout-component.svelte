@@ -4,6 +4,7 @@
     import xmarkIcon from "./icons/xmark.svg?raw";
     import { titleStore } from "../utils/title_store";
     import { ConfirmationComponent, DialogComponent } from "$lib";
+    import { currentUser, user } from "$lib/auth";
     export let version: string;
     export let baseTitle: string;
     let installPromptContainer: HTMLDivElement;
@@ -16,6 +17,7 @@
         if ((Date.now() - latestClose) < 86_400_000) return; // lower than 1 day
         installPrompt = event;
     });
+    currentUser.set(user.get());
     async function installPromptChoice(): Promise<void>
     {
         if (!installPrompt) return;

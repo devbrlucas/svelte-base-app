@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## [1.2.25] - 2024-07-17
+
+### Modificações
+
+- A interface `SvelteBaseApp.CurrentUser` agora não tem mais a propriedade `type`, sa propriedades padrão são `current` (usuário logado atualmente) e `access_token` (token de acesso à API)
+- Na interface `SvelteBaseApp.CurrentUser`, os tipos dos usuários são definidos como propriedades; se eu tenho um usuário com `type = 'master'`, basta adicionar a propriedade `master` na interface com o seu respectivo tipo
+
 ## [1.2.24] - 2024-07-05
 
 ### Modificações

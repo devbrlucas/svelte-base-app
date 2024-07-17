@@ -3,7 +3,7 @@
     import { Input } from "../form";
     import { messages } from "../messages";
     import { confirmation, type ConfirmationProperites } from "../confirmation";
-    import { user } from "$lib/auth";
+    import { user, type AuthResponse } from "$lib/auth";
     export let form: Record<string, any> = {
         name: '',
         email: '',
@@ -21,7 +21,7 @@
             const response = await Ajax
                                         .post(url)
                                         .setOption('convertToFormData', true)
-                                        .send<SvelteBaseApp.CurrentUser>('json', form);
+                                        .send<AuthResponse<any, string>>('json', form);
             if (response.error) return;
             messages.success('Dados editados com sucesso');
             user.set(response.body.data);

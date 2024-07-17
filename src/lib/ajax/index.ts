@@ -1,4 +1,4 @@
-import { user, UserNotFoundError } from "../auth";
+import { user } from "../auth";
 import { formUtils } from "../form";
 import { messages } from "../messages";
 import type { PaginatedResponse } from "../pagination";
@@ -52,11 +52,7 @@ export class Ajax
         this.method = method;
         this.options = options ? options : {};
         let token: string = '';
-        try {
-            token = user.get('access_token');
-        } catch (error) {
-            if (!(error instanceof UserNotFoundError)) throw error;
-        }
+        token = user.get('access_token');
         this.setAuthorizationHeader(token, 'Bearer');
         this.isNavigating = get(navigating) !== null;
         this.initLoadIcon();

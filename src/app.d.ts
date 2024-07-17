@@ -14,7 +14,6 @@ declare global {
 				email: string;
 				image: string | null;
 			};
-			type: string;
 		}
 	}
 }
