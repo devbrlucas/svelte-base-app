@@ -27,6 +27,7 @@
     }
     function clean(): void
     {
+        if (callback) callback();
         filterStore.update(filter => {
             filter.active = false;
             return filter;

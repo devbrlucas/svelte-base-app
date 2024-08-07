@@ -3,7 +3,6 @@ export type UserData = {
     access_token: string;
     user: any;
     type: string;
-    current?: any;
 }
 export const INITIAL_DATA: UserData = {
     access_token: '',

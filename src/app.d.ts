@@ -14,6 +14,11 @@ declare global {
 				email: string;
 				image: string | null;
 			};
+			current?: {
+				name: string;
+				email: string;
+				image: string | null;
+			};
 		}
 	}
 }

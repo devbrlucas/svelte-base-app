@@ -2,7 +2,6 @@ declare global {
     namespace SvelteBaseApp {
         interface CurrentUser {
             access_token: string;
-            current?: any;
         }
     }
 } 

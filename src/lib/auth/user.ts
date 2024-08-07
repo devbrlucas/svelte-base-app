@@ -5,7 +5,7 @@ function getUser<T extends keyof SvelteBaseApp.CurrentUser>(key: T): SvelteBaseA
 function getUser(key?: keyof SvelteBaseApp.CurrentUser): SvelteBaseApp.CurrentUser | SvelteBaseApp.CurrentUser[keyof SvelteBaseApp.CurrentUser]
 {
     const json = window.localStorage.getItem(APP_CURRENT_USER_KEY);
-    const user: UserData = json ? proxyUser(JSON.parse(json)) : proxyUser(INITIAL_DATA);
+    const user: SvelteBaseApp.CurrentUser = json ? proxyUser(JSON.parse(json)) : proxyUser(INITIAL_DATA);
     return key ? user[key] : user;
 }
 function setUser(user: UserData): void
