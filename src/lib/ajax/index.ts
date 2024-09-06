@@ -173,8 +173,15 @@ export class Ajax
                 ajaxResponse.body = null;
             } else {
                 try {
-                    const currentUserHeader = response.headers.get('App-Current-User');
-                    if (currentUserHeader) {
+                    if (response.headers.get('App-Current-User')) {
+                        let currentUserHeader: string = '';
+                        try {
+                            currentUserHeader = atob(response.headers.get('App-Current-User') ?? '');
+                        } catch (error) {
+                            if (error instanceof DOMException && error.name === 'InvalidCharacterError') {
+                                currentUserHeader = response.headers.get('App-Current-User') ?? '';
+                            } else throw error;
+                        }
                         const jsonCurrentUser = JSON.parse(currentUserHeader);
                         user.update(jsonCurrentUser);
                     }
