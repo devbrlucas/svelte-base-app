@@ -3,6 +3,7 @@
     import Error from "./error.svelte";
     import LabelInfo from "./label-info.svelte";
     import { uploadIcon, xmarkIcon } from "$lib/icons";
+    import { onMount } from "svelte";
     type Type = 
         'password' |
         'number' |
@@ -28,31 +29,36 @@
     export let actionOptions: P | undefined = undefined;
     export let clearCallback: ((event: Event) => void | Promise<void>) | undefined = undefined;
     const id = `input-${Math.random() * 5}`;
-    function handleInputFileChange(event: Event): void
-    {
-        const input = event.currentTarget as HTMLInputElement;
-        if (!input.files) {
-            file = null;
-            return;
-        }
-        if (input.files.length === 0) {
-            file = null;
-        } else {
-            file = input.multiple ? input.files : input.files[0];
-        }
+    let files: FileList | null = null;
+    $: {
+        const input = document.querySelector<HTMLInputElement>(`input[id="${id}"]`);
+        if (files && input) file = input.multiple ? files : files.item(0);
     }
     function clearSelectedFiles(event: Event): void
     {
-        if (file) {
+        const input = document.querySelector<HTMLInputElement>(`input[id="${id}"]`);
+        if (file && input) {
+            files = null;
             file = null;
-            const button = event.currentTarget as HTMLButtonElement;
-            const input = button.parentElement?.querySelector('input');
-            if (!input) return;
             input.value = '';
         } else {
             clearCallback?.(event);
         }
     }
+    onMount(() => {
+        if (type === 'file' && file) {
+            const input = document.querySelector<HTMLInputElement>(`input[id="${id}"]`);
+            if (input) {
+                if (file instanceof FileList) input.files = file;
+                if (file instanceof File) {
+                    const data = new DataTransfer;
+                    data.items.add(file);
+                    console.log(data.files);
+                    input.files = data.files;
+                }
+            }
+        }
+    })
 </script>
 
 <div class="app input-component" class:disabled class:info={$$slots.default} class:required class:file={type === 'file'} class:fileselected={Boolean(file)}>
@@ -133,9 +139,9 @@
         {/if}
     {:else if type === 'file'}
         {#if action}
-            <input {id} type="file" autocomplete="off" {...$$restProps} {disabled} on:input on:blur on:change={handleInputFileChange} use:action={actionOptions} {required} aria-label={label} />
+            <input {id} type="file" autocomplete="off" {...$$restProps} {disabled} bind:files on:input on:blur on:change use:action={actionOptions} {required} aria-label={label} />
         {:else}
-            <input {id} type="file" autocomplete="off" {...$$restProps} {disabled} on:input on:blur on:change={handleInputFileChange} {required} aria-label={label} />
+            <input {id} type="file" autocomplete="off" {...$$restProps} {disabled} bind:files on:input on:blur on:change {required} aria-label={label} />
         {/if}
         <span class="icon">
             {@html uploadIcon}
