@@ -9,16 +9,33 @@
         acceptButtonClicked = false;
         deniedButtonClicked = false;
     }
+    function testConfirmation(): void
+    {
+        reset();
+        confirmation({
+            callback: () => acceptButtonClicked = true,
+            deniedCallback: () => deniedButtonClicked = true,
+            message: 'Teste sem anexar no botão',
+        });
+    }
 </script>
 
 <main id="app-main">
     <h1>confirmation</h1>
     <button
-         type="button"
-         on:click={reset}
+        on:click={reset}
+        type="button"
         use:confirmation={{callback: () => acceptButtonClicked = true, message: 'Teste', deniedCallback: () => deniedButtonClicked = true}}
     >
-        Testar confirmation
+        Testar confirmation com o <b>use:</b>
+    </button>
+    <br>
+    <br>
+    <button
+         type="button"
+         on:click={testConfirmation}
+    >
+        Testar confirmation sem o <b>use:</b>
     </button>
     <p>
         Botão aceite selecionado: <i>{acceptButtonClicked ? 'Sim' : 'Não'}</i>
