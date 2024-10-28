@@ -7,8 +7,10 @@
     import ProfileButton from "./components/profile-button.svelte";
     import ProfileLinks from "./components/profile-links.svelte";
     import { onMount } from "svelte";
+    import { title } from "$lib/utils";
     let navState: boolean = false;
     let profileMenuState: boolean = false;
+    const titleStore = title();
     beforeNavigate(() => {
         if (navState) navState = false;
         if (profileMenuState) profileMenuState = false;
@@ -51,6 +53,7 @@
         {@html hideNavIcon}
     </button>
     <img src="/logo.png" alt="logo da empresa">
+    <span>{$titleStore}</span>
     <nav class:show={navState} id="app-nav">
         <slot name="nav"></slot>
     </nav>
@@ -74,3 +77,6 @@
     {/if}
 </aside>
 <slot name="body"></slot>
+<footer id="app-footer">
+    <img src="/logo.png" alt="logo da empresa">
+</footer>
