@@ -34,7 +34,7 @@
     }
 </script>
 <main id="login-page">
-    <h1>
+    <h1 class="login">
         <span>Login</span>
         <img src="/logo.png" alt="logo da empresa">
     </h1>
@@ -42,14 +42,17 @@
         <Input type="email" label="E-mail" bind:value={form.email} error="email" required size="40" />
         <br>
         <Input type="password" label="Senha" bind:value={form.password} error="password" required size="40" />
-        <slot></slot>
+        <slot name="fields"></slot>
         <br>
         <SelectionBox type="checkbox" label="Manter conectado" bind:checked={form.remember} error="remember" />
+        <slot name="inside-form"></slot>
     </form>
+    <slot name="post-form"></slot>
     <footer>
         <button type="submit" form="form" class="highlighted">
             Acessar
         </button>
+        <slot name="buttons"></slot>
         {#if passwordReset}
             <p class="reset-password">
                 <a href="/redefinir-senha">Esqueci minha senha</a>

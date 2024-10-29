@@ -1,6 +1,7 @@
 body:not(.custom) {
     #login-page {
         margin: 3em 1em;
+        max-height: 90vh;
         justify-self: center;
         align-self: start;
         text-align: center;
@@ -34,11 +35,11 @@ body:not(.custom) {
             }
         }
         & > footer {
-            display: flex;
-            align-items: flex-end;
-            flex-wrap: wrap;
-            justify-content: center;
             &.password-reset {
+                display: flex;
+                align-items: flex-end;
+                flex-wrap: wrap;
+                justify-content: center;
                 justify-content: space-between;
             }
             & > button.highlighted {
@@ -62,6 +63,7 @@ body:not(.custom) {
             margin: 0;
             width: 100vw;
             height: 100vh;
+            max-height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
