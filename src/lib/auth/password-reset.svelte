@@ -37,7 +37,7 @@
     }
 </script>
 <main id="login-page">
-    <h1>
+    <h1 class="visible">
         <span>Redefinir<br>senha</span>
         <img src="/logo.png" alt="logo da empresa">
     </h1>

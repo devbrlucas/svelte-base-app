@@ -34,7 +34,7 @@
     }
 </script>
 <main id="login-page">
-    <h1 class="login">
+    <h1 class="login visible">
         <span>Login</span>
         <img src="/logo.png" alt="logo da empresa">
     </h1>
