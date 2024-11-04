@@ -20,4 +20,13 @@
         </button>
     </p>
 </main>
-<aside id="app-aside"></aside>
+<aside id="app-aside">
+    <button type="button">Teste</button>
+    <button type="button">Teste</button>
+    <button type="button">Teste</button>
+    <button type="button">Teste</button>
+    <button type="button">Teste</button>
+    <button type="button">Teste</button>
+    <button type="button">Teste</button>
+    <button type="button">Teste</button>
+</aside>

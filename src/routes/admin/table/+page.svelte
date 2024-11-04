@@ -109,6 +109,9 @@
     <button type="button" on:click={() => toggle = !toggle}>
         Refazer corpo da table com actions
     </button>
+    <button type="button" on:click={() => toggle = !toggle}>
+        Refazer corpo da table com actions
+    </button>
 </aside>
 <style>
     h2 {

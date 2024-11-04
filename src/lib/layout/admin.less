@@ -28,14 +28,13 @@
 }
 
 body:not(.custom) > div#app {
-    padding-right: 1em;
+    padding-right: .5em;
     @media (max-width: 1023px) {
         grid-template: min-content min-content auto / auto;
         padding-right: 0;
     }
     @media (max-width: 767px) {
         grid-template: min-content min-content auto min-content / auto;
-        gap: .5em;
     }
 
     & > #app-header {
@@ -203,8 +202,8 @@ body:not(.custom) > div#app {
 
     & > #app-user-info {
         position: absolute;
-        top: 1em;
-        right: 1em;
+        top: .5em;
+        right: .5em;
         z-index: 550;
         display: grid;
         align-items: center;
@@ -261,34 +260,50 @@ body:not(.custom) > div#app {
     & > #app-main {
         align-self: baseline;
         justify-self: baseline;
-        padding: 2em;
+        padding: 1em;
         width: 100%;
-        height: 100%;
+        height: calc(100% - 4.5em);
         background-color: #FFF;
         border-radius: 1em;
         box-shadow: 0 .2em 2em rgba(0, 0, 0, .05);
         overflow: auto;
         @media (max-width: 1023px) {
             margin: 0 .5em;
+            height: calc(100% - 1em);
             width: calc(100% - 1em);
+        }
+        @media (max-width: 767px) {
+            box-shadow: none;
+            padding: .5em;
+            height: 100%;
         }
     }
     
     & > #app-aside {
         grid-area: 1/2/1/2;
-        display: flex;
-        align-items: center;
-        flex-wrap: wrap;
-        gap: 1em;
-        margin-top: 1em;
+        margin-top: .5em;
+        overflow: auto;
+        white-space: nowrap;
+        @media (min-width: 1024px) {
+            height: 2.5em;
+        }
+        &::-webkit-scrollbar {
+            display: none;
+        }
         & > a, & > button, & > span {
             position: relative;
+            margin: 0 .5em;
             padding: .7em 1em;
             background-color: #FFF;
             border-radius: 2em;
             box-shadow: 0 .2em 2em rgba(0, 0, 0, .05);
             overflow: hidden;
             white-space: nowrap;
+            @media (min-width: 1024px) {
+                &:first-child {
+                    margin-left: 0;
+                }
+            }
             &:focus {
                 outline: solid 2px var(--accent-color);
                 color: var(--accent-color);
@@ -321,7 +336,7 @@ body:not(.custom) > div#app {
         }
         @media (max-width: 1023px) {
             grid-area: 2/1/2/1;
-            margin: 0 1em;
+            margin-top: 0;
         }
     }
 
