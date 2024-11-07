@@ -43,6 +43,7 @@ body:not(.custom) > div#app {
         display: flex;
         flex-direction: column;
         justify-content: space-between;
+        gap: 5em;
         padding: 1em;
         height: 100vh;
         color: #FFF;
@@ -80,22 +81,28 @@ body:not(.custom) > div#app {
             width: 100%;
             height: auto;
             object-fit: contain;
-            @media (max-width: 767px) {
+            @media (max-width: 1023px) {
                 display: none;
             }
         }
         & > span {
             font-weight: 500;
             font-size: 1.2em;
-            @media (min-width: 768px) {
+            @media (min-width: 1024px) {
                 display: none;
             }
         }
         & > nav {
             display: flex;
+            padding: .2em;
             gap: 1em;
             flex-direction: column;
             background-color: var(--accent-color);
+            overflow: hidden auto;
+            height: 100%;
+            &::-webkit-scrollbar {
+                display: none;
+            }
             & > a, & > button {
                 white-space: nowrap;
                 padding: .5em;
@@ -161,20 +168,15 @@ body:not(.custom) > div#app {
             grid-area: auto;
             flex-direction: row;
             align-items: center;
-            height: auto;
+            gap: 1em;
+            height: 4.5em;
             & > img {
                 max-width: 10em;
                 max-height: 4em;
             }
-            & > nav {
-                flex-direction: row;
-            }
             & > div {
                 display: block;
-            }
-        }
-        @media (max-width: 767px) {
-            height: 4.5em;
+            }            
             & > button {
                 display: flex;
             }
@@ -193,7 +195,8 @@ body:not(.custom) > div#app {
                 transition: height .2s, padding .2s;
                 &.show {
                     padding: 2em 0 1em;
-                    height: auto;
+                    height: calc(100vh - 4.3em);
+                    overflow: hidden auto;
                 }
             }
             

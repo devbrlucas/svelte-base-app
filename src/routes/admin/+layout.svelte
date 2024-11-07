@@ -11,7 +11,17 @@
         <a href="/admin/filter">filter</a>
         <a href="/admin/confirmation">confirmation</a>
         <a href="/admin/form">form</a>
-        <a href="/admin/qrcode">qrcode</a>
+        <a href="/admin/dashboard">inicio scroll</a>
+        <a href="/admin/dashboard">scroll</a>
+        <a href="/admin/dashboard">scroll</a>
+        <a href="/admin/dashboard">scroll</a>
+        <a href="/admin/dashboard">scroll</a>
+        <a href="/admin/dashboard">scroll</a>
+        <a href="/admin/dashboard">scroll</a>
+        <a href="/admin/dashboard">scroll</a>
+        <a href="/admin/dashboard">scroll</a>
+        <a href="/admin/dashboard">scroll</a>
+        <a href="/admin/dashboard">fim scroll</a>
     </svelte:fragment>
     <svelte:fragment slot="body">
         <slot></slot>
