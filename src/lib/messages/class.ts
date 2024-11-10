@@ -1,34 +1,38 @@
 import { messages as store, type MessageLevel } from "./store";
-import { get } from "svelte/store";
 export class Messages
 {
-    private appendMessage(level: MessageLevel, content?: string): void
+    private appendMessage(level: MessageLevel, content?: string): number
     {
-        if (!content) return;
-        const storedMessages = get(store);
-        storedMessages.push({
-            id: Math.random(),
-            content,
-            level,
+        if (!content) return -1;
+        const id = Math.random();
+        store.update(value => {
+            value.push({
+                id,
+                content,
+                level,
+            });
+            return value;
         });
-        store.set(storedMessages);
+        return id;
     }
 
-    public error(content?: string): Messages
+    public error(content?: string): number
     {
-        this.appendMessage('error', content);
-        return this;
+        return this.appendMessage('error', content);
     }
 
-    public warning(content?: string): Messages
+    public warning(content?: string): number
     {
-        this.appendMessage('warning', content);
-        return this;
+        return this.appendMessage('warning', content);
     }
 
-    public success(content?: string): Messages
+    public success(content?: string): number
     {
-        this.appendMessage('success', content);
-        return this;
+        return this.appendMessage('success', content);
+    }
+
+    public close(id: number): void
+    {
+        store.update(value => value.filter(item => item.id !== id));
     }
 }

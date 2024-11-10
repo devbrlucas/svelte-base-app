@@ -11,8 +11,8 @@
         <a href="/admin/filter">filter</a>
         <a href="/admin/confirmation">confirmation</a>
         <a href="/admin/form">form</a>
+        <a href="/admin/mensagens">messages</a>
         <a href="/admin/dashboard">inicio scroll</a>
-        <a href="/admin/dashboard">scroll</a>
         <a href="/admin/dashboard">scroll</a>
         <a href="/admin/dashboard">scroll</a>
         <a href="/admin/dashboard">scroll</a>

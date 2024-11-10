@@ -8,8 +8,6 @@
     async function openNewDialog(): Promise<void>
     {
         const result = await dialog.open<string>('Dialog Dois', ComponentTwo);
-        console.log('Retorno dois');
-        console.log(result);
         if (typeof result !== 'undefined') name = result;
     }
 </script>
