@@ -160,11 +160,7 @@ export class Ajax
                     }
                 } else {
                     const errorMessageDetail: string | undefined = (await response.json()).message;
-                    if (!this.isNavigating) {
-                        messages
-                            .error(`<b>ERRO ${response.status}:</b> ${response.statusText}`)
-                            .error(errorMessageDetail);
-                    }
+                    if (!this.isNavigating) messages.error(errorMessageDetail);
                     console.error(`ERRO ${response.status}: ${response.statusText}`);
                     ajaxResponse.detailed_error = errorMessageDetail;
                     if (errorMessageDetail) console.error(errorMessageDetail);

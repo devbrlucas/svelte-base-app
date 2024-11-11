@@ -8,9 +8,8 @@
     {
         const value = await qrcode.read();
         if (value) {
-            messages
-                .success('Dados lidos')
-                .success(value);
+            messages.success('Dados lidos');
+            messages.success(value);
         } else if (value === null) {
             messages.warning('Leitor fechado');
         } else {

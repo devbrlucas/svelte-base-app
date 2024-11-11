@@ -19,9 +19,8 @@
                                     .send('none', form);
         if (response.response.status !== 204) return;
         emailSent = true;
-        messages
-            .success('Redefinição de senha solicitada')
-            .warning('Se o e-mail informado estiver cadastrado no sistema, você receberá um token para redefinir sua senha');
+        messages.success('Redefinição de senha solicitada');
+        messages.warning('Se o e-mail informado estiver cadastrado no sistema, você receberá um token para redefinir sua senha');
     }
     async function sendPassword(): Promise<void>
     {
