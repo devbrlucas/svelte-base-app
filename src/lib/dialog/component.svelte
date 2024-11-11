@@ -5,6 +5,7 @@
     import { dialog as dialogUtils } from "./index";
     import "./style.less";
     import { onMount } from "svelte";
+    import { afterNavigate } from "$app/navigation";
     let dialog: HTMLDivElement | undefined;
     function close(): void
     {
@@ -12,23 +13,22 @@
         dialog
             ?.classList
             .remove('open');
-        window.removeEventListener('keyup', closeByKeyboard);
+        window.removeEventListener('keydown', closeByKeyboard);
     }
     function show(): void
     {
         dialog
             ?.classList
             .add('open');
-        window.addEventListener('keyup', closeByKeyboard);
+        window.addEventListener('keydown', closeByKeyboard);
     }
     function closeByKeyboard(event: KeyboardEvent): void
     {
         if (event.key === 'Escape' && !Boolean($confirmationStore)) close();
     }
-    $: {
-        $dialogs.length === 0 ? close() : show();
-    }
+    $: $dialogs.length === 0 ? close() : show();
     onMount(() => dialogUtils.closeAll());
+    afterNavigate(({to}) => /^\/login/.test(to?.url.pathname ?? '') && dialogUtils.closeAll());
 </script>
 
 <div bind:this={dialog} id="app-dialog" role="dialog">
