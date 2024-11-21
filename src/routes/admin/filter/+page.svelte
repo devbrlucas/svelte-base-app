@@ -9,6 +9,7 @@
         name: '',
         age: 0,
     }
+    let pagination: Pagination<any>;
 </script>
 
 <main id="app-main">
@@ -26,8 +27,11 @@
         <p>Clique no botão <i>Exibir filtros</i> para exibir os campos</p>
     {/if}
     <!-- <Pagination meta={data.meta} /> -->
-    <Pagination meta={data.meta} ajaxUrl=/pagination />
+    <Pagination bind:this={pagination} meta={data.meta} ajaxUrl=/pagination />
 </main>
 <aside id="app-aside">
     <FilterButtonComponent />
+    <button type="button" on:click={() => pagination.refresh()}>
+        Atualizar paginação
+    </button>
 </aside>

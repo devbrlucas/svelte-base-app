@@ -19,6 +19,7 @@
      };
     export let ajaxUrl: string = '';
     export let results: T[] | undefined = undefined;
+    export const refresh = () => changePage(perPage, currentPage);
     const INITIAL_ITEMS_PER_PAGE: number = 20;
     const MAX_ITENS_PER_PAGE: number = 300;
     let pages: number[] = [];
