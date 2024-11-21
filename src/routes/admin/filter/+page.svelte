@@ -1,7 +1,9 @@
 <script lang="ts">
-    import { title } from "$lib";
+    import { Pagination, title } from "$lib";
     import { FilterButtonComponent, FilterComponent, filterStore } from "$lib/filter";
     import { Input } from "$lib/form";
+    import type { PageData } from "./$types";
+    export let data: PageData;
     title('filter');
     let form: Record<string, any> = {
         name: '',
@@ -23,6 +25,8 @@
     {#if !$filterStore.visible}
         <p>Clique no botão <i>Exibir filtros</i> para exibir os campos</p>
     {/if}
+    <!-- <Pagination meta={data.meta} /> -->
+    <Pagination meta={data.meta} ajaxUrl=/pagination />
 </main>
 <aside id="app-aside">
     <FilterButtonComponent />

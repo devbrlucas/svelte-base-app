@@ -1,4 +1,6 @@
-<script lang="ts">
+<script lang="ts" generics="T">
+    import { Ajax } from "$lib/ajax";
+
     import type { PaginatedResponse } from "./index";
     import { goto } from "$app/navigation";
     import { afterUpdate } from "svelte";
@@ -9,6 +11,8 @@
     import plusIcon from "./icons/plus.svg?raw";
     import minusIcon from "./icons/minus.svg?raw";
     export let meta: PaginatedResponse['meta'];
+    export let ajaxUrl: string = '';
+    export let results: T[] | undefined = undefined;
     const INITIAL_ITEMS_PER_PAGE: number = 20;
     const MAX_ITENS_PER_PAGE: number = 300;
     let pages: number[] = [];
@@ -23,17 +27,24 @@
     $: {
         changePage(perPage, currentPage);
     }
-    function changePage(items: number, page: number): void
+    async function changePage(items: number, page: number): Promise<void>
     {
         const query = new URLSearchParams(location.search);
         query.delete('items');
         query.delete('page');
         if (page > 1) query.set('page', String(page));
         if (items > INITIAL_ITEMS_PER_PAGE) query.set('items', String(items));
-        if (query.toString()) {
-            goto(`${location.pathname}?${query.toString()}`);
+        const url = new URL(location.href);
+        url.search = query.toString();
+        if (ajaxUrl) {
+            const response = await Ajax
+                                        .get(`${ajaxUrl}${url.search}`)
+                                        .send<T>('paginate');
+            if (response.error) return;
+            meta = response.body.meta;
+            results = response.body.data;
         } else {
-            goto(location.pathname);
+            goto(url);
         }
     }
     function validatePageNumber(): void
