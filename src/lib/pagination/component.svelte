@@ -1,6 +1,5 @@
 <script lang="ts" generics="T">
     import { Ajax } from "$lib/ajax";
-
     import type { PaginatedResponse } from "./index";
     import { goto } from "$app/navigation";
     import { afterUpdate } from "svelte";
@@ -10,7 +9,14 @@
     import lastIcon from "./icons/last.svg?raw";
     import plusIcon from "./icons/plus.svg?raw";
     import minusIcon from "./icons/minus.svg?raw";
-    export let meta: PaginatedResponse['meta'];
+    export let meta: PaginatedResponse['meta'] = {
+         current_page: 0,
+         from: 0,
+         last_page: 0,
+         per_page: 0,
+         to: 0,
+         total: 0
+     };
     export let ajaxUrl: string = '';
     export let results: T[] | undefined = undefined;
     const INITIAL_ITEMS_PER_PAGE: number = 20;
