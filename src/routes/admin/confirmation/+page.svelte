@@ -9,14 +9,15 @@
         acceptButtonClicked = false;
         deniedButtonClicked = false;
     }
-    function testConfirmation(): void
+    async function testConfirmation(): Promise<void>
     {
         reset();
-        confirmation({
+        await confirmation({
             callback: () => acceptButtonClicked = true,
             deniedCallback: () => deniedButtonClicked = true,
             message: 'Teste sem anexar no botão',
         });
+        messages.success('Depois de esperar a confirmação');
     }
 </script>
 

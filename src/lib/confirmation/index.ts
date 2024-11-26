@@ -6,9 +6,9 @@ export type ConfirmationProperites = {
     deniedCallback?: Function;
 }
 export { default as ConfirmationComponent } from "./component.svelte";
-export function confirmation(properties: ConfirmationProperites): void
+export function confirmation(properties: ConfirmationProperites): Promise<void>
 export function confirmation(node: HTMLElement, properties: ConfirmationProperites): ActionReturn
-export function confirmation(node: HTMLElement|ConfirmationProperites , properties?: ConfirmationProperites): ActionReturn | void
+export function confirmation(node: HTMLElement|ConfirmationProperites , properties?: ConfirmationProperites): ActionReturn | Promise<void> | void
 {
     if (node instanceof Element && properties) {
         const confirmationCallback = (event: Event) => handleEvent(event, properties);
@@ -21,6 +21,14 @@ export function confirmation(node: HTMLElement|ConfirmationProperites , properti
         }
     } else if (!(node instanceof Element)) {
         store.set(node);
+        return new Promise((resolve, reject) => {
+            const unsubscriber = store.subscribe(value => {
+                if (value === null) {
+                    unsubscriber();
+                    resolve();
+                }
+            });
+        });
     }
 }
 

@@ -1,5 +1,6 @@
 <script lang="ts">
     import { dialog, title } from "$lib";
+    import { onMount } from "svelte";
     import Comp from "./component.svelte";
     import ComponentNaoFecha from "./component_nao_fecha.svelte";
     title('dialog');
@@ -27,6 +28,7 @@
             names = names;
         }
     }
+    onMount(open);
 </script>
 <main id="app-main">
     <h1>dialog</h1>

@@ -103,7 +103,7 @@ body:not(.custom) > div#app {
             &::-webkit-scrollbar {
                 display: none;
             }
-            & > a, & > button {
+            & a, & button {
                 white-space: nowrap;
                 padding: .5em;
                 text-align: right;
@@ -111,14 +111,14 @@ body:not(.custom) > div#app {
                 border-radius: 5em;
                 border: solid .2em transparent;
                 transition: color .2s, background-color .2s, border-color .2s, outline .1s;
-                &:focus {
+                &:not(.open):focus {
                     outline: solid 1px #FFF;
                 }
                 & > svg {
                     font-size: .9em;
                 }
                 @media (hover: hover) {
-                    &:hover {
+                    &:not(.open):hover {
                         background-color: #FFF;
                         color: var(--accent-color);
                     }

@@ -45,7 +45,6 @@ export async function handleFetch(event: FetchEvent, cacheName: string, assets: 
     {
         const url = new URL(event.request.url);
         const cache = await caches.open(cacheName);
-        if (url.pathname !== '/' && event.request.mode === 'navigate') return respondWithRedirect();
         if (assets.includes(url.pathname)) {
             const response = await cache.match(event.request);
             if (response) return response;

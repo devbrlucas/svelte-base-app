@@ -27,7 +27,6 @@
         if (event.key === 'Escape' && !Boolean($confirmationStore)) close();
     }
     $: $dialogs.length === 0 ? close() : show();
-    onMount(() => dialogUtils.closeAll());
     afterNavigate(({to}) => /^\/login/.test(to?.url.pathname ?? '') && dialogUtils.closeAll());
 </script>
 

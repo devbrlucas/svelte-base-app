@@ -8,6 +8,7 @@
     import ProfileLinks from "./components/profile-links.svelte";
     import { onMount } from "svelte";
     import { title } from "$lib/utils";
+    import { store } from "./nav_grouped";
     let navState: boolean = false;
     let profileMenuState: boolean = false;
     const titleStore = title();
@@ -22,13 +23,18 @@
     }
     onMount(() => {
         setCurrentNavLink();
-        const anchors = document.querySelectorAll<HTMLAnchorElement>('#app-nav > a');
-        anchors.forEach(anchor => anchor.addEventListener('click', handleAnchorClick));
+        const allAnchors = document.querySelectorAll<HTMLAnchorElement>('#app-nav a');
+        allAnchors.forEach(anchor => anchor.addEventListener('click', handleAnchorClick));
+        const childAnchors = document.querySelectorAll<HTMLAnchorElement>('#app-nav > a');
+        childAnchors.forEach(anchor => anchor.addEventListener('click', () => {
+            $store.forEach((value, key) => $store.set(key, false));
+            store.update(value => value);
+        }));
     });
     afterNavigate(setCurrentNavLink);
     function setCurrentNavLink(): void
     {
-        const anchors = document.querySelectorAll<HTMLAnchorElement>('#app-nav > a');
+        const anchors = document.querySelectorAll<HTMLAnchorElement>('#app-nav a');
         anchors.forEach(anchor => anchor.classList.remove('current'));
         const currentPathname = window.location.pathname;
         anchors.forEach(anchor => {
