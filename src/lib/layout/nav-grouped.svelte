@@ -1,19 +1,14 @@
 <script lang="ts">
-    import { getContext, onMount } from "svelte";
+    import { getContext } from "svelte";
     import { store } from "./nav_grouped";
     export let name: string;
     let key: string;
     let button: HTMLButtonElement;
-    const setCurrentNavLink = getContext<() => void>('currentAnchor');
-    onMount(() => {
-        do {
-            key = Math.random().toString(16).substring(2);
-        } while ($store.has(key));
-        $store.set(key, false);
-        setTimeout(() => {
-            setCurrentNavLink();
-        }, 0);
-    });
+    const setCurrentNavLink = getContext<(param: boolean) => void>('currentAnchor');
+    do {
+        key = Math.random().toString(16).substring(2);
+    } while ($store.has(key));
+    $store.set(key, false);
     function toggle(): void
     {
         $store.forEach((value, _key) => {
@@ -35,7 +30,7 @@
             }, 0);
         }
         store.update(value => value);
-        setTimeout(setCurrentNavLink, 0);
+        setTimeout(setCurrentNavLink, 0, false);
     }
 </script>
 <button type="button" bind:this={button} class:open={$store.get(key)} on:click={toggle}>{name}</button>

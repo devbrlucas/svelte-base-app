@@ -23,7 +23,8 @@
     }
     setContext('currentAnchor', setCurrentNavLink);
     onMount(() => {
-        setCurrentNavLink();
+        // setTimeout(setCurrentNavLink, 0);
+        setCurrentNavLink(true);
         const allAnchors = document.querySelectorAll<HTMLAnchorElement>('#app-nav a');
         allAnchors.forEach(anchor => anchor.addEventListener('click', handleAnchorClick));
         const childAnchors = document.querySelectorAll<HTMLAnchorElement>('#app-nav > a');
@@ -32,8 +33,8 @@
             store.update(value => value);
         }));
     });
-    afterNavigate(setCurrentNavLink);
-    function setCurrentNavLink(): void
+    afterNavigate(() => setCurrentNavLink(true));
+    function setCurrentNavLink(handleGroupedButton: boolean): void
     {
         const anchors = document.querySelectorAll<HTMLAnchorElement>('#app-nav a');
         anchors.forEach(anchor => anchor.classList.remove('current'));
@@ -43,8 +44,10 @@
             const regexp = new RegExp(`^${anchorPathname}`);
             if (regexp.test(currentPathname)) {
                 anchor.classList.add('current');
-                const button = anchor.parentElement?.previousElementSibling;
-                if (button && button instanceof HTMLButtonElement && !button.classList.contains('open')) button.click();
+                if (handleGroupedButton) {
+                    const button = anchor.parentElement?.previousElementSibling;
+                    if (button && button instanceof HTMLButtonElement && !button.classList.contains('open')) button.click();
+                }
                 return;
             }
         });
