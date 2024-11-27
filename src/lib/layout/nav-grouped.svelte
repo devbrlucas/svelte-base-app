@@ -1,9 +1,10 @@
 <script lang="ts">
-    import { onMount } from "svelte";
+    import { getContext, onMount } from "svelte";
     import { store } from "./nav_grouped";
     export let name: string;
     let key: string;
     let button: HTMLButtonElement;
+    const setCurrentNavLink = getContext<() => void>('currentAnchor');
     onMount(() => {
         do {
             key = Math.random().toString(16).substring(2);
@@ -36,27 +37,13 @@
         store.update(value => value);
         setTimeout(setCurrentNavLink, 0);
     }
-    function setCurrentNavLink(): void
-    {
-        const anchors = document.querySelectorAll<HTMLAnchorElement>('#app-nav a');
-        anchors.forEach(anchor => anchor.classList.remove('current'));
-        const currentPathname = window.location.pathname;
-        anchors.forEach(anchor => {
-            const anchorPathname = anchor.pathname;
-            const regexp = new RegExp(`^${anchorPathname}`);
-            if (regexp.test(currentPathname)) {
-                anchor.classList.add('current');
-                return;
-            }
-        });
-    }
 </script>
 <button type="button" bind:this={button} class:open={$store.get(key)} on:click={toggle}>{name}</button>
-<div class:show={$store.get(key)}>
+<div class="grouped-nav" class:show={$store.get(key)}>
     <slot></slot>
 </div>
 <style lang="less">
-    div {
+    div.grouped-nav {
         display: none;
         gap: 1em;
         flex-direction: column;

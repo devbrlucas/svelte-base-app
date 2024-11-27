@@ -6,7 +6,7 @@
     import { slide } from "svelte/transition";
     import ProfileButton from "./components/profile-button.svelte";
     import ProfileLinks from "./components/profile-links.svelte";
-    import { onMount } from "svelte";
+    import { onMount, setContext } from "svelte";
     import { title } from "$lib/utils";
     import { store } from "./nav_grouped";
     let navState: boolean = false;
@@ -21,6 +21,7 @@
         navState = !navState;
         profileMenuState = false;
     }
+    setContext('currentAnchor', setCurrentNavLink);
     onMount(() => {
         setCurrentNavLink();
         const allAnchors = document.querySelectorAll<HTMLAnchorElement>('#app-nav a');
@@ -42,6 +43,8 @@
             const regexp = new RegExp(`^${anchorPathname}`);
             if (regexp.test(currentPathname)) {
                 anchor.classList.add('current');
+                const button = anchor.parentElement?.previousElementSibling;
+                if (button && button instanceof HTMLButtonElement && !button.classList.contains('open')) button.click();
                 return;
             }
         });
