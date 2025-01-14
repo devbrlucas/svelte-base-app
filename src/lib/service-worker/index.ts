@@ -57,8 +57,6 @@ export async function handleFetch(event: FetchEvent, cacheName: string, assets: 
         } catch (error) {
             let response = await cache.match(event.request);
 			if (response) return response;
-            if (error instanceof TypeError) response = await cache.match(new URL('/offline.html'));
-            if (response) return response;
             return respondWithRedirect();
         }
     }
