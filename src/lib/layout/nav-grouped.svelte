@@ -33,7 +33,7 @@
         setTimeout(setCurrentNavLink, 0, false);
     }
 </script>
-<button type="button" bind:this={button} class:open={$store.get(key)} on:click={toggle}>{name}</button>
+<button type="button" bind:this={button} class:open={$store.get(key)} on:click={toggle}>{@html name}</button>
 <div class="grouped-nav" class:show={$store.get(key)}>
     <slot></slot>
 </div>
