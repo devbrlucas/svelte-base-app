@@ -53,15 +53,39 @@
                 if (file instanceof File) {
                     const data = new DataTransfer;
                     data.items.add(file);
-                    console.log(data.files);
                     input.files = data.files;
                 }
             }
         }
-    })
+    });
+    function ondragover(event: Event): void
+    {
+        event.preventDefault();
+        const container = event.currentTarget as HTMLElement;
+        !container.classList.contains('dragover') && container.classList.add('dragover');
+    }
+    function ondragleave(event: Event): void
+    {
+        event.preventDefault();
+        const container = event.currentTarget as HTMLElement;
+        container.classList.contains('dragover') && container.classList.remove('dragover');
+    }
+    function ondrop(event: DragEvent): void
+    {
+        event.preventDefault();
+        const container = event.currentTarget as HTMLElement;
+        const input = container.querySelector('input');
+        if (!input) throw new ReferenceError('<input type="file"> not found on drop handler');
+        container.classList.contains('dragover') && container.classList.remove('dragover');
+        if (!event.dataTransfer) return;
+        console.log(input.files);
+        input.files = event.dataTransfer.files;
+        files = event.dataTransfer.files;
+        console.log(input.files);
+    }
 </script>
 
-<div class="app input-component" class:disabled class:info={$$slots.default} class:required class:file={type === 'file'} class:fileselected={Boolean(file)}>
+<div class="app input-component" class:disabled class:info={$$slots.default} class:required class:file={type === 'file'} class:fileselected={Boolean(file)} on:dragover={ondragover} on:dragleave={ondragleave} role="form" on:drop={ondrop}>
     {#if type !== 'file' && label}
         {#if $$slots.default}
             <LabelInfo {id} {label}>
