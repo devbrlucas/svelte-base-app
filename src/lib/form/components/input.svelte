@@ -62,12 +62,16 @@
     {
         event.preventDefault();
         const container = event.currentTarget as HTMLElement;
+        const input = container.querySelector('input');
+        if (input?.type !== 'file') return;
         !container.classList.contains('dragover') && container.classList.add('dragover');
     }
     function ondragleave(event: Event): void
     {
         event.preventDefault();
         const container = event.currentTarget as HTMLElement;
+        const input = container.querySelector('input');
+        if (input?.type !== 'file') return;
         container.classList.contains('dragover') && container.classList.remove('dragover');
     }
     function ondrop(event: DragEvent): void
@@ -75,13 +79,12 @@
         event.preventDefault();
         const container = event.currentTarget as HTMLElement;
         const input = container.querySelector('input');
+        if (input?.type !== 'file') return;
         if (!input) throw new ReferenceError('<input type="file"> not found on drop handler');
         container.classList.contains('dragover') && container.classList.remove('dragover');
         if (!event.dataTransfer) return;
-        console.log(input.files);
         input.files = event.dataTransfer.files;
         files = event.dataTransfer.files;
-        console.log(input.files);
     }
 </script>
 
