@@ -124,11 +124,14 @@ export class Ajax
             throwHttpError()
             {
                 const statusCode = ajaxResponse.response.status;
-                if (statusCode >= 400 && statusCode <= 599) {
-                    error(statusCode as NumericRange<400, 599>, {
-                        message: ajaxResponse.response.statusText,
-                        detailed_message: ajaxResponse.detailed_error,
-                    });
+                if ((statusCode >= 400 && statusCode <= 599) || ajaxResponse.error) {
+                    error(
+                        statusCode >= 400 && statusCode <= 599 ? statusCode : 500,
+                        {
+                            message: ajaxResponse.response.statusText,
+                            detailed_message: ajaxResponse.detailed_error,
+                        },
+                    );
                 }
             },
         }
