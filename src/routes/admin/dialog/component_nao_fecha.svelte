@@ -11,3 +11,11 @@
         <button type="submit">Enviar</button>
     </form>
 </main>
+<footer>
+    <button type="button" class="highlighted" on:click={() => dialog.canClose(true)}>
+        Teste canClose(true) janela
+    </button>
+    <button type="button" class="highlighted" on:click={() => dialog.canClose(false)}>
+        Teste canClose(false) janela
+    </button>
+</footer>

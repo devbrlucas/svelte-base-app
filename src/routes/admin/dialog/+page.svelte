@@ -22,7 +22,7 @@
     async function openDialogCloseFalse()
     {
         let r: string | undefined;
-        while (r = await dialog.open<string>('Cadastro do cliente', ComponentNaoFecha)) {
+        while (r = await dialog.open<string>('Cadastro do cliente', ComponentNaoFecha, undefined, false)) {
             if (r === undefined) break;
             names.push(r);
             names = names;

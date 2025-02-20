@@ -1,5 +1,6 @@
 import type { ComponentType } from "svelte";
-import { dialogs } from "./dialogs";
+import { dialogs, type Dialog } from "./dialogs";
+import { get } from "svelte/store";
 export { default as DialogComponent } from "./component.svelte";
 type DialogMessage = {
     close?: boolean;
@@ -16,7 +17,7 @@ function getActiveDialogChannel(): BroadcastChannel
 {
     return new BroadcastChannel(getActiveDialogId());
 }
-async function open<T>(title: string, component: ComponentType, props?: Record<string, any>): Promise<T | undefined>
+async function open<T>(title: string, component: ComponentType, props?: Record<string, any>, canClose: boolean = true): Promise<T | undefined>
 {
     const id = `dialog-${component.name}`;
     dialogs.update(value => {
@@ -26,6 +27,7 @@ async function open<T>(title: string, component: ComponentType, props?: Record<s
                 component,
                 props: props ?? {},
                 id,
+                can_close: canClose,
             });
         }
         return value;
@@ -57,9 +59,31 @@ function resolve<T>(data: T, close: boolean = true): void
     getActiveDialogChannel().postMessage({ resolve: data });
     if (close) dialogs.update(value => value.filter(item => item.id !== id));
 }
+function canClose(value: boolean): void
+{
+    const id = getActiveDialogId();
+    dialogs.update(dialogs => {
+        for (const dialog of dialogs) {
+            if (dialog.id === id) {
+                dialog.can_close = value;
+            }
+        }
+        return dialogs;
+    });
+}
+function active(): Dialog|null
+{
+    const id = getActiveDialogId();
+    for (const dialog of get(dialogs)) {
+        if (dialog.id === id) return dialog;
+    }
+    return null;
+}
 export const dialog = {
     open,
     close,
     closeAll,
     resolve,
+    canClose,
+    active,
 }
