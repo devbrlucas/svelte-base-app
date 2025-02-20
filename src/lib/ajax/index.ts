@@ -18,6 +18,7 @@ type Options = {
     unauthenticatedMessage?: string;
     dontUseBaseURL?: boolean;
     disableRedirects?: boolean;
+    abortSignal?: AbortSignal;
 }
 type AjaxResponse<B> = {
     response: Response;
@@ -104,6 +105,7 @@ export class Ajax
     public setOption(key: 'convertToFormData', value: boolean): Ajax
     public setOption(key: 'dontUseBaseURL', value: boolean): Ajax
     public setOption(key: 'disableRedirects', value: boolean): Ajax
+    public setOption(key: 'abortSignal', value: AbortSignal): Ajax
     public setOption(key: keyof Options, value: any): Ajax
     {
         this.options[key] = value;
@@ -142,6 +144,7 @@ export class Ajax
                 method: this.method,
                 headers: this.headers,
                 body: requestBody,
+                signal: this.options.abortSignal,
             });
             if (!this.options.preserveErrors) formUtils.cleanErrors();
             if (!response.ok) {
