@@ -20,6 +20,11 @@
     </button>
     <br>
     <br>
+    <button type="button" class="highlighted" on:click={() => id = messages.error('Mensagem aberta', false)}>
+        Sempre aberta
+    </button>
+    <br>
+    <br>
     <button type="button" class="highlighted" on:click={() => messages.close(id)}>
         Fechar mensagem
     </button>
