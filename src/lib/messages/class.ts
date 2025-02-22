@@ -1,7 +1,7 @@
-import { messages as store, type MessageLevel } from "./store";
+import { messages as store, type Message, type MessageLevel } from "./store";
 export class Messages
 {
-    private appendMessage(level: MessageLevel, content?: string, close: boolean = true): number
+    private appendMessage(level: MessageLevel, content?: string, close: boolean = true, callback?: (message: Message) => any|Promise<any>): number
     {
         if (!content) return -1;
         const id = Math.random();
@@ -11,6 +11,7 @@ export class Messages
                 content,
                 level,
                 close,
+                callback,
             });
             localStorage.setItem('app:persistent_messages', JSON.stringify(value.filter(item => !item.close)));
             return value;
@@ -18,19 +19,19 @@ export class Messages
         return id;
     }
 
-    public error(content?: string, close: boolean = true): number
+    public error(content?: string, close: boolean = true, callback?: (message: Message) => any|Promise<any>): number
     {
-        return this.appendMessage('error', content, close);
+        return this.appendMessage('error', content, close, callback);
     }
 
-    public warning(content?: string, close: boolean = true): number
+    public warning(content?: string, close: boolean = true, callback?: (message: Message) => any|Promise<any>): number
     {
-        return this.appendMessage('warning', content, close);
+        return this.appendMessage('warning', content, close, callback);
     }
 
-    public success(content?: string, close: boolean = true): number
+    public success(content?: string, close: boolean = true, callback?: (message: Message) => any|Promise<any>): number
     {
-        return this.appendMessage('success', content, close);
+        return this.appendMessage('success', content, close, callback);
     }
 
     public close(id: number): void

@@ -24,7 +24,7 @@
     {#each $messages as message (message.id)}
         <!-- svelte-ignore a11y-click-events-have-key-events -->
         <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
-        <p class={message.level} on:click={() => remove(message.id)} in:scale={{duration: 200}} animate:flip={{duration: 200}} role="alert">
+        <p class={message.level} on:click={() => {remove(message.id); message.callback?.(message)}} in:scale={{duration: 200}} animate:flip={{duration: 200}} role="alert">
             {@html icon + message.content}
             {#if message.close}
                 <span aria-hidden="true" class="flash-messages-progress" on:animationend={() => remove(message.id)}></span>

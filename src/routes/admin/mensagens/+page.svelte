@@ -25,6 +25,11 @@
     </button>
     <br>
     <br>
+    <button type="button" class="highlighted" on:click={() => id = messages.warning('Vai vir outra mensagem', false, () => messages.success('Viu !!!!'))}>
+        Callback
+    </button>
+    <br>
+    <br>
     <button type="button" class="highlighted" on:click={() => messages.close(id)}>
         Fechar mensagem
     </button>
