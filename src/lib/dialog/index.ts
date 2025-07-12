@@ -35,8 +35,8 @@ async function open<T>(title: string, component: ComponentType, props?: Record<s
     const channel = new BroadcastChannel(id);
     return new Promise((resolve, reject) => {
         const channelCallback = (event: MessageEvent<DialogMessage>) => {
-            if (event.data.close) resolve(undefined);
-            if (event.data.resolve) resolve(event.data.resolve);
+            if (event.data.close) return resolve(undefined);
+            resolve(event.data.resolve);
             channel.removeEventListener('message', channelCallback);
             channel.close();
         }
