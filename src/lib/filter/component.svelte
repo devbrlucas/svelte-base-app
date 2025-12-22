@@ -6,6 +6,7 @@
     export let url: string;
     export let form: Record<string, any>;
     export let callback: (() => void | Promise<void>) | undefined = undefined;
+    export let appends: Record<string, string> = {};
     function filter(): void
     {
         filterStore.update(filter => {
@@ -17,6 +18,9 @@
         );
         for (const key in form) {
             params.set(key, form[key]);
+        }
+        for (const key in appends) {
+            params.set(key, appends[key]);
         }
         const newURL = `${url}?${params.toString()}`;
         if (newURL === `${window.location.pathname}${window.location.search}`) {

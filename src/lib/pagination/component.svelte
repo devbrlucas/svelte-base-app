@@ -20,6 +20,7 @@
     export let ajaxUrl: string = '';
     export let results: T[] | undefined = undefined;
     export const refresh = () => changePage(perPage, currentPage);
+    export let appends: Record<string, string> = {};
     const INITIAL_ITEMS_PER_PAGE: number = 20;
     const MAX_ITENS_PER_PAGE: number = 300;
     let pages: number[] = [];
@@ -41,6 +42,9 @@
         query.delete('page');
         if (page > 1) query.set('page', String(page));
         if (items > INITIAL_ITEMS_PER_PAGE) query.set('items', String(items));
+        for (const key in appends) {
+            query.set(key, appends[key]);
+        }
         const url = new URL(location.href);
         url.search = query.toString();
         if (ajaxUrl) {
