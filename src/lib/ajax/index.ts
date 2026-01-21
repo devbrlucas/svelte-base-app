@@ -19,6 +19,7 @@ type Options = {
     dontUseBaseURL?: boolean;
     disableRedirects?: boolean;
     abortSignal?: AbortSignal;
+    hideMessages?: boolean;
 }
 type AjaxResponse<B> = {
     response: Response;
@@ -106,6 +107,7 @@ export class Ajax
     public setOption(key: 'dontUseBaseURL', value: boolean): Ajax
     public setOption(key: 'disableRedirects', value: boolean): Ajax
     public setOption(key: 'abortSignal', value: AbortSignal): Ajax
+    public setOption(key: 'hideMessages', value: boolean): Ajax
     public setOption(key: keyof Options, value: any): Ajax
     {
         this.options[key] = value;
@@ -151,9 +153,9 @@ export class Ajax
                 if (response.status === 422) {
                     const responseErrors: AjaxValidationErrorResponse = await response.json();
                     formUtils.setErrors(responseErrors.errors);
-                    formUtils.message();
+                    if (!this.options.hideMessages) formUtils.message();
                 } else if (response.status === 401) {
-                    messages.error(this.options.unauthenticatedMessage ?? 'Você precisa se identificar para acessar esse recurso');
+                    if (!this.options.hideMessages) messages.error(this.options.unauthenticatedMessage ?? 'Você precisa se identificar para acessar esse recurso');
                     user.clean();
                     if (!this.options.disableRedirects) goto('/login');
                 } else if (response.status === 403) {
@@ -162,11 +164,11 @@ export class Ajax
                     if (this.isNavigating && !this.options.disableRedirects) {
                         ajaxResponse.detailed_error = forbiddenMessage;
                     } else {
-                        messages.error(forbiddenMessage);
+                        if (!this.options.hideMessages) messages.error(forbiddenMessage);
                     }
                 } else {
                     const errorMessageDetail: string | undefined = (await response.json()).message;
-                    if (!this.isNavigating) messages.error(errorMessageDetail);
+                    if (!this.isNavigating && !this.options.hideMessages) messages.error(errorMessageDetail);
                     console.error(`ERRO ${response.status}: ${response.statusText}`);
                     ajaxResponse.detailed_error = errorMessageDetail;
                     if (errorMessageDetail) console.error(errorMessageDetail);
@@ -195,7 +197,7 @@ export class Ajax
             }
             ajaxResponse.response = response;
         } catch (error) {
-            messages.error(String(error));
+            if (!this.options.hideMessages) messages.error(String(error));
             ajaxResponse.error = String(error);
         } finally {
             this.stopLoadingIcon();
