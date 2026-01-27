@@ -5,9 +5,9 @@
     import { slide } from "svelte/transition";
     export let url: string;
     export let form: Record<string, any>;
-    export let callback: (() => void | Promise<void>) | undefined = undefined;
+    export let callback: ((action: 'filter' | 'clean') => void | Promise<void>) | undefined = undefined;
     export let appends: Record<string, string> = {};
-    function filter(): void
+    async function filter(): Promise<void>
     {
         filterStore.update(filter => {
             filter.active = true;
@@ -24,14 +24,14 @@
         }
         const newURL = `${url}?${params.toString()}`;
         if (newURL === `${window.location.pathname}${window.location.search}`) {
-            invalidateAll();
+            await invalidateAll();
         } else {
-            goto(newURL);
+            await goto(newURL);
         }
     }
-    function clean(): void
+    async function clean(): Promise<void>
     {
-        if (callback) callback();
+        if (callback) await callback('clean');
         filterStore.update(filter => {
             filter.active = false;
             return filter;
@@ -44,9 +44,9 @@
             form[key] = '';
         }
         if (params.toString()) {
-            goto(`${url}?${params.toString()}`);
+            await goto(`${url}?${params.toString()}`);
         } else {
-            goto(url);
+            await goto(url);
         }
     }
     function populate(): void
@@ -85,10 +85,10 @@
             return filter;
         });
     });
-    function handleSubmit(): void
+    async function handleSubmit(): Promise<void>
     {
-        filter();
-        if (callback) callback();
+        await filter();
+        if (callback) await callback('filter');
     }
 </script>
 
