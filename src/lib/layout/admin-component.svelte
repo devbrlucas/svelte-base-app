@@ -9,6 +9,7 @@
     import { onMount, setContext } from "svelte";
     import { title } from "$lib/utils";
     import { store } from "./nav_grouped";
+    export let anchorclick: boolean = true;
     let navState: boolean = false;
     let profileMenuState: boolean = false;
     const titleStore = title();
@@ -25,8 +26,10 @@
     onMount(() => {
         // setTimeout(setCurrentNavLink, 0);
         setCurrentNavLink(true);
-        const allAnchors = document.querySelectorAll<HTMLAnchorElement>('#app-nav a');
-        allAnchors.forEach(anchor => anchor.addEventListener('click', handleAnchorClick));
+        if (anchorclick) {
+            const allAnchors = document.querySelectorAll<HTMLAnchorElement>('#app-nav a');
+            allAnchors.forEach(anchor => anchor.addEventListener('click', handleAnchorClick));
+        }
         const childAnchors = document.querySelectorAll<HTMLAnchorElement>('#app-nav > a');
         childAnchors.forEach(anchor => anchor.addEventListener('click', () => {
             $store.forEach((value, key) => $store.set(key, false));

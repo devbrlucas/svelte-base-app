@@ -31,7 +31,6 @@
     }
     async function clean(): Promise<void>
     {
-        if (callback) await callback('clean');
         filterStore.update(filter => {
             filter.active = false;
             return filter;
@@ -48,6 +47,7 @@
         } else {
             await goto(url);
         }
+        if (callback) await callback('clean');
     }
     function populate(): void
     {
