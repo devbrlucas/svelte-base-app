@@ -55,10 +55,14 @@
             }
         });
     }
-    function handleAnchorClick(event: Event): void
+    async function handleAnchorClick(event: Event): Promise<void>
     {
         const anchor = event.currentTarget as HTMLAnchorElement;
-        if (anchor.pathname === location.pathname && !location.search) invalidateAll();
+        if (anchor.pathname === location.pathname && !location.search) {
+            event.preventDefault();
+            event.stopImmediatePropagation();
+            await invalidateAll();
+        }
     }
 </script>
 
