@@ -1,40 +1,48 @@
+<!-- @migration-task Error while migrating Svelte code: Cannot use `export let` in runes mode — use `$props()` instead
+https://svelte.dev/e/legacy_export_invalid -->
 <script lang="ts" generics="T">
+    import { createBubbler, preventDefault } from 'svelte/legacy';
+
+    const bubble = createBubbler();
     import { Ajax } from "$lib/ajax";
     import type { PaginatedResponse } from "./index";
     import { goto } from "$app/navigation";
-    import { afterUpdate } from "svelte";
     import previousIcon from "./icons/previous.svg?raw";
     import nextIcon from "./icons/next.svg?raw";
     import firstIcon from "./icons/first.svg?raw";
     import lastIcon from "./icons/last.svg?raw";
     import plusIcon from "./icons/plus.svg?raw";
     import minusIcon from "./icons/minus.svg?raw";
-    export let meta: PaginatedResponse['meta'] = {
-         current_page: 0,
-         from: 0,
-         last_page: 0,
-         per_page: 0,
-         to: 0,
-         total: 0
-     };
-    export let ajaxUrl: string = '';
-    export let results: T[] | undefined = undefined;
-    export const refresh = () => changePage(perPage, currentPage);
-    export let appends: Record<string, string> = {};
+    let {
+        meta = {
+            current_page: 0,
+            from: 0,
+            last_page: 0,
+            per_page: 0,
+            to: 0,
+            total: 0
+        },
+        ajaxUrl = '',
+        results = undefined,
+        appends = {}
+    }: {
+        meta?: PaginatedResponse['meta'];
+        ajaxUrl?: string;
+        results?: T[];
+        appends?: Record<string, string>;
+    } = $props();
+
     const INITIAL_ITEMS_PER_PAGE: number = 20;
     const MAX_ITENS_PER_PAGE: number = 300;
-    let pages: number[] = [];
-    $: {
-        pages = [];
+    let pages: number[] = $derived.by(() => {
+        const p = [];
         for (let i = 1; i <= meta.last_page; i++) {
-            pages.push(i);
+            p.push(i);
         }
-    }
-    $: currentPage = meta.current_page;
-    $: perPage = meta.per_page;
-    $: {
-        changePage(perPage, currentPage);
-    }
+        return p;
+    });
+    let currentPage = $derived(meta.current_page);
+    let perPage = $derived(meta.per_page);
     async function changePage(items: number, page: number): Promise<void>
     {
         const query = new URLSearchParams(location.search);
@@ -58,34 +66,41 @@
             goto(url);
         }
     }
-    function validatePageNumber(): void
+    function validatePageNumber(_meta: PaginatedResponse['meta']): void
     {
-        if (meta.current_page > meta.last_page) {
+        if (_meta.current_page > _meta.last_page) {
             currentPage = 1;
         }
     }
-    afterUpdate(validatePageNumber);
+
+    $effect(() => {
+        changePage(perPage, currentPage);
+    });
+
+    $effect(() => {
+        validatePageNumber(meta);
+    });
 </script>
 
-<form on:submit|preventDefault title="paginação dos registros" class="app-pagination">
+<form onsubmit={preventDefault(bubble('submit'))} title="paginação dos registros" class="app-pagination">
     <span>
         Exibindo dos itens {meta.from ?? 0} - {meta.to ?? 0} de um total de {meta.total} registros
     </span>
     <br>
     <div>
-        <button type="button" on:click={() => perPage -= 20} disabled={perPage === INITIAL_ITEMS_PER_PAGE} title="mais itens por página">
+        <button type="button" onclick={() => perPage -= 20} disabled={perPage === INITIAL_ITEMS_PER_PAGE} title="mais itens por página">
             {@html minusIcon}
         </button>
         <span>{perPage}</span>
-        <button type="button" on:click={() => perPage += 20} disabled={perPage === MAX_ITENS_PER_PAGE} title="mais itens por página">
+        <button type="button" onclick={() => perPage += 20} disabled={perPage === MAX_ITENS_PER_PAGE} title="mais itens por página">
             {@html plusIcon}
         </button>
     </div>
     <div>
-        <button type="button" on:click={() => currentPage = 1} disabled={meta.current_page === 1} title="primeira página">
+        <button type="button" onclick={() => currentPage = 1} disabled={meta.current_page === 1} title="primeira página">
             {@html firstIcon}    
         </button>
-        <button type="button" on:click={() => currentPage--} disabled={meta.current_page === 1} title="página anterior">
+        <button type="button" onclick={() => currentPage--} disabled={meta.current_page === 1} title="página anterior">
             {@html previousIcon}
         </button>
         <select bind:value={meta.current_page}>
@@ -93,10 +108,10 @@
                 <option>{page}</option>
             {/each}
         </select>
-        <button type="button" on:click={() => currentPage++} disabled={meta.current_page === meta.last_page} title="próxima página">
+        <button type="button" onclick={() => currentPage++} disabled={meta.current_page === meta.last_page} title="próxima página">
             {@html nextIcon}
         </button>
-        <button type="button" on:click={() => currentPage = meta.last_page} disabled={meta.current_page === meta.last_page} title="última página">
+        <button type="button" onclick={() => currentPage = meta.last_page} disabled={meta.current_page === meta.last_page} title="última página">
             {@html lastIcon}
         </button>
     </div>

@@ -1,11 +1,13 @@
 <script lang="ts">
     import { type PaginatedResponse, Pagination } from "../pagination";
-    import { afterUpdate } from "svelte";
-    export let center = false;
-    export let full = false;
-    export let pagination: {meta: PaginatedResponse['meta'];} | undefined = undefined;
+
+     let { head, body,
+        center = false,
+        full = false,
+        pagination = undefined
+    } = $props();
     let table: HTMLTableElement;
-    afterUpdate(() => {
+    $effect(() => {
         const headCells = table.querySelectorAll<HTMLTableCellElement>('thead > tr > th');
         const bodyRows = table.querySelectorAll<HTMLTableRowElement>('tbody > tr');
         for (const [headCellKey, headCell] of headCells.entries()) {
@@ -27,10 +29,10 @@
 <table class:center class:full class="app-table-records" bind:this={table}>
     <thead>
         <tr>
-            <slot name="head"></slot>
+            {@render head?.()}
         </tr>
     </thead>
     <tbody>
-        <slot name="body"></slot>
+        {@render body?.()}
     </tbody>
 </table>

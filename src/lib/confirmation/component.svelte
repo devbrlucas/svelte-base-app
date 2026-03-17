@@ -1,6 +1,8 @@
 <script lang="ts">
+    import { run } from 'svelte/legacy';
+
     import { store } from "./store";
-    let dialog: HTMLDivElement | undefined;
+    let dialog: HTMLDivElement | undefined = $state();
     function close(): void
     {
         dialog
@@ -25,9 +27,9 @@
     {
         if (event.key === 'Escape') denied();
     }
-    $: {
+    run(() => {
         Boolean($store) ? show() : close();
-    }
+    });
     function accept(): void
     {
         if ($store) $store.callback();
@@ -45,10 +47,10 @@
         <h3>Alerta</h3>
         <p>{@html $store?.message}</p>
         <footer>
-            <button type="button" on:click={accept} class="accept">
+            <button type="button" onclick={accept} class="accept">
                 Sim
             </button>
-            <button type="button" on:click={denied} class="reject">
+            <button type="button" onclick={denied} class="reject">
                 Não
             </button>
         </footer>

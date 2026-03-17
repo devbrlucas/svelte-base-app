@@ -5,10 +5,15 @@
     import { titleStore } from "../utils/title_store";
     import { ConfirmationComponent, DialogComponent } from "$lib";
     import { currentUser, user } from "$lib/auth";
-    export let version: string;
-    export let baseTitle: string;
-    let installPromptContainer: HTMLDivElement;
-    let installPrompt: BeforeInstallPromptEvent | null;
+    interface Props {
+        version: string;
+        baseTitle: string;
+        children?: import('svelte').Snippet;
+    }
+
+    let { version, baseTitle, children }: Props = $props();
+    let installPromptContainer: HTMLDivElement = $state()!;
+    let installPrompt: BeforeInstallPromptEvent | null = $state()!;
     window.addEventListener('beforeinstallprompt', async event => {
         event.preventDefault();
         const latestClose = Number(
@@ -40,15 +45,15 @@
 <svelte:head>
     <title>{$titleStore}{baseTitle}</title>
 </svelte:head>
-<slot></slot>
+{@render children?.()}
 {#if installPrompt}
     <div role="alert" bind:this={installPromptContainer} id="app-pwa-install-message">
-        <button type="button" on:click={removeInstallPrompt} class="remove" title="remover alerta">
+        <button type="button" onclick={removeInstallPrompt} class="remove" title="remover alerta">
             {@html xmarkIcon}
         </button>
         <span>Clique no botão abaixo para instalar o aplicativo</span>
         <br>
-        <button type="button" on:click={installPromptChoice} class="choice">
+        <button type="button" onclick={installPromptChoice} class="choice">
             Instalar
         </button>
     </div>

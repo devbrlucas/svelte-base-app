@@ -1,12 +1,25 @@
 <script lang="ts">
+    import { preventDefault } from 'svelte/legacy';
+
     import { goto, invalidateAll } from "$app/navigation";
     import { onDestroy, onMount } from "svelte";
     import { filterStore } from "./store";
     import { slide } from "svelte/transition";
-    export let url: string;
-    export let form: Record<string, any>;
-    export let callback: ((action: 'filter' | 'clean') => void | Promise<void>) | undefined = undefined;
-    export let appends: Record<string, string> = {};
+    interface Props {
+        url: string;
+        form: Record<string, any>;
+        callback?: ((action: 'filter' | 'clean') => void | Promise<void>) | undefined;
+        appends?: Record<string, string>;
+        children?: import('svelte').Snippet;
+    }
+
+    let {
+        url,
+        form = $bindable(),
+        callback = undefined,
+        appends = {},
+        children
+    }: Props = $props();
     async function filter(): Promise<void>
     {
         filterStore.update(filter => {
@@ -93,13 +106,13 @@
 </script>
 
 {#if $filterStore.visible}
-    <form on:submit|preventDefault={handleSubmit} transition:slide={{duration: 200}} id="form-filter">
+    <form onsubmit={preventDefault(handleSubmit)} transition:slide={{duration: 200}} id="form-filter">
         <fieldset>
             <legend>Pesquisa</legend>
-            <slot></slot>
+            {@render children?.()}
             <br>
             <br>
-            <button type="button" class="clean" on:click={clean}>
+            <button type="button" class="clean" onclick={clean}>
                 Limpar
             </button>
             <button type="submit" class="filter">

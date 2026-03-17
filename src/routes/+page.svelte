@@ -1,4 +1,1 @@
-<script lang="ts">
-    import { goto } from "$app/navigation";
-    goto('/login');
-</script>
+<h1>Hi</h1>

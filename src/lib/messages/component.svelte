@@ -22,12 +22,12 @@
 
 <div id="app-messages-container" role="alertdialog">
     {#each $messages as message (message.id)}
-        <!-- svelte-ignore a11y-click-events-have-key-events -->
-        <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
-        <p class={message.level} on:click={() => {remove(message.id); message.callback?.(message)}} in:scale={{duration: 200}} animate:flip={{duration: 200}} role="alert">
+        <!-- svelte-ignore a11y_click_events_have_key_events -->
+        <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
+        <p class={message.level} onclick={() => {remove(message.id); message.callback?.(message)}} in:scale={{duration: 200}} animate:flip={{duration: 200}} role="alert">
             {@html icon + message.content}
             {#if message.close}
-                <span aria-hidden="true" class="flash-messages-progress" on:animationend={() => remove(message.id)}></span>
+                <span aria-hidden="true" class="flash-messages-progress" onanimationend={() => remove(message.id)}></span>
             {/if}
         </p>
     {/each}

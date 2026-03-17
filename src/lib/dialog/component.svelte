@@ -1,11 +1,13 @@
 <script lang="ts">
+    import { run } from 'svelte/legacy';
+
     import xmarkIcon from "./xmark.svg?raw";
     import { dialogs } from "./dialogs";
     import { store as confirmationStore } from "../confirmation/store";
     import { dialog as dialogUtils } from "./index";
     import "./style.less";
     import { afterNavigate } from "$app/navigation";
-    let dialogElement: HTMLDivElement | undefined;
+    let dialogElement: HTMLDivElement | undefined = $state();
     function close(): void
     {
         dialogUtils.close();
@@ -26,7 +28,9 @@
         const dialog = dialogUtils.active();
         if (event.key === 'Escape' && !Boolean($confirmationStore) && dialog?.can_close) close();
     }
-    $: $dialogs.length === 0 ? close() : show();
+    run(() => {
+        $dialogs.length === 0 ? close() : show();
+    });
     afterNavigate(({to}) => /^\/login/.test(to?.url.pathname ?? '') && dialogUtils.closeAll());
 </script>
 
@@ -36,12 +40,12 @@
             <header>
                 <h3>{dialog.title}</h3>
                 {#if dialog.can_close !== false}
-                    <button type="button" class="circle red" on:click={close}>
+                    <button type="button" class="circle red" onclick={close}>
                         {@html xmarkIcon}
                     </button>
                 {/if}
             </header>
-            <svelte:component this={dialog.component} props={dialog.props} />
+            <dialog.component {...dialog.props} />
         </div>
     {/each}
 </div>

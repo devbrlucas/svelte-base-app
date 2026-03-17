@@ -1,4 +1,7 @@
 <script lang="ts" generics="P">
+    import { run, createBubbler } from 'svelte/legacy';
+
+    const bubble = createBubbler();
     import type { Action } from "svelte/action";
     import Error from "./error.svelte";
     import LabelInfo from "./label-info.svelte";
@@ -18,22 +21,41 @@
         'time' |
         'color';
 
-    export let type: Type
-    export let label: string = '';
-    export let value: string | number | undefined | null = null;
-    export let file: FileList | File | null = null;
-    export let error: string = '';
-    export let disabled: boolean = false;
-    export let required: boolean = false;
-    export let action: Action<HTMLElement, P | undefined> | undefined = undefined;
-    export let actionOptions: P | undefined = undefined;
-    export let clearCallback: ((event: Event) => void | Promise<void>) | undefined = undefined;
+    interface Props {
+        type: Type;
+        label?: string;
+        value?: string | number | undefined | null;
+        file?: FileList | File | null;
+        error?: string;
+        disabled?: boolean;
+        required?: boolean;
+        action?: Action<HTMLElement, P | undefined> | undefined;
+        actionOptions?: P | undefined;
+        clearCallback?: ((event: Event) => void | Promise<void>) | undefined;
+        children?: import('svelte').Snippet;
+        [key: string]: any
+    }
+
+    let {
+        type,
+        label = '',
+        value = $bindable(null),
+        file = $bindable(null),
+        error = '',
+        disabled = false,
+        required = false,
+        action = undefined,
+        actionOptions = undefined,
+        clearCallback = undefined,
+        children,
+        ...rest
+    }: Props = $props();
     const id = `input-${Math.random() * 5}`;
-    let files: FileList | null = null;
-    $: {
+    let files: FileList | null = $state(null);
+    run(() => {
         const input = document.querySelector<HTMLInputElement>(`input[id="${id}"]`);
         if (files && input) file = input.multiple ? files : files.item(0);
-    }
+    });
     function clearSelectedFiles(event: Event): void
     {
         const input = document.querySelector<HTMLInputElement>(`input[id="${id}"]`);
@@ -88,11 +110,11 @@
     }
 </script>
 
-<div class="app input-component" class:disabled class:info={$$slots.default} class:required class:file={type === 'file'} class:fileselected={Boolean(file)} on:dragover={ondragover} on:dragleave={ondragleave} role="form" on:drop={ondrop}>
+<div class="app input-component" class:disabled class:info={children} class:required class:file={type === 'file'} class:fileselected={Boolean(file)} {ondragover} {ondragleave} role="form" {ondrop}>
     {#if type !== 'file' && label}
-        {#if $$slots.default}
+        {#if children}
             <LabelInfo {id} {label}>
-                <slot></slot>
+                {@render children?.()}
             </LabelInfo>
         {:else}
             <LabelInfo {id} {label} />
@@ -100,75 +122,75 @@
     {/if}
     {#if type === 'password'}
         {#if action}
-            <input {id} type="password" bind:value autocomplete="off" {...$$restProps} {disabled} on:input on:blur use:action={actionOptions} {required} />
+            <input {id} type="password" bind:value autocomplete="off" {...rest} {disabled} oninput={bubble('input')} onblur={bubble('blur')} use:action={actionOptions} {required} />
         {:else}
-            <input {id} type="password" bind:value autocomplete="off" {...$$restProps} {disabled} on:input on:blur {required} />
+            <input {id} type="password" bind:value autocomplete="off" {...rest} {disabled} oninput={bubble('input')} onblur={bubble('blur')} {required} />
         {/if}
     {:else if type === 'number'}
         {#if action}
-            <input {id} type="number" bind:value autocomplete="off" {...$$restProps} {disabled} on:input on:blur use:action={actionOptions} {required} />
+            <input {id} type="number" bind:value autocomplete="off" {...rest} {disabled} oninput={bubble('input')} onblur={bubble('blur')} use:action={actionOptions} {required} />
         {:else}
-            <input {id} type="number" bind:value autocomplete="off" {...$$restProps} {disabled} on:input on:blur {required} />
+            <input {id} type="number" bind:value autocomplete="off" {...rest} {disabled} oninput={bubble('input')} onblur={bubble('blur')} {required} />
         {/if}
     {:else if type === 'email'}
         {#if action}
-            <input {id} type="email" bind:value autocomplete="off" {...$$restProps} {disabled} on:input use:action={actionOptions} {required} />
+            <input {id} type="email" bind:value autocomplete="off" {...rest} {disabled} oninput={bubble('input')} use:action={actionOptions} {required} />
         {:else}
-            <input {id} type="email" bind:value autocomplete="off" {...$$restProps} {disabled} on:input {required} />
+            <input {id} type="email" bind:value autocomplete="off" {...rest} {disabled} oninput={bubble('input')} {required} />
         {/if}
     {:else if type === 'text'}
         {#if action}
-            <input {id} type="text" bind:value autocomplete="off" {...$$restProps} {disabled} on:input on:blur use:action={actionOptions} {required} />
+            <input {id} type="text" bind:value autocomplete="off" {...rest} {disabled} oninput={bubble('input')} onblur={bubble('blur')} use:action={actionOptions} {required} />
         {:else}
-            <input {id} type="text" bind:value autocomplete="off" {...$$restProps} {disabled} on:input on:blur {required} />
+            <input {id} type="text" bind:value autocomplete="off" {...rest} {disabled} oninput={bubble('input')} onblur={bubble('blur')} {required} />
         {/if}
     {:else if type === 'tel'}
         {#if action}
-            <input {id} type="tel" bind:value autocomplete="off" {...$$restProps} {disabled} on:input on:blur use:action={actionOptions} {required} />
+            <input {id} type="tel" bind:value autocomplete="off" {...rest} {disabled} oninput={bubble('input')} onblur={bubble('blur')} use:action={actionOptions} {required} />
         {:else}
-            <input {id} type="tel" bind:value autocomplete="off" {...$$restProps} {disabled} on:input on:blur {required} />
+            <input {id} type="tel" bind:value autocomplete="off" {...rest} {disabled} oninput={bubble('input')} onblur={bubble('blur')} {required} />
         {/if}
     {:else if type === 'date'}
         {#if action}
-            <input {id} type="date" bind:value autocomplete="off" {...$$restProps} {disabled} on:input on:blur use:action={actionOptions} {required} />
+            <input {id} type="date" bind:value autocomplete="off" {...rest} {disabled} oninput={bubble('input')} onblur={bubble('blur')} use:action={actionOptions} {required} />
         {:else}
-            <input {id} type="date" bind:value autocomplete="off" {...$$restProps} {disabled} on:input on:blur {required} />
+            <input {id} type="date" bind:value autocomplete="off" {...rest} {disabled} oninput={bubble('input')} onblur={bubble('blur')} {required} />
         {/if}
     {:else if type === 'month'}
         {#if action}
-            <input {id} type="month" bind:value autocomplete="off" {...$$restProps} {disabled} on:input on:blur use:action={actionOptions} {required} />
+            <input {id} type="month" bind:value autocomplete="off" {...rest} {disabled} oninput={bubble('input')} onblur={bubble('blur')} use:action={actionOptions} {required} />
         {:else}
-            <input {id} type="month" bind:value autocomplete="off" {...$$restProps} {disabled} on:input on:blur {required} />
+            <input {id} type="month" bind:value autocomplete="off" {...rest} {disabled} oninput={bubble('input')} onblur={bubble('blur')} {required} />
         {/if}
     {:else if type === 'search'}
         {#if action}
-            <input {id} type="search" bind:value autocomplete="off" {...$$restProps} {disabled} on:input on:blur use:action={actionOptions} {required} />
+            <input {id} type="search" bind:value autocomplete="off" {...rest} {disabled} oninput={bubble('input')} onblur={bubble('blur')} use:action={actionOptions} {required} />
         {:else}
-            <input {id} type="search" bind:value autocomplete="off" {...$$restProps} {disabled} on:input on:blur {required} />
+            <input {id} type="search" bind:value autocomplete="off" {...rest} {disabled} oninput={bubble('input')} onblur={bubble('blur')} {required} />
         {/if}
     {:else if type === 'color'}
         {#if action}
-            <input {id} type="color" bind:value autocomplete="off" {...$$restProps} {disabled} on:input on:blur use:action={actionOptions} {required} />
+            <input {id} type="color" bind:value autocomplete="off" {...rest} {disabled} oninput={bubble('input')} onblur={bubble('blur')} use:action={actionOptions} {required} />
         {:else}
-            <input {id} type="color" bind:value autocomplete="off" {...$$restProps} {disabled} on:input on:blur {required} />
+            <input {id} type="color" bind:value autocomplete="off" {...rest} {disabled} oninput={bubble('input')} onblur={bubble('blur')} {required} />
         {/if}
     {:else if type === 'datetime-local'}
         {#if action}
-            <input {id} type="datetime-local" bind:value autocomplete="off" {...$$restProps} {disabled} on:input on:blur use:action={actionOptions} {required} />
+            <input {id} type="datetime-local" bind:value autocomplete="off" {...rest} {disabled} oninput={bubble('input')} onblur={bubble('blur')} use:action={actionOptions} {required} />
         {:else}
-            <input {id} type="datetime-local" bind:value autocomplete="off" {...$$restProps} {disabled} on:input on:blur {required} />
+            <input {id} type="datetime-local" bind:value autocomplete="off" {...rest} {disabled} oninput={bubble('input')} onblur={bubble('blur')} {required} />
         {/if}
     {:else if type === 'time'}
         {#if action}
-            <input {id} type="time" bind:value autocomplete="off" {...$$restProps} {disabled} on:input on:blur use:action={actionOptions} {required} />
+            <input {id} type="time" bind:value autocomplete="off" {...rest} {disabled} oninput={bubble('input')} onblur={bubble('blur')} use:action={actionOptions} {required} />
         {:else}
-            <input {id} type="time" bind:value autocomplete="off" {...$$restProps} {disabled} on:input on:blur {required} />
+            <input {id} type="time" bind:value autocomplete="off" {...rest} {disabled} oninput={bubble('input')} onblur={bubble('blur')} {required} />
         {/if}
     {:else if type === 'file'}
         {#if action}
-            <input {id} type="file" autocomplete="off" {...$$restProps} {disabled} bind:files on:input on:blur on:change use:action={actionOptions} {required} aria-label={label} />
+            <input {id} type="file" autocomplete="off" {...rest} {disabled} bind:files oninput={bubble('input')} onblur={bubble('blur')} onchange={bubble('change')} use:action={actionOptions} {required} aria-label={label} />
         {:else}
-            <input {id} type="file" autocomplete="off" {...$$restProps} {disabled} bind:files on:input on:blur on:change {required} aria-label={label} />
+            <input {id} type="file" autocomplete="off" {...rest} {disabled} bind:files oninput={bubble('input')} onblur={bubble('blur')} onchange={bubble('change')} {required} aria-label={label} />
         {/if}
         <span class="icon">
             {@html uploadIcon}
@@ -185,7 +207,7 @@
             </ol>
         {/if}
         {#if clearCallback || file}
-            <button type="button" class="circle red" title="limpar arquivos selecionados" on:click={clearSelectedFiles}>
+            <button type="button" class="circle red" title="limpar arquivos selecionados" onclick={clearSelectedFiles}>
                 {@html xmarkIcon}
             </button>
         {/if}

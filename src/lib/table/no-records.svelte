@@ -1,6 +1,10 @@
 <script lang="ts">
-    export let colspan: number;
-    export let message: string = 'Nenhum registro encontrado';
+    interface Props {
+        colspan: number;
+        message?: string;
+    }
+
+    let { colspan, message = 'Nenhum registro encontrado' }: Props = $props();
 </script>
 
 <tr class="hover-disabled">

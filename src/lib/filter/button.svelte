@@ -8,6 +8,6 @@
         });
     }
 </script>
-<button type="button" on:click={toggle}>
+<button type="button" onclick={toggle}>
     {$filterStore.visible ? 'Ocultar' : 'Exibir'} filtros
 </button>

@@ -3,8 +3,12 @@
     import { messages } from "../../messages";
     import icon from "../icons/check.svg?raw";
     import { confirmation, type ConfirmationProperites } from "../../confirmation";
-    export let href: string;
-    export let callback: (response: Response) => Promise<boolean>;
+    interface Props {
+        href: string;
+        callback: (response: Response) => Promise<boolean>;
+    }
+
+    let { href, callback }: Props = $props();
 
     async function destroy(): Promise<void>
     {

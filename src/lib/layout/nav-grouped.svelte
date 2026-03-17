@@ -1,9 +1,14 @@
 <script lang="ts">
     import { getContext } from "svelte";
     import { store } from "./nav_grouped";
-    export let name: string;
-    let key: string;
-    let button: HTMLButtonElement;
+    interface Props {
+        name: string;
+        children?: import('svelte').Snippet;
+    }
+
+    let { name, children }: Props = $props();
+    let key: string = $state()!;
+    let button: HTMLButtonElement = $state()!;
     const setCurrentNavLink = getContext<(param: boolean) => void>('currentAnchor');
     do {
         key = Math.random().toString(16).substring(2);
@@ -33,9 +38,9 @@
         setTimeout(setCurrentNavLink, 0, false);
     }
 </script>
-<button type="button" bind:this={button} class:open={$store.get(key)} on:click={toggle}>{@html name}</button>
+<button type="button" bind:this={button} class:open={$store.get(key)} onclick={toggle}>{@html name}</button>
 <div class="grouped-nav" class:show={$store.get(key)}>
-    <slot></slot>
+    {@render children?.()}
 </div>
 <style lang="less">
     div.grouped-nav {

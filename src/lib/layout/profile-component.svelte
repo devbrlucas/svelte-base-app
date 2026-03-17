@@ -4,15 +4,27 @@
     import { messages } from "../messages";
     import { confirmation, type ConfirmationProperites } from "../confirmation";
     import { user, type AuthResponse } from "$lib/auth";
-    export let form: Record<string, any> = {
+    interface Props {
+        fields?: Record<string, any>;
+        url?: string;
+        callback?: Function | undefined;
+        form?: import('svelte').Snippet;
+        buttons?: import('svelte').Snippet;
+    }
+
+    let {
+        fields = $bindable({
         name: '',
         email: '',
         image: null,
         password: '',
         password_confirmation: '',
-    }
-    export let url: string = '/users/self';
-    export let callback: Function | undefined = undefined;
+    }),
+        url = '/users/self',
+        callback = undefined,
+        form,
+        buttons
+    }: Props = $props();
     async function update(): Promise<void>
     {
         if (callback) {
@@ -21,12 +33,12 @@
             const response = await Ajax
                                         .post(url)
                                         .setOption('convertToFormData', true)
-                                        .send<AuthResponse<any, string>>('json', form);
+                                        .send<AuthResponse<any, string>>('json', fields);
             if (response.error) return;
             messages.success('Dados editados com sucesso');
             user.set(response.body.data);
-            form.image = null;
-            form.password = form.password_confirmation = '';
+            fields.image = null;
+            fields.password = fields.password_confirmation = '';
         }
     }
 
@@ -39,15 +51,15 @@
 <main id="app-main">
     <h1>Meu Perfil</h1>
     <form id="form" use:confirmation={action}>
-        <Input type="text" label="Nome" bind:value={form.name} error="name" required size=60 />
+        <Input type="text" label="Nome" bind:value={fields.name} error="name" required size=60 />
         <br>
-        <Input type="email" label="E-Mail" bind:value={form.email} error="email" required size=60 />
+        <Input type="email" label="E-Mail" bind:value={fields.email} error="email" required size=60 />
         <br>
-        <Input type="file" label="Selecione uma foto de perfil" bind:file={form.image} error="image" />
+        <Input type="file" label="Selecione uma foto de perfil" bind:file={fields.image} error="image" />
         <br>
-        <Input type="password" label="Senha" bind:value={form.password} error="password" size=40 />
-        <Input type="password" label="Confirmação da senha" bind:value={form.password_confirmation} error="password_confirmation" size=40 />
-        <slot name="form"></slot>
+        <Input type="password" label="Senha" bind:value={fields.password} error="password" size=40 />
+        <Input type="password" label="Confirmação da senha" bind:value={fields.password_confirmation} error="password_confirmation" size=40 />
+        {@render form?.()}
     </form>
 </main>
 
@@ -55,5 +67,5 @@
     <button type="submit" form="form">
         Alterar
     </button>
-    <slot name="buttons"></slot>
+    {@render buttons?.()}
 </aside>

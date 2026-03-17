@@ -1,31 +1,50 @@
 <script lang="ts" generics="P">
+    import { createBubbler } from 'svelte/legacy';
+
+    const bubble = createBubbler();
     import type { Action } from "svelte/action";
     import Error from "./error.svelte";
     import LabelInfo from "./label-info.svelte";
-    export let label: string = '';
-    export let value: string | null = '';
-    export let error: string = '';
-    export let disabled: boolean = false;
-    export let required: boolean = false;
-    export let action: Action<HTMLElement, P | undefined> | undefined = undefined;
-    export let actionOptions: P | undefined = undefined;
+    interface Props {
+        label?: string;
+        value?: string | null;
+        error?: string;
+        disabled?: boolean;
+        required?: boolean;
+        action?: Action<HTMLElement, P | undefined> | undefined;
+        actionOptions?: P | undefined;
+        children?: import('svelte').Snippet;
+        [key: string]: any
+    }
+
+    let {
+        label = '',
+        value = $bindable(''),
+        error = '',
+        disabled = false,
+        required = false,
+        action = undefined,
+        actionOptions = undefined,
+        children,
+        ...rest
+    }: Props = $props();
     const id = `textarea-${Math.random() * 5}`;
 </script>
 
 <div class="app input-component textarea" class:disabled class:required>
     {#if label}
-        {#if $$slots.default}
+        {#if children}
             <LabelInfo {id} {label}>
-                <slot></slot>
+                {@render children?.()}
             </LabelInfo>
         {:else}
             <LabelInfo {id} {label} />
         {/if}
     {/if}
     {#if action}
-        <textarea {id} bind:value autocomplete="off" {...$$restProps} {disabled} on:input on:blur use:action={actionOptions} {required}></textarea>
+        <textarea {id} bind:value autocomplete="off" {...rest} {disabled} oninput={bubble('input')} onblur={bubble('blur')} use:action={actionOptions} {required}></textarea>
     {:else}
-        <textarea {id} bind:value autocomplete="off" {...$$restProps} {disabled} on:input on:blur {required}></textarea>
+        <textarea {id} bind:value autocomplete="off" {...rest} {disabled} oninput={bubble('input')} onblur={bubble('blur')} {required}></textarea>
     {/if}
     <Error name={error} />
 </div>

@@ -3,10 +3,10 @@ import { formUtils } from "../form";
 import { messages } from "../messages";
 import type { PaginatedResponse } from "../pagination";
 import { goto } from "$app/navigation";
-import { navigating } from "$app/stores";
-import { get } from "svelte/store";
-import { error, type NumericRange } from "@sveltejs/kit";
+import { error } from "@sveltejs/kit";
 import { createFormDataFromObject } from "../utils";
+import { PUBLIC_API_URL } from "$env/static/public";
+import { navigating } from "$app/state";
 type Method = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE' | 'HEAD';
 type ResponseType = 'json' | 'blob' | 'text' | 'none' | 'paginate' | 'form-data' | 'basic-json';
 type ResourceResponse<D, A = object> = A & {
@@ -43,7 +43,7 @@ export class Ajax
     private uri: string;
     private method: Method;
     private headers: Record<string, string> = {
-        'X-Requested-With': 'XMLHttpRequest',
+        'Accept': 'application/json',
     }
     private options: Options;
     private isNavigating: boolean;
@@ -53,10 +53,7 @@ export class Ajax
         this.uri = uri;
         this.method = method;
         this.options = options ? options : {};
-        let token: string = '';
-        token = user.get('access_token');
-        this.setAuthorizationHeader(token, 'Bearer');
-        this.isNavigating = get(navigating) !== null;
+        this.isNavigating = navigating.to !== null;
         this.initLoadIcon();
     }
 
@@ -141,12 +138,14 @@ export class Ajax
         }
         try {
             const requestBody = this.handleRequestBody(data);
-            const url = this.options.dontUseBaseURL ? this.uri : `${import.meta.env.VITE_API_BASE_URL}${this.uri}`;
+            const url = this.options.dontUseBaseURL ? this.uri : `${PUBLIC_API_URL}${this.uri}`;
+            this.headers['X-XSRF-TOKEN'] = await this.getCsrfToken();
             const response = await fetch(url, {
                 method: this.method,
                 headers: this.headers,
                 body: requestBody,
                 signal: this.options.abortSignal,
+                credentials: 'include',
             });
             if (!this.options.preserveErrors) formUtils.cleanErrors();
             if (!response.ok) {
@@ -154,7 +153,7 @@ export class Ajax
                     const responseErrors: AjaxValidationErrorResponse = await response.json();
                     formUtils.setErrors(responseErrors.errors);
                     if (!this.options.hideMessages) formUtils.message();
-                } else if (response.status === 401) {
+                } else if (response.status === 401 || response.status === 419) {
                     if (!this.options.hideMessages) messages.error(this.options.unauthenticatedMessage ?? 'Você precisa se identificar para acessar esse recurso');
                     user.clean();
                     if (!this.options.disableRedirects) goto('/login');
@@ -272,5 +271,28 @@ export class Ajax
                 responseBody = null;
         }
         return responseBody;
+    }
+
+    async getCsrfToken(retried = false): Promise<string>
+    {
+        const token = await cookieStore
+            .get('XSRF-TOKEN')
+            .then(cookie => cookie?.value ?? '')
+            .then(value => decodeURIComponent(value));
+        if (token) return token;
+        if (retried) throw new Error('Falha ao obter token CSRF');
+        await this.setCsrfToken();
+        return this.getCsrfToken(true) ?? '';
+    }
+    
+    async setCsrfToken(): Promise<void>
+    {
+        const response = await fetch(`${PUBLIC_API_URL}/sanctum/csrf-cookie`, {
+            headers: {
+                'Accept': 'application/json',
+            },
+            credentials: 'include',
+        });
+        if (!response.ok) throw new Error('Não foi possível obter o token CSRF.');
     }
 }

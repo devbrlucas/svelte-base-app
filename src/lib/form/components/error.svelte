@@ -1,6 +1,10 @@
 <script lang="ts">
     import { errors } from "../errors";
-    export let name: string;
+    interface Props {
+        name: string;
+    }
+
+    let { name }: Props = $props();
 </script>
 
 {#if $errors[name]}

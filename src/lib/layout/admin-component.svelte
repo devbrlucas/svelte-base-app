@@ -9,9 +9,15 @@
     import { onMount, setContext } from "svelte";
     import { title } from "$lib/utils";
     import { store } from "./nav_grouped";
-    export let anchorclick: boolean = true;
-    let navState: boolean = false;
-    let profileMenuState: boolean = false;
+    interface Props {
+        anchorclick?: boolean;
+        nav?: import('svelte').Snippet;
+        body?: import('svelte').Snippet;
+    }
+
+    let { anchorclick = true, nav, body }: Props = $props();
+    let navState: boolean = $state(false);
+    let profileMenuState: boolean = $state(false);
     const titleStore = title();
     beforeNavigate(() => {
         if (navState) navState = false;
@@ -67,14 +73,14 @@
 </script>
 
 <header id="app-header">
-    <button type="button" title="exibe menu" on:click={toggleNavMenu} class:show={navState}>
+    <button type="button" title="exibe menu" onclick={toggleNavMenu} class:show={navState}>
         {@html showNavIcon}
         {@html hideNavIcon}
     </button>
     <img src="/logo.png" alt="logo da empresa">
     <span>{$titleStore}</span>
     <nav class:show={navState} id="app-nav">
-        <slot name="nav"></slot>
+        {@render nav?.()}
     </nav>
     <div>
         <ProfileButton bind:profileMenuState bind:navState />
@@ -95,7 +101,7 @@
         </ul>
     {/if}
 </aside>
-<slot name="body"></slot>
+{@render body?.()}
 <footer id="app-footer">
     <img src="/logo.png" alt="logo da empresa">
 </footer>

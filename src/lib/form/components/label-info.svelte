@@ -1,14 +1,19 @@
 <script lang="ts">
     import { slide } from "svelte/transition";
     import questionIcon from "./icons/question.svg?raw";
-    export let id: string;
-    export let label: string;
-    let infoVisible: boolean = false;
+    interface Props {
+        id: string;
+        label: string;
+        children?: import('svelte').Snippet;
+    }
+
+    let { id, label, children }: Props = $props();
+    let infoVisible: boolean = $state(false);
 </script>
 <span class="label">
     <label for={id}>{label}</label>
-    {#if $$slots.default}
-        <button type="button" class:visible={infoVisible} on:click={() => infoVisible = !infoVisible} title="{infoVisible ? 'ocultar' : 'exibir'} informações do campo">
+    {#if children}
+        <button type="button" class:visible={infoVisible} onclick={() => infoVisible = !infoVisible} title="{infoVisible ? 'ocultar' : 'exibir'} informações do campo">
             {@html questionIcon}
         </button>
     {/if}
@@ -16,6 +21,6 @@
 <br>
 {#if infoVisible}
     <div transition:slide={{duration: 200}} class="info">
-        <slot></slot>
+        {@render children?.()}
     </div>
 {/if}

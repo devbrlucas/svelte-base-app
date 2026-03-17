@@ -1,6 +1,10 @@
 <script lang="ts" generics="T">
-    export let name: string;
-    export let content: T;
+    interface Props {
+        name: string;
+        content: T;
+    }
+
+    let { name, content }: Props = $props();
 </script>
 
 <div>

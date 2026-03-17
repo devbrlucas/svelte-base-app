@@ -1,7 +1,11 @@
 <script lang="ts">
     import { currentUser } from "../../auth/store";
-    export let profileMenuState: boolean;
-    export let navState: boolean;
+    interface Props {
+        profileMenuState: boolean;
+        navState: boolean;
+    }
+
+    let { profileMenuState = $bindable(), navState = $bindable() }: Props = $props();
     function toggleProfileMenu(): void
     {
         profileMenuState = !profileMenuState;
@@ -9,7 +13,7 @@
     }
 </script>
 
-<button type="button" on:click={toggleProfileMenu} class:image={$currentUser?.current?.image} aria-label="exibir opções do perfil de usuário">
+<button type="button" onclick={toggleProfileMenu} class:image={$currentUser?.current?.image} aria-label="exibir opções do perfil de usuário">
     {#if $currentUser?.current?.image}
         <img src={$currentUser?.current?.image} alt="imagem de perfil do usuário">
     {:else}

@@ -1,8 +1,11 @@
-<script lang="ts" context="module">
+<script lang="ts" module>
     import { writable } from "svelte/store";
     const store = writable<Record<string, any[]>>({});
 </script>
 <script lang="ts" generics="T, C extends 'checkbox' | 'radio', P">
+    import { run, createBubbler } from 'svelte/legacy';
+
+    const bubble = createBubbler();
     import type { Action } from "svelte/action";
     import { onMount } from "svelte";
     import Error from "./error.svelte";
@@ -10,17 +13,37 @@
     import circleIcon from "./icons/circle.svg?raw";
     import LabelInfo from "./label-info.svelte";
     type GroupType = (C extends 'checkbox' ? T[] : T) | undefined;
-    export let type: C;
-    export let label: string;
-    export let value: T | undefined = undefined;
-    export let checked: boolean = false;
-    export let group: (C extends 'checkbox' ? T[] : T) | undefined = undefined;
-    export let error: string = '';
-    export let disabled: boolean = false;
-    export let required: boolean = false;
-    export let key: string = '';
-    export let action: Action<HTMLElement, P | undefined> | undefined = undefined;
-    export let actionOptions: P | undefined = undefined;
+    interface Props {
+        type: C;
+        label: string;
+        value?: T | undefined;
+        checked?: boolean;
+        group?: (C extends 'checkbox' ? T[] : T) | undefined;
+        error?: string;
+        disabled?: boolean;
+        required?: boolean;
+        key?: string;
+        action?: Action<HTMLElement, P | undefined> | undefined;
+        actionOptions?: P | undefined;
+        children?: import('svelte').Snippet;
+        [key: string]: any
+    }
+
+    let {
+        type,
+        label,
+        value = undefined,
+        checked = $bindable(false),
+        group = $bindable(undefined),
+        error = '',
+        disabled = false,
+        required = false,
+        key = '',
+        action = undefined,
+        actionOptions = undefined,
+        children,
+        ...rest
+    }: Props = $props();
     const id = `box-${Math.random() * 5}`;
     const valueError = new TypeError('<SelectionBox>: Ao utilizar bind:group, é obrigatório informar a prop value');
     function handleGroup(): void
@@ -39,7 +62,6 @@
             group = group;
         }
     }
-    $: group && initGroup();
     function initGroup(): void
     {
         if (type === 'checkbox' && Array.isArray(group)) {
@@ -55,27 +77,30 @@
         }
     }
     onMount(initGroup);
+    run(() => {
+        group && initGroup();
+    });
 </script>
-<div class="app input-component selection-box {type}" class:disabled class:info={$$slots.default} class:required>
+<div class="app input-component selection-box {type}" class:disabled class:info={children} class:required>
     {#if type === 'checkbox'}
         {#if Array.isArray(group)}
             {#if action}
-                <input {id} type="checkbox" {...$$restProps} bind:checked={checked} {value} autocomplete='off' {disabled} on:change={handleGroup} use:action={actionOptions} {required}>
+                <input {id} type="checkbox" {...rest} bind:checked={checked} {value} autocomplete='off' {disabled} onchange={handleGroup} use:action={actionOptions} {required}>
             {:else}
-                <input {id} type="checkbox" {...$$restProps} bind:checked={checked} {value} autocomplete='off' {disabled} on:change={handleGroup} {required}>
+                <input {id} type="checkbox" {...rest} bind:checked={checked} {value} autocomplete='off' {disabled} onchange={handleGroup} {required}>
             {/if}
         {:else}
             {#if action}
-                <input {id} type="checkbox" {...$$restProps} bind:checked={checked} autocomplete='off' {disabled} on:change use:action={actionOptions} {required}>
+                <input {id} type="checkbox" {...rest} bind:checked={checked} autocomplete='off' {disabled} onchange={bubble('change')} use:action={actionOptions} {required}>
             {:else}
-                <input {id} type="checkbox" {...$$restProps} bind:checked={checked} autocomplete='off' {disabled} on:change {required}>
+                <input {id} type="checkbox" {...rest} bind:checked={checked} autocomplete='off' {disabled} onchange={bubble('change')} {required}>
             {/if}
         {/if}
     {:else if type === 'radio'}
         {#if action}
-            <input {id} type="radio" {...$$restProps} bind:group {value} autocomplete='off' {disabled} on:change use:action={actionOptions} {required}>
+            <input {id} type="radio" {...rest} bind:group {value} autocomplete='off' {disabled} onchange={bubble('change')} use:action={actionOptions} {required}>
         {:else}
-            <input {id} type="radio" {...$$restProps} bind:group {value} autocomplete='off' {disabled} on:change {required}>
+            <input {id} type="radio" {...rest} bind:group {value} autocomplete='off' {disabled} onchange={bubble('change')} {required}>
         {/if}
     {/if}
     {#if type === 'radio'}
@@ -87,9 +112,9 @@
             {@html checkIcon}
         </label>
     {/if}
-    {#if $$slots.default}
+    {#if children}
         <LabelInfo {id} {label}>
-            <slot></slot>
+            {@render children?.()}
         </LabelInfo>
     {:else}
         <LabelInfo {id} {label} />

@@ -1,6 +1,12 @@
 <script lang="ts">
     import { store } from "./store";
-    export let href: string;
+    interface Props {
+        href: string;
+        children?: import('svelte').Snippet;
+        [key: string]: any
+    }
+
+    let { href = $bindable(), children, ...rest }: Props = $props();
     const url = `${href}${$store[href] ?? ''}`;
     function update(): void
     {
@@ -11,8 +17,8 @@
     }
 </script>
 
-<a href={url} {...$$restProps} on:click={update}>
-    <slot>
+<a href={url} {...rest} onclick={update}>
+    {#if children}{@render children()}{:else}
         Voltar
-    </slot>
+    {/if}
 </a>

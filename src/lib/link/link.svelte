@@ -1,6 +1,15 @@
 <script lang="ts">
+    import { createBubbler, handlers } from 'svelte/legacy';
+
+    const bubble = createBubbler();
     import { store } from "./store";
-    export let href: string;
+    interface Props {
+        href: string;
+        children?: import('svelte').Snippet;
+        [key: string]: any
+    }
+
+    let { href, children, ...rest }: Props = $props();
     function update(): void
     {
         const path = window.location.pathname;
@@ -12,6 +21,6 @@
     }
 </script>
 
-<a {href} {...$$restProps} on:click={update} on:click>
-    <slot></slot>
+<a {href} {...rest} onclick={handlers(update, bubble('click'))}>
+    {@render children?.()}
 </a>
