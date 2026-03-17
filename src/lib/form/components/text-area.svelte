@@ -19,12 +19,12 @@
 
     let {
         label = '',
-        value = $bindable(''),
+        value = $bindable(),
         error = '',
         disabled = false,
         required = false,
-        action = undefined,
-        actionOptions = undefined,
+        action,
+        actionOptions,
         children,
         ...rest
     }: Props = $props();

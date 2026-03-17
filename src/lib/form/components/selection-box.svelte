@@ -18,7 +18,7 @@
         label: string;
         value?: T | undefined;
         checked?: boolean;
-        group?: (C extends 'checkbox' ? T[] : T) | undefined;
+        group?: (C extends 'checkbox' ? T[] : T);
         error?: string;
         disabled?: boolean;
         required?: boolean;
@@ -32,15 +32,15 @@
     let {
         type,
         label,
-        value = undefined,
-        checked = $bindable(false),
-        group = $bindable(undefined),
+        value,
+        checked = $bindable(),
+        group = $bindable(),
         error = '',
         disabled = false,
         required = false,
         key = '',
-        action = undefined,
-        actionOptions = undefined,
+        action,
+        actionOptions,
         children,
         ...rest
     }: Props = $props();

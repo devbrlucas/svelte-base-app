@@ -39,14 +39,14 @@
     let {
         type,
         label = '',
-        value = $bindable(null),
-        file = $bindable(null),
+        value = $bindable(),
+        file = $bindable(),
         error = '',
         disabled = false,
         required = false,
-        action = undefined,
-        actionOptions = undefined,
-        clearCallback = undefined,
+        action,
+        actionOptions,
+        clearCallback,
         children,
         ...rest
     }: Props = $props();

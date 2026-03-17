@@ -1,4 +1,4 @@
-import type { ComponentType } from "svelte";
+import type { Component } from "svelte";
 import { dialogs, type Dialog } from "./dialogs";
 import { get } from "svelte/store";
 export { default as DialogComponent } from "./component.svelte";
@@ -17,7 +17,7 @@ function getActiveDialogChannel(): BroadcastChannel
 {
     return new BroadcastChannel(getActiveDialogId());
 }
-async function open<T>(title: string, component: ComponentType, props?: Record<string, any>, canClose: boolean = true): Promise<T | undefined>
+async function open<T>(title: string, component: Component<any>, props?: Record<string, any>, canClose: boolean = true): Promise<T | undefined>
 {
     const id = `dialog-${component.name}`;
     dialogs.update(value => {

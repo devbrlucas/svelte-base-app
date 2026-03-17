@@ -28,8 +28,8 @@
         multiple = false,
         disabled = false,
         required = false,
-        action = undefined,
-        actionOptions = undefined,
+        action,
+        actionOptions,
         info,
         children,
         ...rest
