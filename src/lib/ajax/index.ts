@@ -154,6 +154,10 @@ export class Ajax
                     formUtils.setErrors(responseErrors.errors);
                     if (!this.options.hideMessages) formUtils.message();
                 } else if (response.status === 401 || response.status === 419) {
+                    if (response.status === 419) {
+                        await cookieStore.delete('XSRF-TOKEN');
+                        messages.error('Sua sessão expirou. Por favor, faça login novamente.');
+                    }
                     if (!this.options.hideMessages) messages.error(this.options.unauthenticatedMessage ?? 'Você precisa se identificar para acessar esse recurso');
                     user.clean();
                     if (!this.options.disableRedirects) goto('/login');
